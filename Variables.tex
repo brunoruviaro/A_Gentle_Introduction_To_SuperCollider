@@ -1,0 +1,99 @@
+\section{Variables}
+\label{sec:variables}
+
+You can store numbers, words, unit generators, functions, or entire blocks of code in variables. Variables can be single letters or whole words chosen by you. We use the equal sign (=) to ``assign'' variables. Run these lines one at a time and watch the Post window:
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+x = 10;
+y = 660;
+y; // check what's in there
+x;
+x + y;
+y - x;
+\end{lstlisting}
+ 
+
+The first line assigns the number 10 to the variable \texttt{x}. The second line puts 660 into the variable \texttt{y}. The next two lines prove that those letters now ``contain'' those numbers (the data). Finally, the last two lines show that we can use the variables to do any operations with the data.
+
+Lowercase letters \texttt{a} through \texttt{z} can be used anytime as variables in SuperCollider. The only single letter that by convention we don't use is \texttt{s}, which by default represents the Server. Anything can go into a variable:
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+a = "Hello, World"; // a string of characters
+b = [0, 1, 2, 3, 5]; // a list
+c = Pbind(\note, Pwhite(0, 10), \dur, 0.1); // you'll learn all about Pbind later, don't worry
+
+// ...and now you can use them just like you would use the original data:
+a.postln; // post it
+b + 100; // do some math
+c.play; // play that Pbind
+d = b * 5; // take b, multiply by 5, and assign that to a new variable
+\end{lstlisting}
+
+Often it will make more sense to give better names to your variables, to help you remember what they stand for in your code. You need to use a $\sim$ (tilde) to declare a variable with a longer name. Note that there is no space between the tilde and the name of the variable.
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+~myFreqs = [415, 220, 440, 880, 220, 990];
+~myDurs = [0.1, 0.2, 0.2, 0.5, 0.2, 0.1];
+
+Pbind(\freq, Pseq(~myFreqs), \dur, Pseq(~myDurs)).play;
+\end{lstlisting}
+ 
+
+Variable names must begin with lowercase letters. You can use numbers, underscores, and uppercase letters within the name, just not as the first character. All characters must be contiguous (no spaces or punctuation). In short, stick to letters and numbers and the occasional underscore, and avoid all other characters when naming your variables. \texttt{$\sim$myFreqs}, \texttt{$\sim$theBestSineWave}, and \texttt{$\sim$banana\_3} are valid names. \texttt{$\sim$MyFreqs}, \texttt{$\sim$theBest\&*\#\@SineWave}, and \texttt{$\sim$banana!!!} are bad names.
+
+There are two types of variables that you can create: \emph{environment} variables and \emph{local} variables.
+
+\subsection{Environment Variables vs. Local Variables}
+
+The ones you have seen up to now are environment variables (some people loosely call them ``global variables''): they are the single lowercase letters \texttt{a} through \texttt{z}, or those starting with the tilde ($\sim$) character. Once declared, they will work anywhere in the patch, in other patches, even in other SC documents, until you quit SuperCollider.
+
+Local variables, on the other hand, are declared with the reserved keyword \texttt{\textbf{var}} at the beginning of the line. You can assign an initial value to a variable at declaration time (\texttt{\textbf{var} apples = 4}). Local variables only exist within the scope of that code block.
+
+Here's a simple example comparing the two types of variables. Evaluate line by line and watch the Post window.
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// Environment variables
+~galaApples = 4;
+~bloodOranges = 5;
+~limes = 2;
+~plantains = 1;
+
+["Citrus", ~bloodOranges + ~limes];
+["Non-citrus", ~plantains + ~galaApples];
+
+// Local variables: valid only within the code block.
+// Evaluate the block once and watch the Post window:
+(
+var apples = 4, oranges = 3, lemons = 8, bananas = 10;
+["Citrus fruits", oranges + lemons].postln;
+["Non-citrus fruits", bananas + apples].postln;
+"End".postln;
+)
+
+~galaApples; // still exists
+apples; // gone
+\end{lstlisting}
+
+\subsection{Reassignment}
+
+One last useful thing to understand about variables is that they can be \emph{reassigned}: you can give them a new value at anytime.
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// Assign a variable
+a = 10 + 3;
+a.postln; // check it
+a = 999; // reassign the variable (give it a new value)
+a.postln; // check it: the old value is gone.
+\end{lstlisting}
+
+A very common practice that is sometimes confusing for beginners is when \emph{the variable itself is used in its own reassignment}. Take a look at this example:
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+x = 10; // assign 10 to the variable x
+x = x + 1; // assign x + 1 to the variable x
+x.postln; // check it
+\end{lstlisting}
+
+The easiest way to understand that last line is to read it like this: ``take the current value of variable x, add 1 to it, and assign this new result to the variable x.'' It's really not complicated, and you will see later on how this can be useful.\footnote{This example clearly demonstrates that the equal sign, in programming, is not the same equal sign that you learned in mathematics. In math, $x = x + 1$ is impossible (a number cannot be equal to itself plus one). In a programming language like SuperCollider, the equal sign can be seen as a kind of action: \emph{take the result of the expression on the right side of the sign, and ``assign it'' to the variable on the left side}.}

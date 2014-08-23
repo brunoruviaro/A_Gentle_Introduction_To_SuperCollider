@@ -1,0 +1,29 @@
+\section{Multichannel Expansion}
+
+With your Meter window open---[ctrl+M]---, watch this.
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+{Out.ar(0, Saw.ar(freq: [440, 570], mul: Line.kr(0, 1, 10)))}.play;
+\end{lstlisting}
+
+We are using a nice \texttt{Line.kr} UGen to ramp up the amplitude from 0 to 1 in 10 seconds. That's neat. But there is a more interesting magic going on here. Did you notice that there are 2 channels of output (left and right)? Did you hear that there is a different note on each channel? And that those two notes come from a \emph{list}---[440, 570]---that is passed to \texttt{Saw.ar} as its \texttt{freq} argument?
+
+This is called Multichannel Expansion.
+
+David Cottle jokes that ``multichannel expansion is one [application of arrays] that borders on voodoo.''\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, p. 14} It is one of the most powerful and unique features of SuperCollider, and one that may puzzle people at first.
+
+In a nutshell: if you use an array anywhere as one of the arguments of a UGen, \emph{the entire patch is duplicated}. The number of copies created is \textit{the number of items in the array}. These duplicated UGens are sent out to as many \textit{adjacent buses} as needed, starting from the bus specified as the first argument of \texttt{Out.ar}.
+
+In the example above, we have \texttt{Out.ar(0, ... )}. The \texttt{freq} of the Saw wave is an array of two items: \texttt{[440, 570]}. What does SC do? It ``multichannel expands,'' creating two copies of the entire patch. The first copy is a sawtooth wave with frequency 440 Hz, sent out to bus 0 (your left channel); the second copy is a sawtooth wave with frequency 570 Hz, sent out to bus 1 (your right channel)!
+
+Go ahead and check that for yourself. Change those two frequencies to any other values you like. Listen to the results. One goes to the left channel, the other goes to the right channel. Go even further, and add a third frequency to the list (say, \texttt{[440, 570, 980]}). Watch the Meter window. You will see that the first three outputs are lighting up (but you will only be able to hear the third one if you have a multichannel sound card).
+
+What's more: you can use additional arrays in other arguments of the same UGen, or in arguments of other UGens in the same synth. SuperCollider will do the housekeeping and generate synths that follow those values accordingly. For example: right now both frequencies [440, 570] are fading in from 0 to 1 in 10 seconds. But change the code to \texttt{Line.kr(0, 1, [1, 15])} and you'll have the 440 Hz tone take 1 second to fade in, and the 570 Hz tone take 15 seconds to fade in. Try it.
+
+Exercise: listen to this simulation of a ``busy tone'' of an old telephone. It uses multichannel expansion to create two sine oscillators, each playing a different frequency on a different channel. Make the left channel pulse 2 times per second, and the right channel pulse 3 times per second.\endnote{Solution: \texttt{a = \{Out.ar(0, SinOsc.ar(freq: [800, 880], mul: LFPulse.ar([2, 3])))\}.play;}}
+
+\medskip
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+a = {Out.ar(0, SinOsc.ar(freq: [800, 880], mul: LFPulse.ar(2)))}.play;
+a.free;
+\end{lstlisting}

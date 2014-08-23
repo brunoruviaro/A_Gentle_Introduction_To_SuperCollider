@@ -1,0 +1,85 @@
+\section{MIDI}
+
+An extended presentation of MIDI concepts and tricks is beyond the scope of this tutorial. The examples below assume some familiarity with MIDI devices, and are provided just to get you started.
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// Quick way to connect all available devices to SC
+MIDIIn.connectAll;
+
+// Quick way to see all incoming MIDI messages
+MIDIFunc.trace(true);
+MIDIFunc.trace(false); // stop it
+
+// Quick way to inspect all CC inputs
+MIDIdef.cc(\someCC, {arg a, b; [a, b].postln});
+
+// Get input only from cc 7, channel 0
+MIDIdef.cc(\someSpecificControl, {arg a, b; [a, b].postln}, ccNum: 7, chan: 0);
+
+// A SynthDef for quick tests
+SynthDef("quick", {arg freq, amp; Out.ar(0, SinOsc.ar(freq) * Env.perc(level: amp).kr(2))}).add;
+
+// Play from a keyboard or drum pad
+(
+MIDIdef.noteOn(\someKeyboard, { arg vel, note;
+	Synth("quick", [\freq, note.midicps, \amp, vel.linlin(0, 127, 0, 1)]);
+});
+)
+
+// Create a pattern and play that from the keyboard
+(
+a = Pbind(
+	\instrument, "quick",
+	\degree, Pwhite(0, 10, 5),
+	\amp, Pwhite(0.05, 0.2),
+	\dur, 0.1
+);
+)
+
+// test
+a.play;
+
+// Trigger pattern from pad or keyboard
+MIDIdef.noteOn(\quneo, {arg vel, note; a.play});
+\end{lstlisting}
+
+A frequently asked question is how to manage note on and note off messages for sustained notes. In other words, when using an ADSR envelope, you want each note to be sustained for as long as a key is pressed. The release stage comes only when the finger comes off the corresponding key (review section on ADSR envelopes if needed).
+
+In order to do that, SuperCollider simply needs to keep track of which synth node corresponds to each key. We can use an Array for that purpose, as shown in the example below.
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+ // A SynthDef with ADSR envelope
+SynthDef("quick2", {arg freq = 440, amp = 0.1, gate = 1;
+	var snd, env;
+	env = Env.adsr(0.01, 0.1, 0.3, 2, amp).kr(2, gate);
+	snd = Saw.ar([freq, freq*1.5], env);	
+	Out.ar(0, snd)
+}).add;
+
+// Play it with a MIDI keyboard
+(
+var noteArray = Array.newClear(128); // array has one slot per possible MIDI note
+
+MIDIdef.noteOn(\myKeyDown, {arg vel, note;
+	noteArray[note] = Synth("quick2", [\freq, note.midicps, \amp, vel.linlin(0, 127, 0, 1)]);
+	["NOTE ON", note].postln;
+});
+	
+MIDIdef.noteOff(\myKeyUp, {arg vel, note;
+	noteArray[note].set(\gate, 0);
+	["NOTE OFF", note].postln;
+});
+)
+// PS. Make sure SC MIDI connections are made (MIDIIn.connectAll)
+ \end{lstlisting} 
+ 
+To help you understand the code above:
+
+\begin{itemize}
+\item The SynthDef \texttt{"quick2"} uses an ADSR envelope. The \texttt{gate} argument is the one responsible for turning notes on and off.
+\item An Array called \texttt{"noteArray"} is created to keep track of notes being played. The indices of the array are meant to correspond to MIDI note numbers being played.
+\item Every time a key is pressed on the keyboard, a Synth starts playing (a synth node is created in the server), and \emph{the reference to that synth node is stored in a unique slot in the array}; the array index is simply the MIDI note number itself.
+\item Whenever a key is released, the message \texttt{.set(\textbackslash gate, 0)} is sent to the appropriate synth node, retrieved from the array by note number.
+\end{itemize}
+
+In this short MIDI demo we only discussed getting MIDI \emph{into} SuperCollider. To get MIDI messages \emph{out} of SuperCollider, take a look at the \texttt{MIDIOut} Help file.

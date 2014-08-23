@@ -1,0 +1,33 @@
+At this point you already know quite a lot about the SuperCollider. The last part of this tutorial introduced you to nitty-gritty details about the language itself, from variables to enclosures and more. You also learned how to create interesting \texttt{Pbind}s using several members of the Pattern family.
+
+This part of the tutorial will (finally!) introduce you to sound synthesis and processing with SuperCollider. We will start with the topic of Unit Generators (UGens).\footnote{Most tutorials start with Unit Generators right away; in this intro to SC, however, we chose to emphasize the Pattern family first (\texttt{Pbind} and friends) for a different pedagogical approach.}
+
+\section{UGens}
+
+You have already seen a few Unit Generators (UGens) in action in sections \ref{sec:first-sine} and \ref{sec:nesting}. What is a UGen? A unit generator is an object that generates sound signals or control signals. These signals are always calculated in the server. There are many classes of unit generators, all of which derive from the class UGen. \texttt{SinOsc} and \texttt{LFNoise0} are examples of UGens. For more details, look at the Help files called ``Unit Generators and Synths,'' and ``Tour of UGens.'' 
+
+When you played your Pbinds earlier in this tutorial, the default sound was always the same: a simple piano-like synth. That synth is made of a combination of unit generators.\footnote{Since you used \texttt{Pbind}s to make sound in SuperCollider so far, you may be tempted to think: \textit{``I see, so the \texttt{Pbind} is a Unit Generator!''} That's not the case. \texttt{Pbind} is not a Unit Generator---it is just a recipe for making musical events (score). \textit{``So the \texttt{EventStreamPlayer}, the thing that results when I call \texttt{play} on a \texttt{Pbind}, THAT must be a UGen!''} The answer is still no. The \texttt{EventStreamPlayer} is just the player, like a pianist, and the pianist does not generate sound. In keeping with this limited metaphor, the \emph{instrument piano} is the thing that actually vibrates and generates sound. That is a more apt analogy for a UGen: it's not the score, nor the player: it's the instrument. When you made music with \texttt{Pbind}s earlier, SC would create an \texttt{EventStreamPlayer} to play your score with the built-in piano synth. You didn't have to worry about creating the piano or any of that---SuperCollider did all the work under the hood for you. That hidden piano synth is made of a combination of a few Unit Generators.} You will learn how to combine unit generators to create all sorts of electronic instruments with synthetic and processed sounds. The next example builds up from your first sine wave to create an electronic instrument that you can perform live with the mouse.
+
+\subsection{Mouse control: instant Theremin}
+
+Here's a simple synth that you can perform live. It is a simulation of the Theremin, one of the oldest electronic music instruments:
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+{SinOsc.ar(freq: MouseX.kr(300, 2500), mul: MouseY.kr(0, 1)}.play;
+\end{lstlisting}
+
+If you don't know what a Theremin is, please stop everything right now and search for ``Clara Rockmore Theremin'' ou YouTube. Then come back here and try to play the Swan song with your SC Theremin.
+
+\texttt{SinOsc}, \texttt{MouseX}, and \texttt{MouseY} are UGens. \texttt{SinOsc} is generating the sine wave tone. The other two are capturing the motion of your cursor on the screen (X for horizontal motion, Y for vertical motion), and using the numbers to feed frequency and amplitude values to the sine wave. Very simple, and a lot of fun.
+
+\subsection{Saw and Pulse; plot and scope}
+
+The theremin above used a sine oscillator. There are other waveforms you could use to make the sound. Run the lines the below---they use the convenient \texttt{plot} method---to look at the shape of \texttt{SinOsc}, and compare it to \texttt{Saw} and \texttt{Pulse}. The lines below won't make sound---they just let you visualize a snapshot of the waveform. 
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+{ SinOsc.ar }.plot; // sine wave
+{ Saw.ar }.plot; // sawtooth wave
+{ Pulse.ar }.plot; // square wave
+\end{lstlisting}
+
+Now rewrite your theremin line replacing \texttt{SinOsc} with \texttt{Saw}, then \texttt{Pulse}. Listen how different they sound. Finally, try \texttt{.scope} instead of \texttt{.play} in your theremin code, and you will be able to watch a representation of the waveform in real time (a ``Stethoscope'' window will pop up).

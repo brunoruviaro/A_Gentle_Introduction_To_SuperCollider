@@ -1,0 +1,68 @@
+\section{Enclosures}
+
+There are four types of enclosures: \texttt{(parentheses)}, \texttt{[brackets]}, \texttt{\{braces\}}, and \texttt{"quotation marks"}.
+
+Each one that you open will need to be closed at a later point. This is called ``balancing,'' that is, keeping properly matched pairs of enclosures throughout your code.
+
+The SuperCollider IDE automatically indicates matching parentheses (also brackets and braces) when you close a pair---they show up in red. If you click on a parenthesis that lacks an opening/closing match, you will see a dark red selection telling you something is missing. Balancing is a quick way to select large sections of code for evaluation, deletion, or copy/paste operations. You can double click an opening or closing parenthesis (also brackets and braces) to select everything within.
+
+\subsection{Quotation marks}
+
+Quotation marks are used to enclose a sequence of characters (including spaces) as a single unit. These are called Strings. Single quotes create Symbols, which are slightly different than Strings. Symbols can also be created with a backslash immediately before the text. Thus \texttt{'greatSymbol'} and \texttt{\textbackslash greatSymbol} are equivalent.
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+"Here's a nice string";
+'greatSymbol';
+\end{lstlisting}
+
+\subsection{Parentheses}
+
+Parentheses can be used to:
+
+\begin{itemize}
+\item enclose argument lists: \texttt{rrand(0, 10);}
+\item force precedence: \texttt{5 + (10 * 4);}
+\item create code blocks (multiple lines of code to be evaluated together).
+\end{itemize} 
+
+\subsection{Brackets}
+
+Square brackets define a collection of items, like \texttt{[1, 2, 3, 4, "hello"]}. These are normally called Arrays. An array can contain anything: numbers, strings, functions, patterns, etc. Arrays understand messages such as \texttt{reverse}, \texttt{scramble}, \texttt{mirror}, \texttt{choose}, to name a few. You can also perform mathematical operations on arrays.
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+[1, 2, 3, 4, "hello"].scramble;
+[1, 2, 3, 4, "hello"].mirror;
+[1, 2, 3, 4].reverse + 10;
+// convert midi to frequency in Hz
+[60, 62, 64, 65, 67, 69, 71].midicps.round(0.1);
+\end{lstlisting}
+
+More on Arrays coming soon in section \ref{sec:arrays}.
+
+\subsection{Curly Braces}
+
+Braces (or ``curly braces'') define functions. Functions encapsulate some kind of operation or task that will probably be used and reused multiple times, possibly returning different results each time. The example below is from the SuperCollider book.
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+exprand(1, 1000.0);
+{exprand(1, 1000.0)};
+\end{lstlisting}
+
+David Cottle walks us through his example: \textit{``the first line picks a random number, which is displayed in the post window. The second prints a very different result: a function. What does the function do? It picks a random number. How can that difference affect code? Consider the lines below. The first chooses a random number and duplicates it. The second executes the random-number-picking function 5 times and collects the results in an array.''}\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, p. 13.}
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+rand(1000.0).dup(5);  // picks a number, duplicates it
+{rand(1000.0)}.dup(5);  // duplicates the function of picking a number
+{rand(1000.0)}.dup(5).round(0.1); // all of the above, then round
+// essentially, this (which has a similar result)
+[rand(1000.0), rand(1000.0), rand(1000.0), rand(1000.0), rand(1000.0)]
+\end{lstlisting}
+ 
+
+More about functions soon. For now, here's a summary of all possible enclosures:
+\begin{description}
+\item[Collections] \texttt{[list, of, items]}
+\item[Functions] \texttt{\{ often multiple lines of code \}}
+\item[Strings] \texttt{"words inside quotes"}
+\item[Symbols] \texttt{'singlequotes'} or preceded by a \texttt{\textbackslash backslash}
+\end{description}

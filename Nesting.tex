@@ -1,0 +1,100 @@
+\section{Nesting}
+\label{sec:nesting}
+
+The solution to the last exercise has led you to nest things one inside the other. David Cottle has an excellent explanation of nesting in the SuperCollider book, so we will just quote it here.\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, pp. 8-9.}
+
+\begin{quotation}
+\textit{To further clarify the idea of nesting, consider a hypothetical example in which SC will make you lunch. To do so, you might use a} \texttt{serve} message. \textit{The arguments might be salad, main course, and dessert. But just saying} \texttt{serve(lettuce, fish, banana)} \textit{may not give you the results you want. So to be safe you could clarify those arguments, replacing each with a nested message and argument.}
+\end{quotation}
+
+\texttt{serve(toss(lettuce, tomato, cheese), bake(fish, 400, 20), mix(banana, icecream))
+}
+\begin{quotation}
+\textit{SC would then serve not just lettuce, fish, and banana, but a tossed salad with lettuce, tomato, and cheese; a baked fish; and a banana sundae. These inner commands can be further clarified by nesting a message(arg) for each ingredient: lettuce, tomato, cheese, and so on. Each internal message produces a result that is in turn used as an argument by the outer message.}
+\end{quotation}
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize, label=code-dinner]
+// Pseudo-code to make dinner: 
+serve(
+	toss(
+		wash(lettuce, water, 10),
+		dice(tomato, small),
+		sprinkle(choose([blue, feta, gouda]))
+	),
+	bake(catch(lagoon, hook, bamboo), 400, 20),
+	mix(
+		slice(peel(banana), 20),
+		cook(mix(milk, sugar, starch), 200, 10)
+	)
+);
+\end{lstlisting}
+
+\begin{quotation}
+\textit{When the nesting has several levels, we can use new lines and indents for clarity. Some messages and arguments are left on one line, some are spread out with one argument per line---whichever is clearer. Each indent level should indicate a level of nesting. (Note that you can have any amount of white space---new lines, tabs, or spaces---between bits of code.)}
+
+[In the dinner example]\textit{ the lunch program is now told to wash the lettuce in water for 10 minutes and to dice the tomato into small pieces before tossing them into the salad bowl and sprinkling them with cheese. You've also specified where to catch the fish and to bake it at 400 degrees for 20 minutes before serving, and so on.}
+
+\textit{To ``read'' this style of code you start from the innermost nested message and move out to each successive layer. Here is an example aligned to show how the innermost message is nested inside the outer messages.}
+\end{quotation}
+
+%\lstinputlisting[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]{code-nesting.scd}
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+                exprand(1.0, 1000.0);
+           dup({exprand(1.0, 1000.0)}, 100);
+      sort(dup({exprand(1.0, 1000.0)}, 100));
+round(sort(dup({exprand(1.0, 1000.0)}, 100)), 0.01);
+\end{lstlisting}
+
+The code below is another example of nesting. Answer the questions that follow. You don't have to explain what the numbers are doing---the task is simply to identify the arguments in each layer of nesting. (Example and exercise questions also borrowed and slightly adapted from Cottle's tutorial.)
+
+ 
+%\lstinputlisting[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize, label=code-nested-music]{code-nested-music.scd}
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// Nesting and proper indentation
+(
+{
+	CombN.ar(
+		SinOsc.ar(
+			midicps(
+				LFNoise1.ar(3, 24,
+					LFSaw.ar([5, 5.123], 0, 3, 80)
+				)
+			),
+			0, 0.4
+		),
+		1, 0.3, 2)
+}.play;
+)
+\end{lstlisting}
+
+\begin{enumerate}[a)]
+\item What number is the second argument for \texttt{LFNoise1.ar}?
+\item What is the first argument for \texttt{LFSaw.ar}?
+\item What is the third argument for \texttt{LFNoise1.ar}?
+\item How many arguments are in \texttt{midicps}?
+\item What is the third argument for \texttt{SinOsc.ar}?
+\item What are the second and third arguments for \texttt{CombN.ar}?
+\end{enumerate}
+
+
+ 
+See the end of this document for the answers.\endnote{ Answers: 
+\begin{enumerate}[a)]
+\item 24
+\item $\left[5, 5.123\right]$ [both numbers and brackets)
+\item Entire \texttt{LFSaw} line
+\item Only one
+\item 0.4
+\item 1 and 0.3
+\end{enumerate}
+ }
+
+\medskip
+ 
+\bigskip
+\todo[inline, color=green!40]{ 
+TIP: If for whatever reason your code has lost proper indentation, simply select all of it and go to menu Edit$\rightarrow$Autoindent Line or Region, and it will be fixed.
+}
+\bigskip

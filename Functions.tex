@@ -1,0 +1,63 @@
+\section{Functions}
+\label{sec:functions}
+
+When you find yourself doing the same task several times, it may be a good time to create a reusable function. A function, as you learned in the Enclosures section, is something written within curly braces. David Touretzky introduces the idea of function in this way: ``think of a function as a box through which data flows. The function operates on the data in some way, and the result is what flows out.''\footnote{Touretzky, David. COMMON LISP: A Gentle Introduction to Symbolic Computation. The Benjamin/Cummings Publishing Company, Inc, 1990, p. 1. That's the book that inspired the title of this tutorial.}
+
+\begin{figure}[h]
+\centerline{\framebox{
+	\includegraphics[scale=0.9]{fig-function-box.pdf}}}
+\caption{General idea of a function.}
+\label{fig:function-box}
+\end{figure}
+
+The first line in the example below defines a function and assigns it to the variable \texttt{f}. The second line puts the function to work.
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+f = { 2 + 2 }; // define the function
+f.value; // put the function to work
+\end{lstlisting}
+ 
+The function above is not terribly useful, as it only knows how to do one thing (add 2 and 2). Normally you will want to define functions that can give you different results depending on the input arguments you give to it. We use the keyword \texttt{arg} to specify the inputs that a function can accept. The example below looks more like the drawing from figure \ref{fig:function-box}.
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+f = {arg a, b; ["a plus b", a+b, "a times b", a*b].postln}; // define function
+f.value(3, 7); // now you can give any two numbers as arguments to the function
+f.value(10, 14);
+
+// Compare:
+~sillyRand = rrand(0, 10); // not a function
+~sillyRand.value; // evaluate several times
+~sillyRand2 = {rrand(0, 10)}; // a function
+~sillyRand2.value; // evaluate several times
+\end{lstlisting}
+ 
+
+As a last example, here's one very useful function.
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// Use this function to decide how to spend your Summer days
+(
+~whatToDo = { 
+var today, dayName, actions;
+	today = Date.getDate.dayOfWeek;
+	dayName = 
+	case
+	{today==0} {"Sunday"}
+	{today==1} {"Monday"}
+	{today==2} {"Tuesday"}
+	{today==3} {"Wednesday"}
+	{today==4} {"Thursday"}
+	{today==5} {"Friday"}
+	{today==6} {"Saturday"};
+	actions = ["boomerang throwing", "arm wrestling", "stair climbing", "playing chess", "underwater hockey", "pea shooting", "a nap marathon"];
+	"Ah, " ++ dayName ++ "...! " ++ "What a good day for " ++ actions.choose;
+};
+)
+
+// Run it in the morning
+~whatToDo.value;
+\end{lstlisting}
+
+\bigskip
+\todo[inline, color=green!40]{ TIP: Another common notation to declare arguments at the beginning of a Function is: \texttt{f = \{|a, b| a + b\}}. This is equivalent to \texttt{f = \{arg a, b; a + b\}}} 

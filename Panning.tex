@@ -1,0 +1,38 @@
+\section{Panning}
+
+Panning is the spreading of an audio signal into a stereo or multichannel sound field. Here's a mono signal bouncing between left and right channel thanks to \texttt{Pan2}:\footnote{For multichannel panning, take a look at \texttt{Pan4} and \texttt{PanAz}. Advanced users may want to take a look at SuperCollider plug-ins for Ambisonics.}
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+p = {Pan2.ar(in: PinkNoise.ar, pos: SinOsc.kr(2), level: 0.1)}.play;
+p.free;
+\end{lstlisting}
+From the \texttt{Pan2} Help file, you can see that the argument \texttt{pos} (position) expects a number between -1 (left) and +1 (right), 0 being center. That's why you can use a \texttt{SinOsc} directly into that argument: the sine oscillator is a bipolar UGen, so it outputs numbers between -1 and +1 by default.
+
+Here's a more elaborated example. A sawtooth wave goes through a very sharp band pass filter (\texttt{rq: 0.01}). Notice the use of local variables to modularize different parts of the code. Analyze and try to understand as much as you can in the example above. Then answer the questions below.
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+(
+x = {
+	var lfn = LFNoise2.kr(1);
+	var saw = Saw.ar(
+		freq: 30, 
+		mul: LFPulse.kr(
+			freq: LFNoise1.kr(1).range(1, 10),
+			width: 0.1));
+	var bpf = BPF.ar(in: saw, freq: lfn.range(500, 2500), rq: 0.01, mul: 20);
+	Pan2.ar(in: bpf, pos: lfn);
+}.play;
+)
+x.free;
+\end{lstlisting}
+ 
+Questions:
+\begin{enumerate}[(a)]
+\item The variable \texttt{lfn} is used in two different places. Why? (What is the result?)
+\item What happens if you change the \texttt{mul:} argument of the \texttt{BPF} from 20 to 10, 5, or 1? Why such a high number as 20 was used?
+\item What part of the code is controlling the rhythm?
+\end{enumerate}
+
+Answers are at the end of this document.\endnote{(a) The variable \texttt{lfn} simply holds a \texttt{LFNoise2}. The role of \texttt{LFNoise2} in life is to generate a new random number every second (between -1 and +1), and slide to it from the previous random number (differently from \texttt{LFNoise0}, that jumps to the new number immediately). The first use of this variable \texttt{lfn} is in the \texttt{freq} argument of the BPF: \texttt{lfn.range(500, 2500)}. This takes the numbers between -1 and +1 and scales them to the range 500-2500. These numbers are then used as the center frequency of the filter. These frequencies are the pitches that we hear sliding up and down. Finally, \texttt{lfn} is used again to control the position of the panner \texttt{Pan2}. It is used directly (without a \texttt{.range} message) because the numbers are already in the range we want (-1 to +1). The nice result of this is that we couple the change of frequency with the change of position. How? Every second, \texttt{LFNoise2} starts to slide toward a new random number, and this becomes a synchronized change in frequency of the filter and panning position. If we had two different \texttt{LFNoise2} in each place, the changes would be uncorrelated (which might be fine too, but it's a different aural result). \\
+(b) a \texttt{mul:} of 1 would just be too soft. Because the filter is so sharp, it takes so much out of the original signal that the amplitude drops too much. We need to boost the signal back to a reasonably audible range, so that's why we have \texttt{mul: 20} at the end of the \texttt{BPF} line. \\
+(c) The rhythm is driven by the \texttt{LFPulse} that is the \texttt{mul:} argument of the \texttt{Saw}. \texttt{LFPulse} frequency (how many pulses per second) is controlled by an \texttt{LFNoise1} that produces numbers between 1 and 10 (interpolating between them). Those numbers are the ``how many notes per second'' of this patch.  
+}

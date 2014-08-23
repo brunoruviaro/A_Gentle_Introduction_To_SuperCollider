@@ -1,0 +1,13 @@
+\section{The last thing always gets posted}
+
+A small but useful detail to understand: SuperCollider, by default, always posts to the Post window the result of whatever was the \emph{last thing to be evaluated}. This explains why your Hello World code prints twice when you evaluate. Type the following lines onto a new document, then select all with [ctrl+A] and evaluate all lines at once:
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+"First Line".postln;
+"Second Line".postln;
+(2 + 2).postln;
+3 + 3;
+"Finished".postln;
+\end{lstlisting}
+
+All five lines are executed by SuperCollider. You see the result of \texttt{2 + 2} in the Post window because there was an explicit \texttt{postln} request. The result of \texttt{3 + 3} was calculated, but there was no request to post it, so you don't see it. Then the command of the last line is executed (the word ``Finished'' gets posted due to the \texttt{postln} request). Finally, the result of the very last thing to be evaluated is posted by default: in this case, it happened to be the word ``Finished.''

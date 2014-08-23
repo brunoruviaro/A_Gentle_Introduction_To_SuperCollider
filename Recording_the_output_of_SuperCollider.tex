@@ -1,0 +1,17 @@
+\section{Recording the output of SuperCollider}
+
+Soon you will want to start recording the sound output of your SuperCollider patches. Here's a quick way:
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// QUICK RECORD
+// Start recording:
+s.record;
+// Make some cool sound
+{Saw.ar(LFNoise0.kr([2, 3]).range(100, 2000), LFPulse.kr([4, 5]) * 0.1)}.play;
+// Stop recording:
+s.stopRecording;
+// Optional: GUI with record button, volume control, mute button:
+s.makeWindow;
+\end{lstlisting}
+ 
+The Post Window shows the path of the folder where the file was saved. Find the file, open it with Audacity or similar program, and verify that the sound was indeed recorded. For more info, look at the ``Server'' Help file (scroll down to ``Recording Support''). Also online at \url{http://doc.sccode.org/Classes/Server.html}.

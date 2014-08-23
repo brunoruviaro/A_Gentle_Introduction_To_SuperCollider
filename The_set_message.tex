@@ -1,0 +1,13 @@
+\section{The \texttt{set} message}
+
+Just like with any function (review section \ref{sec:functions}), arguments specified at the beginning of your synth function are accessible by the user. This allows you to change synth parameters on the fly (while the synth is running). The message \texttt{set} is used for that purpose. Simple example:
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+x = {arg freq = 440, amp = 0.1; SinOsc.ar(freq, 0, amp)}.play;
+x.set(\freq, 778);
+x.set(\amp, 0.5);
+x.set(\freq, 920, \amp, 0.2);
+x.free;
+\end{lstlisting}
+
+It's good practice to provide default values (like the 440 and 0.1 above), otherwise the synth won't play until you set a proper value to the 'empty' parameters.

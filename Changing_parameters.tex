@@ -1,0 +1,16 @@
+\section{Changing parameters}
+
+Here's a nice example adapted from the first chapter of the SuperCollider book.\footnote{
+Wilson, S. and Cottle, D. and Collins, N. (Editors). The SuperCollider Book, MIT Press, 2011, p. 5. Several things in the present tutorial were borrowed, adapted from, or inspired by David Cottle's excellent ``Beginner's Tutorial,'' which is the first chapter of the book. This tutorial borrows some examples and explanations from Cottle's chapter, but---differently from it---assumes less exposure to computer music, and introduces the Pattern family as the backbone of the pedagogical approach.
+} As with the previous examples, don't worry trying to understand everything. Just enjoy the sound result and play with the numbers.
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+{RLPF.ar(Dust.ar([12, 15]), LFNoise1.ar([0.3, 0.2]).range(100, 3000), 0.02)}.play;
+\end{lstlisting}
+
+Stop the sound, change some of the numbers, and evaluate again. For example, what happens when you replace the numbers 12 and 15 with lower numbers between 1 and 5? After \texttt{LFNoise1}, what if instead of 0.3 and 0.2 you tried something like 1 and 2? Change them one at a time. Compare the new sound with the previous sound, listen to the differences. See if you can understand what number is controlling what. This is a fun way of exploring SuperCollider: grab a snippet of code that makes something interesting, and mess around with the parameters to create variations of it. Even if you don't fully understand the role of every single number, you can still find interesting sonic results.
+
+\bigskip 
+\todo[inline, color=green!40]{ 
+TIP: Like with any software, remember to frequently save your work with [ctrl+S]! When working on tutorials like this one, you will often come up with interesting sounds by experimenting with the examples provided. When you want to keep something you like, copy the code onto a new document and save it. Notice that every SuperCollider file has the extension .scd, which stands for ``SuperCollider Document.''
+}

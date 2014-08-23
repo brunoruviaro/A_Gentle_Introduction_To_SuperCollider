@@ -1,0 +1,14 @@
+\section{Stopping individual synths}
+
+Here's a very common way of starting several synths and being able to stop them separately. The example is self-explanatory:
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// Run one line at a time (don't stop the sound in between):
+a = { Saw.ar(LFNoise2.kr(8).range(1000, 2000), mul: 0.2) }.play;
+b = { Saw.ar(LFNoise2.kr(7).range(100, 1000), mul: 0.2) }.play;
+c = { Saw.ar(LFNoise0.kr(15).range(2000, 3000), mul: 0.1) }.play;
+// Stop synths individually:
+a.free;
+b.free;
+c.free; 	
+\end{lstlisting}

@@ -1,0 +1,52 @@
+\section{Mix and Splay}
+
+Here's a cool trick. You can use multichannel expansion to generate complex sounds, and then mix it all down to mono or stereo with \texttt{Mix} or \texttt{Splay}:
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// 5 channels output (watch Meter window)
+a = { SinOsc.ar([100, 300, 500, 700, 900], mul: 0.1) }.play;
+a.free;
+// Mix it down to mono:
+b = { Mix(SinOsc.ar([100, 300, 500, 700, 900], mul: 0.1)) }.play;
+b.free;
+// Mix it down to stereo (spread evenly from left to right)
+c = { Splay.ar(SinOsc.ar([100, 300, 500, 700, 900], mul: 0.1)) }.play;
+c.free
+// Fun with Splay:
+(
+d = {arg fundamental = 110;
+	var harmonics = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+	var snd = BPF.ar(
+		in: Saw.ar(32, LFPulse.ar(harmonics, width: 0.1)),
+		freq: harmonics * fundamental,
+		rq: 0.01,
+		mul: 20);
+	Splay.ar(snd);	
+}.play;
+)
+d.set(\fundamental, 100); // change fundamental just for fun
+d.free;
+\end{lstlisting}
+ 
+Can you see the multichannel expansion at work in that last \texttt{Splay} example? The only difference is that the array is first stored into a variable (\texttt{harmonics}) before being used in the UGens. The array \texttt{harmonics} has 9 items, so the synth will expand to 9 channels. Then, just before the \texttt{.play}, \texttt{Splay} takes in the array of nine channels and mix it down to stereo, spreading the channels evenly from left to right.\footnote{The last line before the \texttt{.play} could be explicitly written as \texttt{Out.ar(0, Splay.ar(snd))}. Remember that SuperCollider is graciously filling in the gaps and throwing in a \texttt{Out.ar(0...)} there---that's how the synth knows it should play into your channels left (bus 0) and right (bus 1).}
+
+\texttt{Mix} has another nice trick: the method \texttt{fill}. It creates an array of synths and mixes it down to mono all at once.
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// Instant cluster generator
+c = { Mix.fill(16, {SinOsc.ar(rrand(100, 3000), mul: 0.01)}) }.play;
+c.free;
+// A note with 12 partials of decreasing amplitudes
+(
+n = { Mix.fill(12, {arg counter;
+	var partial = counter + 1; // we want it to start from 1, not 0
+	SinOsc.ar(partial * 440, mul: 1/partial.squared) * 0.1
+	})
+}.play;
+FreqScope.new;
+)
+n.free;
+\end{lstlisting}
+
+You give two things to \texttt{Mix.fill}: the size of the array you want to create, and a function (in curly braces) that will be used to fill up the array. In the first example above, \texttt{Mix.fill} evaluates the function 16 times. Note that the function includes a variable component: the frequency of the sine oscillator can be any random number between 100 and 3000. Sixteen sine waves will be created, each with a different random frequency. They will all be mixed down to mono, and you'll hear the result on your left channel.
+The second example shows that the function can take a ``counter'' argument that keeps track of the number of iterations (just like \texttt{Array.fill}). Twelve sine oscillators are generated following the harmonic series, and mixed down to a single note in mono.

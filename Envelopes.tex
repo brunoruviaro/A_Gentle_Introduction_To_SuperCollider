@@ -1,0 +1,139 @@
+\section{Envelopes}
+
+Up to now most of our examples have been continuous sounds. It is about time to learn how to shape the amplitude envelope of a sound. A good example to start with is a percussive envelope. Imagine a cymbal crash. The time it takes for the sound to go from silence to maximum amplitude is very small---a few miliseconds, perhaps. This is called the \emph{attack time}. The time it takes for the sound of the cymbal to decrease from maximum amplitude back to silence (zero) is a little longer, maybe a few seconds. This is called the \emph{release time}.
+
+Think of an amplitude envelope simply as a number that changes over time to be used as the multiplier (\texttt{mul}) of any sound-producing UGen. These numbers should be between 0 (silence) and 1 (full amp), because that's how SuperCollider understands amplitude. You may have realized by now that the last example already included an amplitude envelope: in \texttt{\{WhiteNoise.ar(Line.kr(0.2, 0, 2, doneAction: 2))\}.play}, we make the amplitude of the white noise go from 0.2 to 0 in 2 seconds. A \texttt{Line.kr}, however, is not a very flexible type of envelope.
+
+\texttt{Env} is the object you will be using all the time to define all sorts of envelopes.\texttt{Env} has many useful methods; we can only look at a few here. Feel free to explore the \texttt{Env} Help file to learn more.
+
+\subsection{Env.perc}
+
+\texttt{Env.perc} is a handy way to get a percussive envelope. It takes in four arguments: attackTime, releaseTime, level, and curve. Let's take a look at some typical shapes, outside of any synth.
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+Env.perc.plot; // using all default args
+Env.perc(0.5).plot; // attackTime: 0.5
+Env.perc(attackTime: 0.3, releaseTime: 2, level: 0.4).plot;
+Env.perc(0.3, 2, 0.4, 0).plot; // same as above, but curve:0 means straight lines
+\end{lstlisting}
+ 
+
+Now we can simply hook it up in a synth like this:
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+{PinkNoise.ar(Env.perc.kr(doneAction: 2))}.play; // default Env.perc args
+{PinkNoise.ar(Env.perc(0.5).kr(doneAction: 2))}.play; 
+{PinkNoise.ar(Env.perc(0.3, 2, 0.4).kr(2))}.play;
+{PinkNoise.ar(Env.perc(0.3, 2, 0.4, 0).kr(2))}.play;
+\end{lstlisting}
+ 
+
+All you have to do is to add the bit \texttt{.kr(doneAction: 2)} right after \texttt{Env.perc}, and you are good to go. In fact, you can even remove the explicit declaration of doneAction in this case and simply have \texttt{.kr(2)}. The \texttt{.kr} is telling SC to ``perform'' this envelope at control rate (like other control rate signals we have seen before).
+
+\subsection{Env.triangle}
+
+\texttt{Env.triangle} takes only two arguments: duration, and level. Examples:
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// See it:
+Env.triangle.plot;
+// Hear it:
+{SinOsc.ar([440, 442], mul: Env.triangle.kr(2))}.play;
+// By the way, an envelope can be a multiplier anywhere in your code
+{SinOsc.ar([440, 442]) * Env.triangle.kr(2)}.play;
+\end{lstlisting}
+
+\subsection{Env.linen}
+
+\texttt{Env.linen} describes a line envelope with attack, sustain portion, and release. You can also specify level and curve type. Example:
+
+// See it:
+Env.linen.plot;
+// Hear it:
+{SinOsc.ar([300, 350], mul: Env.linen(0.01, 2, 1, 0.2).kr(2))}.play;
+
+\subsection{Env.pairs}
+
+Need more flexibility? With \texttt{Env.pairs} you can have envelopes of any shape and duration you want. \texttt{Env.pairs} takes two arguments: an array of [time, level] pairs, and a type of curve (see the Env Help file for all available curve types).
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+(
+{
+	var env = Env.pairs([[0, 0], [0.4, 1], [1, 0.2], [1.1, 0.5], [2, 0]], \lin);
+	env.plot;
+	SinOsc.ar([440, 442], mul: env.kr(2));
+}.play;
+)
+\end{lstlisting}
+ 
+
+Read the array of pairs like this:
+\begin{center}
+At time 0, be at level 0;\\
+At time 0.4, be at level 1;\\
+At time 1, be at level 0.2;\\
+At time 1.1, be at level 0.5;\\
+At time 2, be at level 0.
+\end{center}
+
+\subsubsection{Envelopes---not just for amplitude}
+
+Nothing is stopping you from using these same shapes to control something other than amplitude. You just need to scale them to the desired range of numbers. For example, you can create an envelope to control change of frequencies over time:
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+(
+{
+	var freqEnv = Env.pairs([[0, 100], [0.4, 1000], [0.9, 400], [1.1, 555], [2, 440]], \lin);
+	SinOsc.ar(freqEnv.kr, mul: 0.2);
+}.play;
+)
+\end{lstlisting}
+
+Envelopes are a powerful way to control any synth parameters that need to change over time.
+
+\subsection{ADSR Envelope}
+
+All envelopes seen up to now have one thing in common: they have a fixed, pre-defined duration. There are situations, however, when this type of envelope is not adequate. For example, imagine you are playing on a MIDI keyboard. The \textit{attack} of the note is triggered when you press a key. The \textit{release} is when you take your finger off the key. But the amount of time that you keep the finger down is not known in advance. What we need in this case is a so-called ``sustained envelope.'' In other words, after the attack portion, the envelope must hold the note for an indefinite amount of time, and only trigger the release portion after some kind of cue, or message---i.e., the moment you 'release the key'.
+
+An ASR (Attack, Sustain, Release) envelope fits the bill. A more popular variation of it is the ADSR envelope (Attack, Decay, Sustain, Release). Let's look at both.
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// ASR
+// Play note ('press key')
+// attackTime: 0.5 seconds, sustainLevel: 0.8, releaseTime: 3 seconds
+x = {arg gate = 1, freq = 440; SinOsc.ar(freq: freq, mul: Env.asr(0.5, 0.8, 3).kr(doneAction: 2, gate: gate))}.play;
+// Stop note ('finger off the key' - activate release stage)
+x.set(\gate, 0); // alternatively, x.release
+
+// ADSR (attack, decay, sustain, release)
+// Play note:
+(
+d = {arg gate = 1;
+	var snd, env;
+	env = Env.adsr(0.01, 0.4, 0.7, 2);
+	snd = Splay.ar(BPF.ar(Saw.ar((32.1, 32.2..33)), LFNoise2.kr(12).range(100, 1000), 0.05, 10));
+	Out.ar(0, snd * env.kr(doneAction: 2, gate: gate));
+}.play;
+)
+// Stop note:
+d.release; // this is equivalent to d.set(\gate, 0);
+\end{lstlisting}
+ 
+
+Key concepts:
+
+\begin{description}
+\item[Attack] The time (in seconds) that it takes to go from zero (silence) to peak amplitude
+\item[Decay] The time (in seconds) that it takes to go down from peak amplitude to sustain amplitude
+\item[Sustain] The amplitude (between 0 and 1) at which to hold the note (important: this has nothing to do with time)
+\item[Release] The time (in seconds) that it takes to go from sustain level to zero (silence).
+\end{description}
+
+Since sustained envelopes do not have a total duration known in advance, they need a notification as to when to start (trigger the attack) and when to stop (trigger the release). This notification is called a \emph{gate}. The gate is what tells the envelope to 'open' (1) and 'close' (0), thus starting and stopping the note.
+
+For an ASR or ADSR envelope to work in your synth, you must declare a \texttt{gate} argument. Normally the default is \texttt{gate = 1} because you want the synth to start playing right away. When you want the synth to stop, simply send either the \texttt{.release} or \texttt{.set(\textbackslash gate, 0)} message: the release portion of the envelope will be then triggered. For example, if your release time is 3, the note will take three seconds to fade away \emph{from the moment you send the message} \texttt{.set(\textbackslash gate, 0)}.

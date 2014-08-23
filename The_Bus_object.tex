@@ -1,0 +1,36 @@
+\section{The Bus object}
+\label{sec:busobject}
+
+Here's an example that uses everything you just learned in the previous two sections: audio buses, and multichannel expansion.
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// Run this first ('turn reverb on' -- you won't hear anything at first)
+r = {Out.ar(0, FreeVerb.ar(In.ar(55, 2), mix: 0.5, room: 0.9, mul: 0.4))}.play;
+
+// Now run this second ('feed the busy tone into the reverb bus')
+a = {Out.ar(55, SinOsc.ar([800, 880], mul: LFPulse.ar(2)))}.play;
+a.free;
+\end{lstlisting}
+ 
+
+Thanks to multichannel expansion, the busy tone uses two channels. When (in synth \texttt{a}) we route the busy tone to bus 55, two buses are actually being used up---number 55, and the immediately adjacent bus 56. In the reverb (synth \texttt{r}), we indicate with \texttt{In.ar(55, 2)} that we want to read 2 channels starting from bus 55: so both 55 and 56 get into the reverb. The output of the reverb is in turn also expanded to two channels, so synth \texttt{r} sends sound out to buses 0 and 1 (left and right channels of our sound card).
+
+Now, this choice of bus number (55) to connect a source synth to an effect synth was arbitrary: it could have been any other number between 16 and 127 (remember, buses 0-15 are reserved for sound card outputs and inputs). How inconvenient it would be if we had to keep track of bus numbers ourselves. As soon as our patches grew in complexity, imagine the nightmare: ``What bus number did I choose again for reverb? Was it 59 or 95? What about the bus number for my delay? I guess it was 27? Can't recall...'' and so on and so forth.
+
+SuperCollider takes care of this for you with Bus objects. We only hand-assigned the infamous bus 55 in the examples above for the sake of demonstration. In your daily SuperCollider life, you should simply use the Bus object. The Bus object does the job of choosing an available bus for you and keeping track of it. This is how you use it:
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// Create the bus
+~myBus = Bus.audio(s, 2);
+// Turn on the reverb: read from myBus (source sound)
+r = {Out.ar(0, FreeVerb.ar(In.ar(~myBus, 2), mix: 0.5, room: 0.9, mul: 0.4))}.play;
+// Feed the busy tone into ~myBus
+b = {Out.ar(~myBus, SinOsc.ar([800, 880], mul: LFPulse.ar(2)))}.play;
+// Free both synths
+r.free; b.free;
+\end{lstlisting}
+ 
+
+The first argument of \texttt{Bus.audio} is the variable \texttt{s}, which stands for the server. The second argument is how many channels you need (2 in the example). Then you store that into a variable with a meaningful name (\texttt{$\sim$myBus} in the example, but it could be \texttt{$\sim$reverbBus}, \texttt{$\sim$source}, \texttt{$\sim$tangerine}, or whatever makes sense to you in your patch). After that, whenever you need to refer to that bus, just use the variable you created.

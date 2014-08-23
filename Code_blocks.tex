@@ -1,0 +1,18 @@
+\section{Code blocks}
+\label{sec:code-block}
+
+Selecting multiple lines of code before evaluating can be tedious. A much easier way of running a chunk of code all at once is by creating a \textit{code block}: simply enclose in parentheses all lines of code that you want to run together. Here's an example:
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+(
+// A little poem
+"Today is Sunday".postln;
+"Foot of pipe".postln;
+"The pipe is made of gold".postln;
+"It can beat the bull".postln;
+)
+\end{lstlisting}
+
+The outer parentheses are delimiting the code block. As long as your cursor is anywhere within the parentheses, a single [ctrl+Enter] will evaluate all lines for you (they are executed in order from top to bottom, but it's so fast that it seems simultaneous).
+
+Using code blocks saves you the trouble of having to select all the lines again every time you change something and want to re-evaluate. For example, change some of the words between double quotes, and hit [ctrl+Enter] right after making the change. The entire block of code is evaluated without you having to manually select all lines. SuperCollider highlights the block for a second to give you a visual hint of what's being executed.

@@ -1,0 +1,43 @@
+\section{OSC}
+
+OSC (Open Sound Control) is a great way to communicate any kind of message between different applications or different computers over a network. In many cases, it is a much more flexible alternative to MIDI messages. We don't have space to explain it in more detail here, but the example below should serve as a good starting point.
+
+The goal of the demo is to send OSC messages from a smartphone to your computer, or computer to computer.
+
+On the receiver computer, evaluate this simple snippet of code:
+
+\bigskip
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+(
+OSCdef(
+	key: \whatever,
+	func: {arg ...args; args.postln},
+	path: '/stuff')
+)
+\end{lstlisting}
+
+Note: hitting [ctrl+.] will interrupt the \texttt{OSCdef} and you won't receive any more messages.
+
+\subsection{Sending OSC from another computer}
+
+This assumes that both computers are running SuperCollider and connected to a network. Find the IP address of the receiver computer, and evaluate the following lines in the sender computer:
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// Use this on the machine sending messages
+~destination = NetAddr("127.0.0.1", 57120); // use correct IP address of destination computer
+
+~destination.sendMsg("/stuff", "heelloooo");
+\end{lstlisting}
+
+
+\subsection{Sending OSC from a smartphone}
+
+\begin{itemize}
+\item Install any free OSC app on the phone (for example, gyrosc);
+\item Enter the IP address of the receiver computer into the OSC app (as 'target');
+\item Enter SuperCollider's receiving port into the OSC app (usually 57120);
+\item Check the exact message path that the app uses to send OSC to, and change your OSCdef accordingly;
+\item Make sure your phone is connected to the network
+\end{itemize}
+
+As long as your phone is sending messages to the proper path, you should see them arriving on the computer.

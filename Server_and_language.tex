@@ -1,0 +1,19 @@
+\section{Server and Language}
+
+On the Status Bar you can see the words ``Interpreter'' and ``Server.'' The Interpreter starts up turned on by default (``Active''), while ``Server'' is turned off (that's what all the zeros  mean). What is the Interpreter, and what is the Server?
+
+SuperCollider is actually made of two distinct applications: the server and the language. The server is responsible for making sounds. The language (also referred to as \emph{client} or \emph{interpreter}) is used to control the server. The first is called scsynth (SC-synthesizer), the second sclang (SC-language). The Status Bar tell us the status (on/off) of each one of these two components.
+
+Don't worry if this distinction does not make much sense for you just now. The two main things you need to know at this point are:
+
+\begin{enumerate}
+\item Everything that you type in SuperCollider is in the SuperCollider language (the client): that's where you write and execute commands, and see results in the Post window.
+\item Everything that makes sound in SuperCollider is coming from the server---the ``sound engine'', so to speak---, controlled by you through the SuperCollider language.
+\end{enumerate}
+
+\subsection{Booting the Server}
+Your ``Hello World'' program produced no sound: everything happened in the language, and the server was not used at all. The next example will make sound, so we need to make sure the Server is up and running.
+
+The easiest way to boot the server is with the shortcut [ctrl+B]. Alternatively, you can also click on the zeros in the Status Bar: a menu pops up, and one of the options is ``Boot Server.'' You will see some activity in the Post window as the server boots up. After you have successfully started the server, the numbers on the Status Bar will turn green. You will have to do this each time you launch SC, but only once per session.
+
+

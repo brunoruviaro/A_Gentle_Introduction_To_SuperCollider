@@ -1,0 +1,164 @@
+%%
+%% This is file `sclang-prettifier.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% sclang-prettifier.dtx  (with options: `package')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright (C) 2014 by Julien Cretel <jubobs.tex at gmail.com>
+%% 
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%% 
+%%     http://www.latex-project.org/lppl.txt
+%% 
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%% 
+%% This work has the LPPL maintenance status `maintained'.
+%% 
+%% The Current Maintainer of this work is Julien Cretel.
+%% 
+%% This work currently consists of the files sclang-prettifier.dtx,
+%% sclang-prettifier.ins, and the derived file sclang-prettifier.sty.
+%% 
+\NeedsTeXFormat{LaTeX2e}[2011/06/27]
+\ProvidesPackage{sclang-prettifier}
+  [2014/06/14 v0.1 A package for prettyprinting SuperCollider
+   source code]
+\newcommand\lstoptcheck@scpr[1]
+{%
+  \@ifpackagewith{listings}{#1}%
+  {
+    \PackageError{sclang-prettifier}%
+      {incompatible listings' option #1}%
+      {%
+        Make sure the `listings' package
+        doesn't get loaded with option `#1'%
+      }
+  }
+  {}
+}
+\lstoptcheck@scpr{noaspects}
+\lstoptcheck@scpr{0.21}
+\lstoptcheck@scpr{savemem}
+\newif\ifframed@scpr@
+\DeclareOption{framed}{\framed@scpr@true}
+\newif\ifnumbered@scpr@
+\DeclareOption{numbered}{\numbered@scpr@true}
+\DeclareOption{draft}{\PassOptionsToPackage{\CurrentOption}{listings}}
+\DeclareOption{final}{\PassOptionsToPackage{\CurrentOption}{listings}}
+\DeclareOption*%
+{%
+  \OptionNotUsed
+  \PackageWarning{sclang-prettifier}{Unknown `\CurrentOption' option}
+}
+\ProcessOptions\relax
+\RequirePackage{textcomp}[2005/09/27]
+\RequirePackage{xcolor}[2007/01/21]
+\RequirePackage{listings}[2013/08/26]
+\newcommand\language@scpr{SuperCollider}
+\expandafter\lst@NormedDef\expandafter\languageNormedDefd@scpr%
+  \expandafter{\language@scpr}
+\expandafter\expandafter\expandafter\lstdefinelanguage\expandafter
+{\language@scpr}
+{%
+  morekeywords  = {var},
+  alsoletter    = \\~,
+  alsoother     = @,
+  sensitive     = true,
+  morecomment   = [l]{//},
+  morecomment   = [s]{/*}{*/},
+  morestring    = [s]{"}{"},
+  moredelim     = [s][\symbolStyle@scpr]{'}{'},
+}[keywords,strings,comments]
+\lst@SaveOutputDef{`~}\tilde@scpr
+\lst@SaveOutputDef{`$}\dollar@scpr
+\newcommand\getfirstchar@scpr{}
+\newcommand\getfirstchar@@scpr{}
+\newcommand\firstchar@scpr{}
+\def\getfirstchar@scpr#1{\getfirstchar@@scpr#1\relax}
+\def\getfirstchar@@scpr#1#2\relax{\def\firstchar@scpr{#1}}
+\newcommand\addedToOutput@scpr{}
+\lst@AddToHook{Output}{\addedToOutput@scpr}
+\newcount\currentchar@scpr
+\newcommand\@ddedToOutput@scpr
+{%
+  \ifnum\lst@mode=\lst@Pmode%
+    \expandafter\getfirstchar@scpr\expandafter{\the\lst@token}%
+    \expandafter\ifx\firstchar@scpr\lstum@backslash%
+      \let\lst@thestyle\symbolStyle@scpr%
+    \else
+      \expandafter\ifx\firstchar@scpr\dollar@scpr%
+        \let\lst@thestyle\symbolStyle@scpr%
+      \else
+        \expandafter\ifx\firstchar@scpr\tilde@scpr%
+          \def\lst@thestyle{\envvarStyle@scpr}%
+        \else
+          \currentchar@scpr=65
+          \loop
+            \expandafter\ifnum%
+            \expandafter`\firstchar@scpr=\currentchar@scpr%
+              \let\lst@thestyle\classStyle@scpr%
+              \let\iterate\relax%
+            \fi
+            \advance\currentchar@scpr by \@ne%
+            \unless\ifnum\currentchar@scpr>90%
+          \repeat%
+        \fi
+      \fi
+    \fi
+  \fi
+  \lsthk@DetectKeywords%
+}
+\lst@AddToHook{PreInit}
+{%
+  \ifx\lst@language\languageNormedDefd@scpr%
+    \let\addedToOutput@scpr\@ddedToOutput@scpr%
+  \fi
+}
+\newcommand\symbolStyle@scpr{}
+\lst@Key{scsymbolstyle}\relax%
+  {\def\symbolStyle@scpr{#1}}
+\newcommand\envvarStyle@scpr{}
+\lst@Key{scenvvarstyle}\relax%
+  {\def\envvarStyle@scpr{#1}}
+\newcommand\classStyle@scpr{}
+\lst@Key{scclassstyle}\relax%
+  {\def\classStyle@scpr{#1}}
+\newcommand\scttfamily{\fontfamily{pcr}\selectfont}
+\newtoks\toks@scpr
+\toks@scpr=%
+{
+  language               = \languageNormedDefd@scpr,
+  basicstyle             = \color{black}\ttfamily\normalsize,
+  breaklines             = true,
+  showspaces             = false,
+  showstringspaces       = false,
+  upquote                = true,
+  rulecolor              = \color{black!67},
+  numberstyle            = \color{black!33},
+  keywordstyle           = \color[RGB]{000,045,231}\bfseries,
+  commentstyle           = \color[RGB]{202,018,000}         ,
+  stringstyle            = \color[RGB]{095,095,095}         ,
+  scsymbolstyle          = \color[RGB]{000,113,000}         ,
+  scenvvarstyle          = \color[RGB]{147,070,014}         ,
+  scclassstyle           = \color[RGB]{000,040,211}         ,
+}
+\ifframed@scpr@
+  \toks@scpr\expandafter{\the\toks@scpr frame=single,}
+\fi
+\ifnumbered@scpr@
+  \toks@scpr=\expandafter{\the\toks@scpr numbers=left,}
+\fi
+\begingroup\edef\@tempa{\endgroup
+  \noexpand\lstdefinestyle{SuperCollider-IDE}{\the\toks@scpr}
+}\@tempa
+\endinput
+%%
+%% End of file `sclang-prettifier.sty'.

@@ -1,0 +1,139 @@
+\section{Fun with Arrays}
+\label{sec:arrays}
+
+Arrays are the most common type of collections in SuperCollider. Every time you write a collection of items between square brackets, like \texttt{[0, 1, 2]}, it is an instance of the class \texttt{Array}. You will often find yourself manipulating arrays in various ways. Here is a small selection of some interesting methods that arrays understand:
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// Create some array
+a = [10, 11, 12, 13, 14, 15, 16, 17];
+
+a.reverse;  // reverse
+a.scramble; // scramble
+a.choose;  // picks one element at random
+a.size;	  // returns size of array
+a.at(0);   // retrieves item at specified position
+a[0]	;  // same as above
+a.wrapAt(9); // retrieves item at specified position, wrapping around if > a.size
+["wow", 99] ++ a; // concatenates the two arrays into a new one
+a ++ \hi;  // a Symbol is a single character
+a ++ 'hi'; // same as above
+a ++ "hi"; // a String is a collection of characters
+a.add(44);    // creates new array with new element at the end 
+a.insert(5, "wow"); // inserts "wow" at position 5, pushes other items forward (returns new array)
+a; // evaluate this and see that none of the above operations actually changed the original array
+a.put(2, "oops"); // put "oops" at index 2 (destructive; evaluate line above again to check)
+a.permute(3); // permute: item in position 3 goes to position 0, and vice-versa 
+a.mirror;  // makes it a palindrome
+a.powerset; // returns all possible combinations of the array's elements
+\end{lstlisting}
+ 
+
+You can do math with arrays:
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+[1, 2, 3, 4, 5] + 10;
+[1, 2, 3, 4, 5] * 10;
+([1, 2, 3, 4, 5] / 7).round(0.01); // notice the parentheses for precedence
+x = 11; y = 12; // try some variables
+[x, y, 9] * 100;
+// but make sure you only do math with proper numbers
+[1, 2, 3, 4, "oops", 11] + 10; // strange result
+\end{lstlisting}
+ 
+
+\subsection{Creating new Arrays}
+
+Here are a few ways of using the class \texttt{Array} to create new collections:
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// Arithmetic series
+Array.series(size: 6, start: 10, step: 3);
+// Geometric series
+Array.geom(size: 10, start: 1, grow: 2);
+// Compare the two:
+Array.series(7, 100, -10); // 7 items; start at 100, step of -10
+Array.geom(7, 100, 0.9); // 7 items; start at 100; multiply by 0.9 each time
+// Meet the .fill method
+Array.fill(10, "same");
+// Compare:
+Array.fill(10, rrand(1, 10)); 
+Array.fill(10, {rrand(1, 10)}); // function is re-evaluated 10 times
+// The function for the .fill method can take a default argument that is a counter.
+// The argument name can be whatever you want.
+Array.fill(10, {arg counter; counter * 10});
+// For example, generating a list of harmonic frequencies:
+Array.fill(10, {arg wow; wow+1 * 440}); 
+// The .newClear method
+a = Array.newClear(7); // creates an empty array of given size
+a[3] = "wow"; // same as a.put(3, "wow")
+\end{lstlisting}
+
+
+\subsection{That funny exclamation mark}
+
+It is just a matter of time until you see something like \texttt{30!4} in someone else's code. This shortcut notation simply creates an array containing the same item a number of times:
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// Shortcut notation:
+30!4;
+"hello" ! 10;
+// It gives the same results as the following:
+30.dup(4);
+"hello".dup(10);
+// or
+Array.fill(4, 30);
+Array.fill(10, "hello");
+\end{lstlisting}
+ 
+
+\subsection{The two dots between parentheses}
+
+Here is another common syntax shortcut used to create arrays.
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// What is this?
+(50..79);
+// It's a shortcut to generate an array with an arithmetic series of numbers.
+// The above has the same result as:
+series(50, 51, 79);
+// or
+Array.series(30, 50, 1);
+// For a step different than 1, you can do this:
+(50, 53 .. 79); // step of 3
+// Same result as:
+series(50, 53, 79);
+Array.series(10, 50, 3);
+\end{lstlisting}
+ 
+
+Note that each command implies a slightly different way of thinking. The \texttt{(50..79)} allows you to think this way: ``\emph{just give me an array from 50 to 79}.'' You don't necessarily think about how many items the array will end up having. On the other hand, \texttt{Array.series} allows you to think: ``\emph{just give me an array with 30 items total, counting up from 50}.'' You don't necessarily think about who is going to be the last number in the series.
+
+Also note that the shortcut uses parentheses, not square brackets. The resulting array, of course, will be in square brackets.
+
+\subsection{How to ``do'' an Array}
+
+Often you will need to do some action over all items of a collection. We can use the method \texttt{do} for this:
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+~myFreqs = Array.fill(10, {rrand(440, 880)});
+
+// Now let's do some simple action on every item of the list:
+~myFreqs.do({arg item, count; ("Item " ++ count ++ " is " ++ item ++ " Hz. Closest midinote is " ++ item.cpsmidi.round).postln});
+
+// If you don't need the counter, just use one argument:
+~myFreqs.do({arg item; {SinOsc.ar(item, 0, 0.1)}.play});
+~myFreqs.do({arg item; item.squared.postln});
+
+// Of course something as simple as the last one could be done like this:
+~myFreqs.squared;
+\end{lstlisting}
+ 
+
+In summary: when you ``do'' an array, you provide a function. The message \texttt{do} will iterate through the items of the array and evaluate that function each time. The function can take two arguments by default: the array item at current iteration, and a counter that keeps track of number of iterations. The names of these arguments can be whatever you want, but they are always in this order: item, count.
+
+See also the method \texttt{collect}, which is very similar to \texttt{do}, but returns a new collection with all intermediate results.

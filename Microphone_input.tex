@@ -1,0 +1,14 @@
+\section{Microphone Input}
+
+The example below shows how you can easily access sound input from your sound card with the \texttt{SoundIn} UGen.\footnote{Since \texttt{In.ar} will read from any bus, and you know that your soundcard inputs are by default assigned to buses 8-15, you could write \texttt{In.ar(8)} to get sound from your microphone. That works just fine, but \texttt{SoundIn.ar} is a more convenient option.}
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// Warning: use headphones to avoid feedback
+{SoundIn.ar(0)}.play; // same as In.ar(8): takes sound from the first input bus
+
+// Stereo version
+{SoundIn.ar([0, 1])}.play; // first and second inputs
+
+// Some reverb just for fun?
+{FreeVerb.ar(SoundIn.ar([0, 1]), mix: 0.5, room: 0.9)}.play;
+\end{lstlisting}

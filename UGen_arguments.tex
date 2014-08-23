@@ -1,0 +1,16 @@
+\section{UGen arguments}
+
+Most of the time you will want to specify arguments to the UGens you are using. You have already seen that: when you write \texttt{\{SinOsc.ar(440)\}.play}, the number \texttt{440} is an argument to the \texttt{SinOsc.ar}; it specifies the frequency that you will hear. You can be explicit about naming the arguments, like this: \texttt{\{SinOsc.ar(freq: 440, mul: 0.5)\}.play}. The argument names are \texttt{freq} and \texttt{mul} (note the colon immediately after the words in the code). The \texttt{mul} stands for ``multiplier'', and is essentially the amplitude of the waveform. If you don't specify \texttt{mul}, SuperCollider uses the default value of 1 (maximum amplitude). Using a \texttt{mul: 0.5} means multiplying the waveform by half, in other words, it will play at half of the maximum amplitude.
+
+In your theremin code, the \texttt{SinOsc} arguments \texttt{freq} and \texttt{mul} were explicitly named. You may recall that  \texttt{MouseX.kr(300, 2500)} was used to control the frequency of the theremin. \texttt{MouseX.kr} takes two arguments: a low and a high boundary for its output range. That's what the numbers 300 and 2500 were doing there. Same thing for the \texttt{MouseY.kr(0, 1)} controlling amplitude. Those arguments inside the mouse UGens were not explicitly named, but they could be.
+
+How do you find out what arguments a UGen will accept? Simply go to the corresponding Help file: double click the UGen name to select it, and hit [ctrl+D] to open the Documentation page. Do that now for, say, MouseX. After the Description section you see the Class Methods section. Right there, it says that the arguments of the \texttt{kr} method are minval, maxval, warp, and lag. From the same page you can learn what each of them does.
+
+Whenever you don't provide an argument, SC will use the default values that you see in the Help file. If you don't name the arguments explicitly, you have to provide them in the exact order shown in the Help file. If you do name them explicitly, you can put them in any order, and even skip some in the middle. Naming arguments explicitly is also a good learning tool, as it helps you to better understand your code. An example is given below.
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// minval and maxval provided in order, no keywords
+{MouseX.kr(300, 2500).poll}.play;
+// minval, maxval and lag provided, skipped warp
+{MouseX.kr(minval: 300, maxval: 2500, lag: 10).poll}.play;
+\end{lstlisting}

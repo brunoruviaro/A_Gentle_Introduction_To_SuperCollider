@@ -1,0 +1,28 @@
+\section{Your first sine wave \label{sec:first-sine}}
+
+
+``Hello World'' is traditionally the first program that people create when learning a new programming language. You've already done that in SuperCollider.
+
+Creating a simple sine wave might be the ``Hello World'' of computer music languages. Let's jump right to it. Type and evaluate the following line of code. Careful---this can be loud. Bring your volume all the way down, evaluate the line, then increase the volume slowly.
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+{SinOsc.ar}.play;
+\end{lstlisting}
+ 
+
+That's a beautiful, smooth, continuous, and perhaps slightly boring, sine wave. You can stop the sound with [ctrl+.] (That's the \emph{control} key plus the \emph{period} key.) Memorize this key combination, because you will be using it a lot to stop any and all sounds in SC. Now let's make this sine wave a bit more interesting. Type this:
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize ]
+{SinOsc.ar(LFNoise0.kr(10).range(500, 1500), mul: 0.1)}.play;
+\end{lstlisting}
+ 
+
+Remember, you just need to leave your cursor anywhere within the line and hit [ctrl+Enter] to evaluate. Alternatively, you could also select the entire line before evaluating it.
+
+ 
+\bigskip
+\todo[inline, color=green!40]{ 
+TIP: Typing the code examples by yourself is a great learning tool. It will help you to build confidence and familiarize yourself with the language. When reading tutorials in digital format, you may be tempted to simply copy and paste short snippets of code from the examples. That's fine, but you will learn more if you type it up yourself---try that at least in the first stages of your SC learning.
+}

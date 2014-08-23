@@ -1,0 +1,53 @@
+\section{Synth Nodes}
+
+In the previous \texttt{PlayBuf} examples, you had to hit [ctrl+.] after each line to stop the sound. In other examples, you assigned the synth to a variable (like \texttt{x = \{WhiteNoise.ar\}.play}) so that you could stop it directly with \texttt{x.free}.
+
+Every time you create a synth in SuperCollider, you know that it runs in the server, our ``sound engine.'' Each running synth in the server is represented by a \emph{node}. We can take a peek at this tree of nodes with the command \texttt{s.plotTree}. Try it. A window named \texttt{NodeTree} will open.
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// open the GUI
+s.plotTree;
+// run these one by one (don't stop the sound) and watch the Node Tree:
+w = { SinOsc.ar(60.midicps, 0, 0.1) }.play;
+x = { SinOsc.ar(64.midicps, 0, 0.1) }.play;
+y = { SinOsc.ar(67.midicps, 0, 0.1) }.play;
+z = { SinOsc.ar(71.midicps, 0, 0.1) }.play;
+w.free;
+x.free;
+y.free;
+z.free;
+\end{lstlisting}
+ 
+
+Every rectangle that you see in the Node Tree is a synth node. Each synth gets a temporary name (something like temp\_101, temp\_102, etc) and stays there for as long as it is running. Try now playing the four sines again, and hit [ctrl+.] (watch the Node Tree window). The shortcut [ctrl+.] ruthlessly stops at once all nodes that are running in the Server. On the other hand, with the \texttt{.free} method, you can be more subtle and free up specific nodes one at a time.
+
+One thing that is important to realize is that synths may stay running in the server even if they are generating only silence. Here's an example. The amplitude of this \texttt{WhiteNoise} UGen will go from 0.2 to 0 in two seconds. After that, we don't hear anything. But you will see that the synth node is still there, and won't go away until you free it.
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// Evaluate and watch the Node Tree window for a few seconds
+x = {WhiteNoise.ar(Line.kr(0.2, 0, 2))}.play;
+x.free;
+\end{lstlisting}
+ 
+
+\subsection{The glorious doneAction: 2}
+
+Luckily there is a way to make synths smarter in that regard: for example, wouldn't it be great if we could ask \texttt{Line.kr} to notify the synth when it has finished its job (the ramp from 0.2 to 0), upon which the synth would automatically free itself up?
+
+Enter the argument \texttt{doneAction: 2} to solve all our problems.
+
+Play the examples below and compare how they behave with and without doneAction: 2. Keep watching the Node Tree as you run the lines.
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// without doneAction: 2
+{WhiteNoise.ar(Line.kr(0.2, 0, 2))}.play;
+{PlayBuf.ar(1, ~buf1)}.play; // PS. this assumes you still have your sound file loaded into ~buf1 from previous section
+
+// with doneAction: 2
+{WhiteNoise.ar(Line.kr(0.2, 0, 2, doneAction: 2))}.play;
+{PlayBuf.ar(1, ~buf1, doneAction: 2)}.play;
+\end{lstlisting}
+ 
+The synths with doneAction: 2 will free themselves up automatically as soon as their job is done (that is, as soon as the \texttt{Line.kr} ramp is over in the first example, and as soon as the \texttt{PlayBuf.ar} has finished playing the sound file in the second example). This knowledge will be very useful in the next section: Envelopes.

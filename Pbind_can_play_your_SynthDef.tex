@@ -1,0 +1,69 @@
+\section{Pbind can play your SynthDef}
+
+One of the beauties of creating your synths as \texttt{SynthDef}s is that you can use \texttt{Pbind} to play them.
+
+Assuming the \texttt{"wow"} SynthDef is still loaded in memory (it should, unless you quit and reopened SC after the last example), try the \texttt{Pbind}s below:
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+(
+Pbind(
+	\instrument, "wow",
+	\degree, Pwhite(-7, 7),
+	\dur, Prand([0.125, 0.25], inf),
+	\amp, Pwhite(0.5, 1),
+	\wowrelease, 1
+).play;
+)
+
+(
+Pbind(
+	\instrument, "wow",
+	\scale, Pstutter(8, Pseq([
+		Scale.lydian,
+		Scale.major,
+		Scale.mixolydian,
+		Scale.minor,
+		Scale.phrygian], inf)),
+	\degree, Pseq([0, 1, 2, 3, 4, 5, 6, 7], inf),
+	\dur, 0.2,
+	\amp, Pwhite(0.5, 1),
+	\wowrelease, 4,
+	\legato, 0.1
+).play;
+)
+\end{lstlisting}
+ 
+
+When using \texttt{Pbind} to play one of your custom \texttt{SynthDef}s, just keep in mind the following points:
+
+\begin{itemize}
+\item Use the \texttt{Pbind} key \texttt{\textbackslash instrument} to declare the name of your \texttt{SynthDef}.
+
+\item All the arguments of your SynthDef are accessible and controllable from inside \texttt{Pbind}: simply use them as \texttt{Pbind} keys. For example, notice the argument called \texttt{\textbackslash wowrelease} used above. It is not one of the default keys understood by \texttt{Pbind}---rather, it is unique to the synth definition \texttt{wow} (the silly name was chosen on purpose).
+
+\item In order to use all of the pitch conversion facilities of \texttt{Pbind} (the keys \texttt{\textbackslash degree}, \texttt{\textbackslash note}, and \texttt{\textbackslash midinote}), make sure your \texttt{SynthDef} has an argument input for \texttt{freq} (it has to be spelled exactly like that). Pbind will do the math for you.
+
+\item If using a sustained envelope such as \texttt{Env.adsr}, make sure your synth has a default argument \texttt{gate = 1} (\texttt{gate} has to be spelled exactly like that, because \texttt{Pbind} uses it behind the scenes to stop notes at the right times).
+
+\item If not using a sustained envelope, make sure your SynthDef includes a doneAction: 2 in an appropriate UGen, in order to automatically free synth nodes in the server.
+
+\end{itemize}
+
+Exercise: write one or more \texttt{Pbind}s to play the \texttt{"pluck"} SynthDef provided below. For the \texttt{mutedString} argument, try values between 0.1 and 0.9. Have one of your \texttt{Pbind}s play a slow sequence of chords. Try arpeggiating the chords with \texttt{\textbackslash strum}.
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+(
+SynthDef("pluck", {arg amp = 0.1, freq = 440, decay = 5, mutedString = 0.1;
+var env, snd;
+env = Env.linen(0, decay, 0).kr(doneAction: 2);
+snd = Pluck.ar(
+        in: WhiteNoise.ar(amp),
+        trig: Impulse.kr(0),
+        maxdelaytime: 0.1,
+        delaytime: freq.reciprocal,
+        decaytime: decay,
+        coef: mutedString);
+    Out.ar(0, [snd, snd]);
+}).add;
+)
+\end{lstlisting}

@@ -1,0 +1,102 @@
+\contentsline {part}{I\hspace {1em}BASICS}{1}{part.1}
+\contentsline {section}{\numberline {1}Hello World}{1}{section.1}
+\contentsline {section}{\numberline {2}Server and Language}{3}{section.2}
+\contentsline {subsection}{\numberline {2.1}Booting the Server}{4}{subsection.2.1}
+\contentsline {section}{\numberline {3}Your first sine wave }{4}{section.3}
+\contentsline {section}{\numberline {4}Error messages}{5}{section.4}
+\contentsline {section}{\numberline {5}Changing parameters}{6}{section.5}
+\contentsline {section}{\numberline {6}Comments}{7}{section.6}
+\contentsline {section}{\numberline {7}Precedence}{8}{section.7}
+\contentsline {section}{\numberline {8}The last thing always gets posted}{9}{section.8}
+\contentsline {section}{\numberline {9}Code blocks}{9}{section.9}
+\contentsline {section}{\numberline {10}How to clean up the Post window}{10}{section.10}
+\contentsline {section}{\numberline {11}Recording the output of SuperCollider}{11}{section.11}
+\contentsline {section}{\numberline {12}Variables}{11}{section.12}
+\contentsline {subsection}{\numberline {12.1}Environment Variables vs. Local Variables}{13}{subsection.12.1}
+\contentsline {subsection}{\numberline {12.2}Reassignment}{14}{subsection.12.2}
+\contentsline {part}{II\hspace {1em}PATTERNS}{16}{part.2}
+\contentsline {section}{\numberline {13}The Pattern family}{16}{section.13}
+\contentsline {subsection}{\numberline {13.1}Meet Pbind}{16}{subsection.13.1}
+\contentsline {subsection}{\numberline {13.2}Pseq}{17}{subsection.13.2}
+\contentsline {subsection}{\numberline {13.3}Make your code more readable}{18}{subsection.13.3}
+\contentsline {subsection}{\numberline {13.4}Four ways of specifying pitch}{19}{subsection.13.4}
+\contentsline {subsection}{\numberline {13.5}More keywords: amplitude and legato}{21}{subsection.13.5}
+\contentsline {subsection}{\numberline {13.6}Prand}{22}{subsection.13.6}
+\contentsline {subsection}{\numberline {13.7}Pwhite}{23}{subsection.13.7}
+\contentsline {subsection}{\numberline {13.8}Expanding your Pattern vocabulary}{25}{subsection.13.8}
+\contentsline {section}{\numberline {14}More Pattern tricks}{29}{section.14}
+\contentsline {subsection}{\numberline {14.1}Chords}{29}{subsection.14.1}
+\contentsline {subsection}{\numberline {14.2}Scales}{29}{subsection.14.2}
+\contentsline {subsection}{\numberline {14.3}Transposition}{30}{subsection.14.3}
+\contentsline {subsection}{\numberline {14.4}Microtones}{31}{subsection.14.4}
+\contentsline {subsection}{\numberline {14.5}Tempo}{31}{subsection.14.5}
+\contentsline {subsection}{\numberline {14.6}Rests}{32}{subsection.14.6}
+\contentsline {subsection}{\numberline {14.7}Playing two or more Pbinds together}{32}{subsection.14.7}
+\contentsline {subsection}{\numberline {14.8}Using variables}{34}{subsection.14.8}
+\contentsline {section}{\numberline {15}Starting and stopping Pbinds independently}{36}{section.15}
+\contentsline {subsection}{\numberline {15.1}Pbind as a musical score}{36}{subsection.15.1}
+\contentsline {subsection}{\numberline {15.2}EventStreamPlayer}{37}{subsection.15.2}
+\contentsline {subsection}{\numberline {15.3}Example}{38}{subsection.15.3}
+\contentsline {part}{III\hspace {1em}MORE ABOUT THE LANGUAGE}{41}{part.3}
+\contentsline {section}{\numberline {16}Objects, classes, messages, arguments}{41}{section.16}
+\contentsline {section}{\numberline {17}Receiver notation, functional notation}{43}{section.17}
+\contentsline {section}{\numberline {18}Nesting}{44}{section.18}
+\contentsline {section}{\numberline {19}Enclosures}{47}{section.19}
+\contentsline {subsection}{\numberline {19.1}Quotation marks}{48}{subsection.19.1}
+\contentsline {subsection}{\numberline {19.2}Parentheses}{48}{subsection.19.2}
+\contentsline {subsection}{\numberline {19.3}Brackets}{48}{subsection.19.3}
+\contentsline {subsection}{\numberline {19.4}Curly Braces}{49}{subsection.19.4}
+\contentsline {section}{\numberline {20}Conditionals: if/else and case}{50}{section.20}
+\contentsline {section}{\numberline {21}Functions}{53}{section.21}
+\contentsline {section}{\numberline {22}Fun with Arrays}{55}{section.22}
+\contentsline {subsection}{\numberline {22.1}Creating new Arrays}{56}{subsection.22.1}
+\contentsline {subsection}{\numberline {22.2}That funny exclamation mark}{57}{subsection.22.2}
+\contentsline {subsection}{\numberline {22.3}The two dots between parentheses}{57}{subsection.22.3}
+\contentsline {subsection}{\numberline {22.4}How to ``do'' an Array}{58}{subsection.22.4}
+\contentsline {section}{\numberline {23}Getting Help}{59}{section.23}
+\contentsline {part}{IV\hspace {1em}SOUND SYNTHESIS AND PROCESSING}{62}{part.4}
+\contentsline {section}{\numberline {24}UGens}{62}{section.24}
+\contentsline {subsection}{\numberline {24.1}Mouse control: instant Theremin}{63}{subsection.24.1}
+\contentsline {subsection}{\numberline {24.2}Saw and Pulse; plot and scope}{63}{subsection.24.2}
+\contentsline {section}{\numberline {25}Audio rate, control rate}{64}{section.25}
+\contentsline {subsection}{\numberline {25.1}The \texttt {poll} method}{66}{subsection.25.1}
+\contentsline {section}{\numberline {26}UGen arguments}{67}{section.26}
+\contentsline {section}{\numberline {27}Scaling ranges}{68}{section.27}
+\contentsline {subsection}{\numberline {27.1}Scale with the method \texttt {range}}{68}{subsection.27.1}
+\contentsline {subsection}{\numberline {27.2}Scale with \texttt {mul} and \texttt {add}}{69}{subsection.27.2}
+\contentsline {subsection}{\numberline {27.3}\texttt {linlin} and friends}{70}{subsection.27.3}
+\contentsline {section}{\numberline {28}Stopping individual synths}{71}{section.28}
+\contentsline {section}{\numberline {29}The \texttt {set} message}{71}{section.29}
+\contentsline {section}{\numberline {30}Audio Buses}{72}{section.30}
+\contentsline {subsection}{\numberline {30.1}\texttt {Out} and \texttt {In} UGens}{72}{subsection.30.1}
+\contentsline {section}{\numberline {31}Microphone Input}{75}{section.31}
+\contentsline {section}{\numberline {32}Multichannel Expansion}{76}{section.32}
+\contentsline {section}{\numberline {33}The Bus object}{78}{section.33}
+\contentsline {section}{\numberline {34}Panning}{79}{section.34}
+\contentsline {section}{\numberline {35}Mix and Splay}{81}{section.35}
+\contentsline {section}{\numberline {36}Playing an audio file}{83}{section.36}
+\contentsline {section}{\numberline {37}Synth Nodes}{84}{section.37}
+\contentsline {subsection}{\numberline {37.1}The glorious doneAction: 2}{85}{subsection.37.1}
+\contentsline {section}{\numberline {38}Envelopes}{86}{section.38}
+\contentsline {subsection}{\numberline {38.1}Env.perc}{87}{subsection.38.1}
+\contentsline {subsection}{\numberline {38.2}Env.triangle}{87}{subsection.38.2}
+\contentsline {subsection}{\numberline {38.3}Env.linen}{88}{subsection.38.3}
+\contentsline {subsection}{\numberline {38.4}Env.pairs}{88}{subsection.38.4}
+\contentsline {subsubsection}{\numberline {38.4.1}Envelopes---not just for amplitude}{89}{subsubsection.38.4.1}
+\contentsline {subsection}{\numberline {38.5}ADSR Envelope}{89}{subsection.38.5}
+\contentsline {section}{\numberline {39}Synth Definitions}{91}{section.39}
+\contentsline {subsection}{\numberline {39.1}SynthDef and Synth}{92}{subsection.39.1}
+\contentsline {subsection}{\numberline {39.2}Example}{93}{subsection.39.2}
+\contentsline {subsection}{\numberline {39.3}Under the hood}{95}{subsection.39.3}
+\contentsline {section}{\numberline {40}Pbind can play your SynthDef}{96}{section.40}
+\contentsline {section}{\numberline {41}Control Buses}{98}{section.41}
+\contentsline {subsection}{\numberline {41.1}asMap}{100}{subsection.41.1}
+\contentsline {section}{\numberline {42}Order of Execution}{101}{section.42}
+\contentsline {subsection}{\numberline {42.1}Groups}{103}{subsection.42.1}
+\contentsline {part}{V\hspace {1em}FURTHER STUDY TOPICS}{105}{part.5}
+\contentsline {section}{\numberline {43}MIDI}{105}{section.43}
+\contentsline {section}{\numberline {44}OSC}{108}{section.44}
+\contentsline {subsection}{\numberline {44.1}Sending OSC from another computer}{109}{subsection.44.1}
+\contentsline {subsection}{\numberline {44.2}Sending OSC from a smartphone}{109}{subsection.44.2}
+\contentsline {section}{\numberline {45}Quarks and plug-ins}{110}{section.45}
+\contentsline {section}{\numberline {46}Extra Resources}{110}{section.46}

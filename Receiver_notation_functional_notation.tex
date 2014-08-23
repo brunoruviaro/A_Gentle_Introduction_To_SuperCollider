@@ -1,0 +1,27 @@
+\section{Receiver notation, functional notation}
+
+There is more than one way of writing your expressions in SuperCollider. The one we just saw above is called \emph{receiver notation}: \texttt{100.rand}, where the dot connects the Object (\texttt{100}) to the message (\texttt{rand}). Alternatively, the exact same thing can also be written like this: \texttt{rand(100)}. This one is called \emph{functional notation}.
+
+You can use either way of writing. Here's how this works when a message takes two or more arguments.
+
+ 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+5.dup(20);  // receiver notation
+dup(5, 20); // same thing in functional notation
+
+3.1415.round(0.1); // receiver notation
+round(3.1415, 0.1); // functional notation
+\end{lstlisting}
+ 
+
+In the examples above, you might read \texttt{dup(5, 20)} as ``duplicate the number 5 twenty times,'' and \texttt{round(3.1415, 0.1)} as ``round the number 3.1415 to one decimal case.'' Conversely, the receiver notation versions could be read as ``Number 5, duplicate yourself twenty times!'' (for \texttt{5.dup(20)}) and ``Number 3.1415, round yourself to one decimal case!'' (for \texttt{3.1415.round(0.1)}).
+
+In short: \texttt{Receiver.message(argument)} is equivalent to \texttt{message(Receiver, argument)}.
+
+Choosing one writing style over another is a matter of personal preference and convention. Sometimes one method can be clearer than the other. Whatever style you end up preferring (and it's fine to mix them), the important thing is to be consistent. One convention that is widespread among SuperCollider users is that classes (words that begin with uppercase letters) are almost always written as \texttt{Receiver.message(argument)}. For example, you will always see \texttt{SinOsc.ar(440)}, but you will almost never see \texttt{ar(SinOsc, 440)}, even though both are correct.
+
+Exercise: rewrite the following statement using functional notation only:
+
+\texttt{100.0.rand.round(0.01).dup(4);} 
+
+Solution at the end.\endnote{Rewriting using functional notation only: \texttt{dup(round(rand(100.0), 0.01), 4);}}
