@@ -9,7 +9,7 @@ The syntax for an if/else in SC is: \texttt{if(condition, \{true action\}, \{fal
 if(100 > 50, { "very true".postln }, { "very false".postln });
 \end{lstlisting}
 
-The table below, borrowed from the SuperCollider book\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, p. 33}, presents some common Boolean operators that you can use. Note the distinction between a single equal sign (\texttt{x = 10}) and two equal signs (\texttt{x == 10}). The single sign means ``\textit{assign 10 to the variable \texttt{x}},'' while the double sign means ``\textit{is \texttt{x} equal to 10?}'' Type and run some of the examples from the true or false columns, and you will actually see \texttt{true} or \texttt{false} results in the Post window.
+The table below, borrowed from the SuperCollider book\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, p. 33}, presents some common Boolean operators that you can use. Note the distinction between a single equal sign (\texttt{x = 10}) and two equal signs (\texttt{x == 10}). The single sign means ``\textit{assign 10 to the variable x},'' while the double sign means ``\textit{is x equal to 10?}'' Type and run some of the examples from the true or false columns, and you will actually see \texttt{true} or \texttt{false} results in the Post window.
  
 \begin{center}
 \begin{tabular}{llll}
@@ -76,6 +76,6 @@ case
 )
 \end{lstlisting}
  
-Try changing the value of \texttt{$\sim$num} to get all possible results. Notice the useful (and optional) trick in the last line of \texttt{case} in the example above: since \texttt{true} always evaluate to true, you can define a ``last case scenario'' action that will always happen if all previous conditions happen to be false.
+Try changing the code above to get all possible results. Notice the useful (and optional) trick in the last line of \texttt{case} in the example above: since \texttt{true} always evaluate to true, you can define a ``last case scenario'' action that will always happen if all previous conditions happen to be false.
 
 For more, check out the Control Structures Help file.
