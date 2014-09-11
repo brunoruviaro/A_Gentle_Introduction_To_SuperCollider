@@ -137,3 +137,16 @@ Key concepts:
 Since sustained envelopes do not have a total duration known in advance, they need a notification as to when to start (trigger the attack) and when to stop (trigger the release). This notification is called a \emph{gate}. The gate is what tells the envelope to 'open' (1) and 'close' (0), thus starting and stopping the note.
 
 For an ASR or ADSR envelope to work in your synth, you must declare a \texttt{gate} argument. Normally the default is \texttt{gate = 1} because you want the synth to start playing right away. When you want the synth to stop, simply send either the \texttt{.release} or \texttt{.set(\textbackslash gate, 0)} message: the release portion of the envelope will be then triggered. For example, if your release time is 3, the note will take three seconds to fade away \emph{from the moment you send the message} \texttt{.set(\textbackslash gate, 0)}.
+
+\subsection{EnvGen}
+
+For the record, you should know that the construction you learned in this section to generate envelopes is a shortcut, as shown in the code below.
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// This:
+{ SinOsc.ar * Env.perc.kr(doneAction: 2) }.play;
+// ... is a shortcut for this:
+{ SinOsc.ar * EnvGen.kr(Env.perc, doneAction: 2) }.play;
+\end{lstlisting}
+
+\texttt{EnvGen} is the UGen that actually plays back breakpoint envelopes defined by \texttt{Env}. For all practical purposes, you can continue to use the shortcut. However, it is useful to know that these notations are equivalent, as you will often see \texttt{EnvGen} being used in the Help files or other online examples.
