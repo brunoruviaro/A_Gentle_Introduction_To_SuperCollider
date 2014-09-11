@@ -30,7 +30,7 @@ c.play; // play that Pbind
 d = b * 5; // take b, multiply by 5, and assign that to a new variable
 \end{lstlisting}
 
-Often it will make more sense to give better names to your variables, to help you remember what they stand for in your code. You need to use a $\sim$ (tilde) to declare a variable with a longer name. Note that there is no space between the tilde and the name of the variable.
+Often it will make more sense to give better names to your variables, to help you remember what they stand for in your code. You can use a $\sim$ (tilde) to declare a variable with a longer name. Note that there is no space between the tilde and the name of the variable.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 ~myFreqs = [415, 220, 440, 880, 220, 990];
@@ -42,11 +42,11 @@ Pbind(\freq, Pseq(~myFreqs), \dur, Pseq(~myDurs)).play;
 
 Variable names must begin with lowercase letters. You can use numbers, underscores, and uppercase letters within the name, just not as the first character. All characters must be contiguous (no spaces or punctuation). In short, stick to letters and numbers and the occasional underscore, and avoid all other characters when naming your variables. \texttt{$\sim$myFreqs}, \texttt{$\sim$theBestSineWave}, and \texttt{$\sim$banana\_3} are valid names. \texttt{$\sim$MyFreqs}, \texttt{$\sim$theBest\&*\#\@SineWave}, and \texttt{$\sim$banana!!!} are bad names.
 
-There are two types of variables that you can create: \emph{environment} variables and \emph{local} variables.
+There are two types of variables that you can create: ``global'' variables and local variables.
 
-\subsection{Environment Variables vs. Local Variables}
+\subsection{``Global'' vs. Local}
 
-The ones you have seen up to now are environment variables (some people loosely call them ``global variables''): they are the single lowercase letters \texttt{a} through \texttt{z}, or those starting with the tilde ($\sim$) character. Once declared, they will work anywhere in the patch, in other patches, even in other SC documents, until you quit SuperCollider.
+The variables you have seen up to now (the single lowercase letters \texttt{a} through \texttt{z}, and those starting with the tilde ($\sim$) character) may be loosely called ``global variables,'' because once declared, they will work ``globally'' anywhere in the patch, in other patches, even in other SC documents, until you quit SuperCollider.\footnote{Technically speaking, variables starting with a tilde are called Environment variables, and lowercase letter variables (a through z) are called Interpreter variables. SuperCollider beginners do not need to worry about these distinctions, but keep them in mind for the future. Chapter 5 of the SuperCollider book explains the differences in detail.}
 
 Local variables, on the other hand, are declared with the reserved keyword \texttt{\textbf{var}} at the beginning of the line. You can assign an initial value to a variable at declaration time (\texttt{\textbf{var} apples = 4}). Local variables only exist within the scope of that code block.
 
