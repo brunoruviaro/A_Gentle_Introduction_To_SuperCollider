@@ -54,36 +54,44 @@ Now, no matter in what order you execute the lines above, you can be sure that n
 
 \subsection{Groups}
 
-When you start to have lots of synths---some of them for source sounds, other for effects, or whatever you need---it may be a good idea to organize them into groups. Here's a basic example:
+When you start to have lots of synths---some of them for source sounds, others for effects, or whatever you need---it may be a good idea to organize them into groups. Here's a basic example:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // Keep watching everything in the NodeTree
 s.plotTree;
+
 // Create some buses
 ~reverbBus = Bus.audio(s, 2);
 ~masterBus = Bus.audio(s, 2);
+
 // Define groups
 (
 ~sources = Group.new;
 ~effects = Group.new(~sources, \addAfter);
 ~master = Group.new(~effects, \addAfter);
 )
+
 // Run all synths at once
 (
 // One source sound
 {
-	Out.ar(~reverbBus, SinOsc.ar([800, 890])*LFPulse.ar(2)*0.1)
+  Out.ar(~reverbBus, SinOsc.ar([800, 890])*LFPulse.ar(2)*0.1)
 }.play(target: ~sources);
+
 // Another source sound
 {
-	Out.ar(~reverbBus, WhiteNoise.ar(LFPulse.ar(2, 1/2, width: 0.05)*0.1))
+  Out.ar(~reverbBus, WhiteNoise.ar(LFPulse.ar(2, 1/2, width: 0.05)*0.1))
 }.play(target: ~sources);
-// This is some reverb
+
+// Some reverb
 {
-	Out.ar(~masterBus, FreeVerb.ar(In.ar(~reverbBus, 2), mix: 0.5, room: 0.9))
+  Out.ar(~masterBus, FreeVerb.ar(In.ar(~reverbBus, 2), mix: 0.5, room: 0.9))
 }.play(target: ~effects);
+
 // Some silly master volume control with mouse
-{Out.ar(0, In.ar(~masterBus, 2) * MouseY.kr(0, 1))}.play(target: ~master);
+{
+  Out.ar(0, In.ar(~masterBus, 2) * MouseY.kr(0, 1))
+}.play(target: ~master);
 )
 \end{lstlisting}
 
