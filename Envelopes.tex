@@ -50,10 +50,12 @@ Env.triangle.plot;
 
 \texttt{Env.linen} describes a line envelope with attack, sustain portion, and release. You can also specify level and curve type. Example:
 
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // See it:
 Env.linen.plot;
 // Hear it:
 {SinOsc.ar([300, 350], mul: Env.linen(0.01, 2, 1, 0.2).kr(2))}.play;
+\end{lstlisting}
 
 \subsection{Env.pairs}
 
