@@ -68,7 +68,7 @@ a[5].set(\gate, 0);
 
 // ADVANCED: run 6-note chord again, then evaluate this line.
 // Can you figure out what is happening?
-SystemClock.sched(0, {a[5.rand].set(\midinote, rrand(40, 70)); rrand(3, 10)});
+SystemClock.sched(0, {a[5.rand].set(\freq, rrand(40, 70).midicps); rrand(3, 10)});
 \end{lstlisting}
 
 To help you understand the SynthDef above:
