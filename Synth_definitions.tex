@@ -43,7 +43,7 @@ Here's a longer example. After the SynthDef is added, we use an array trick to c
 (
 SynthDef("wow", {arg freq = 60, amp = 0.1, gate = 1, wowrelease = 3;
 	var chorus, source, filtermod, env, snd;
-	chorus = freq.lag(2) * LFNoise2.kr([0.4, 0.5, 0.7, 1, 2, 5, 10]).range(1, 1.02);
+	chorus = Lag.kr(freq, 2) * LFNoise2.kr([0.4, 0.5, 0.7, 1, 2, 5, 10]).range(1, 1.02);
 	source = LFSaw.ar(chorus) * 0.5;
 	filtermod = SinOsc.kr(1/16).range(1, 10);
 	env = Env.asr(1, amp, wowrelease).kr(2, gate);
@@ -76,7 +76,8 @@ To help you understand the SynthDef above:
 \begin{itemize}
 \item The resulting sound is the sum of seven closely-tuned sawtooth oscillators going through a low pass filter.
 \item These seven oscillators are created through multichannel expansion.
-\item What is the variable \texttt{chorus}? It is the frequency multiplied by a \texttt{LFNoise2.kr}. The multichannel expansion starts here, because an array with 7 items is given as an argument to LFNoise2. The result is that seven copies of LFNoise2 are created, each one running at a different speeds taken from the list \texttt{[0.4, 0.5, 0.7, 1, 2, 5, 10]}. Their outputs are constrained to the range 1.0 to 1.02.
+\item What is the variable \texttt{chorus}? It is the frequency \texttt{freq} multiplied by a \texttt{LFNoise2.kr}. The multichannel expansion starts here, because an array with 7 items is given as an argument to LFNoise2. The result is that seven copies of LFNoise2 are created, each one running at a different speeds taken from the list \texttt{[0.4, 0.5, 0.7, 1, 2, 5, 10]}. Their outputs are constrained to the range 1.0 to 1.02.
+\item As an extra feature, notice that \texttt{freq} is enclosed within a \texttt{Lag.kr}. Whenever a new frequency value is fed into this Synth, the Lag UGen simply creates a ramp between the old value and the new value. The "lag time" (duration of the ramp), in this case, is 2 seconds. This is what causes the glissando effect you hear after running the last line of the example.  
 \item The source sound \texttt{LFSaw.ar} takes the variable \texttt{chorus} as its frequency. In a concrete example: for a \texttt{freq} value of 60 Hz, the variable \texttt{chorus} would result in an expression like
 
 $$60 * [1.01, 1.009, 1.0, 1.02, 1.015, 1.004, 1.019]$$
