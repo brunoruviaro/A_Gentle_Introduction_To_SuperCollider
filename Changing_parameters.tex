@@ -1,16 +1,17 @@
-\section{Changing parameters}
+\section{Mudando parâmetros}
 
-Here's a nice example adapted from the first chapter of the SuperCollider book.\footnote{
-Wilson, S. and Cottle, D. and Collins, N. (Editors). The SuperCollider Book, MIT Press, 2011, p. 5. Several things in the present tutorial were borrowed, adapted from, or inspired by David Cottle's excellent ``Beginner's Tutorial,'' which is the first chapter of the book. This tutorial borrows some examples and explanations from Cottle's chapter, but---differently from it---assumes less exposure to computer music, and introduces the Pattern family as the backbone of the pedagogical approach.
-} As with the previous examples, don't worry trying to understand everything. Just enjoy the sound result and play with the numbers.
+Aqui temos um bom exemplo adaptado do primeiro capítulo do The SuperCollider Book.\footnote{
+Wilson, S. and Cottle, D. and Collins, N. (Editors). The SuperCollider Book, MIT Press, 2011, p. 5. Diversas coisas neste tutorial foram emprestadas, adaptadas ou inspiradas pelo excelente “Beginner’s Tutorial” de David Cottle, que é o primeiro capítulo do livro, mas---diferentemente dele--aqui assumimos que o leitor tenha pouca familiaridade com a computer music e apresentamos a família Pattern como espinha dorsal da abordagem pedagógica.
+} Da mesma forma que em exemplos anteriores, não se preocupe em entender tudo. Apenas aprecie o resultado sonoro e brinque com os números.
+
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 {RLPF.ar(Dust.ar([12, 15]), LFNoise1.ar([0.3, 0.2]).range(100, 3000), 0.02)}.play;
 \end{lstlisting}
 
-Stop the sound, change some of the numbers, and evaluate again. For example, what happens when you replace the numbers 12 and 15 with lower numbers between 1 and 5? After \texttt{LFNoise1}, what if instead of 0.3 and 0.2 you tried something like 1 and 2? Change them one at a time. Compare the new sound with the previous sound, listen to the differences. See if you can understand what number is controlling what. This is a fun way of exploring SuperCollider: grab a snippet of code that makes something interesting, and mess around with the parameters to create variations of it. Even if you don't fully understand the role of every single number, you can still find interesting sonic results.
+Pare o som, mude alguns números e rode novamente. Por exemplo, o que acontece quando você substitui os números 12 e 15 por valores mais baixos, entre 1 e 5? Depois de \texttt{LFNoise1}, que tal se em vez de 0.3 e 0.2 você tentasse algo como 1 ou 2?Mude um de cada vez. Compare o novo som com o som anterior, escute as diferenças. Veja se você consegue entender qual número está controlando o quê. Esta é uma maneira divertida de explorar o SuperCollider: pegue um trecho de código que faça algo interessante e experimente com os parâmetros para criar variações. Mesmo se você não entender completamente o papel individual de cada número, ainda assim pode encontrar resultados sonoros interessantes.
 
 \bigskip 
 \todo[inline, color=green!40]{ 
-TIP: Like with any software, remember to frequently save your work with [ctrl+S]! When working on tutorials like this one, you will often come up with interesting sounds by experimenting with the examples provided. When you want to keep something you like, copy the code onto a new document and save it. Notice that every SuperCollider file has the extension .scd, which stands for ``SuperCollider Document.''
+DICA: Como qualquer software, lembre-se de salvar frequentemente o seu trabalho com [ctrl+S]! Quanto estiver trabalhando em tutoriais como esse, você muitas vezes vai chegar a sons interessantes experimentando com os exemplos fornecidos. Quando você quer guardar algo que você gosta, copie o código para um novo documento e salve-o. Perceba que todo arquivo do SuperCollider tem a extensão .scd, que quer dizer "SuperCollider Document."
 }
