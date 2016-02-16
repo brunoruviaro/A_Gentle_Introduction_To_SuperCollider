@@ -1,22 +1,24 @@
-\section{Comments}
+\section{Comentários}
 
-All text in your code that shows in red color is a \emph{comment}. If you are new to programming languages, comments are a very useful way to document your code, both for yourself and for others who may have to read it later. Any line that starts with a double slash is a comment. You can write comments right after a valid line of code; the comment part will be ignored when you evaluate. In SC we use a semicolon to indicate the end of a valid statement.
+Todo o texto no seu código que aparece em vermelho é um \emph{comment}. Se você é novo em linguagens de programação, comentários são uma forma bastante útil de documentar o seu código, tanto para você mesmo quanto para outros que tenham de lê-lo depois. Qualquer linha que começa com uma barra dupla é um comentário. Você pode escrever comentários logo depois de uma linha válida de código, pois a parte do comentário será ignorada quando você rodar. No SC, usamos um ponto-e-vírgula para indicar o fim de um enunciado válido.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-2 + 5 + 10 - 5; // just doing some math
+2 + 5 + 10 - 5; // apenas fazendo contas
 
-rrand(10, 20); // generate a random number between 10 and 20
+rrand(10, 20); // gerar um numero randômico entre 10 e 20
 \end{lstlisting}
 
-You can evaluate a line even if your cursor is in the middle of the comment after that line. The comment part is ignored. The next two paragraphs will be written as ``comments'' just for the sake of the example.
+Você pode rodar uma linha mesmo que o seu cursor estiver no meio de um comentário depois desta linha. A parte do comentário é ignorada. Os próximos dois parágrafos serão escritos como “comentários” apenas como exemplo.
+
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// You can quickly comment out one line of code using the shortcut [ctrl+/].
-"Some SC code here...".postln;
+// Você pode rapidamente transformar uma linha de código em comentário usando o atalho [ctrl+/].
+“Algum código de SC aqui…”.postln;
 2 + 2;
 
-// If you write a really long comment, your text may break into what looks like a new line that does *not* start with a double slash. That still counts as a single line of comment.
 
-/* Use "slash + asterisk" to start a longer comment with several lines. Close the big comment chunk with "asterisk + slash." The shortcut mentioned above also works for big chunks: simply select the lines of code you want to comment out, and hit [ctrl+/]. Same to un-comment. */
+//Se você escrever um comentário realmente longo, pode haver uma quebra em seu texto que parece uma nova linha que *não* começa com uma barra dupla. No entanto, isso ainda conta como uma única linha de comentário.
+
+/* Use “barra + asterisco” para começar um comentário longo com diversas linhas. Feche o trecho de comentário com “asterisco + barra”. O atalho mencionado anteriormente também funciona para grandes trechos: simplesmente selecione as linhas de código que você quer “comentar” e pressione [ctrl+/]. O mesmo serve para des-comentar.*/
 \end{lstlisting}
