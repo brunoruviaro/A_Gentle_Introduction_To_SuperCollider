@@ -1,18 +1,20 @@
-\section{Code blocks}
+\section{Blocos de código}
 \label{sec:code-block}
 
-Selecting multiple lines of code before evaluating can be tedious. A much easier way of running a chunk of code all at once is by creating a \textit{code block}: simply enclose in parentheses all lines of code that you want to run together. Here's an example:
- 
+
+Selecionando múltiplas linhas de um código antes de rodá-lo pode ser tedioso. Uma maneira muito mais fácil de rodar toda uma porção de código ao mesmo tempo é criar um \textit{bloco de código}: simplesmente coloque dentro de parênteses todas as linhas de código que você quer rodar juntas. Aqui temos um exemplo:
+
+
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 (
-// A little poem
-"Today is Sunday".postln;
-"Foot of pipe".postln;
-"The pipe is made of gold".postln;
-"It can beat the bull".postln;
+// Um pequeno poema
+“Hoje é domingo“.postln;
+“Pé de cachimbo”.postln;
+“O cachimbo é de ouro”.postln;
+“Bate no touro”.postln;
 )
 \end{lstlisting}
 
-The outer parentheses are delimiting the code block. As long as your cursor is anywhere within the parentheses, a single [ctrl+Enter] will evaluate all lines for you (they are executed in order from top to bottom, but it's so fast that it seems simultaneous).
+Os parênteses externos delimitam o bloco de código. Desde que que o cursor esteja em qualquer lugar dentro dos parênteses, um único [ctrl+Enter] rodará as linhas para você (elas serão executadas na ordem de cima para baixo, mas isso é tão rápido que parece simultâneo).
 
-Using code blocks saves you the trouble of having to select all the lines again every time you change something and want to re-evaluate. For example, change some of the words between double quotes, and hit [ctrl+Enter] right after making the change. The entire block of code is evaluated without you having to manually select all lines. SuperCollider highlights the block for a second to give you a visual hint of what's being executed.
+Usar blocos de código poupa o trabalho de ter de selecionar todas as linhas novamente a cada vez que você quiser mudar algo e rodar novamente. Por exemplo mude algumas das palavras entre aspas e pressione [ctrl+Enter] logo após fazer a mudança. Todo o bloco de código é rodado sem que você tenha que selecionar manualmente todas as linhas. O SuperCollider ressalta o bloco por um segundo para dar uma indicação visual de o que está sendo executado.
