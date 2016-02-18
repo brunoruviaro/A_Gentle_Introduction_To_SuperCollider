@@ -1,50 +1,52 @@
 \section{Audio rate, control rate}
 
-It is very easy to spot a UGen in SuperCollider code: they are nearly always followed by the messages \texttt{.ar} or \texttt{.kr}. These letters stand for Audio Rate and Control Rate. Let's see what this means.
+É bastante fácil identificar uma UGen em um código de SuperCollider: elas são quase sempre seguidas pelas mensagens \texttt{.ar} ou \texttt{.kr}. Estas letras querem dizer Audio Rate (“taxa de áudio”) e Control Rate (“taxa de controle”). Vamos ver o que isso significa.
 
-From the ``Unit Generators and Synths'' Help file:
+Do arquivo de ajuda “Unit Generators and Synths” (“Unidades geradoras e Sintetizadores”): 
 
 \begin{quotation}
-A unit generator is created by sending the \texttt{ar} or \texttt{kr} message to the unit generator's class object. The \texttt{ar} message creates a unit generator that runs at audio rate. The \texttt{kr} message creates a unit generator that runs at control rate. Control rate unit generators are used for low frequency or slowly changing control signals. Control rate unit generators produce only a single sample per control cycle and therefore use less processing power than audio rate unit generators.\footnote{\url{http://doc.sccode.org/Guides/UGens-and-Synths.html}}
+Uma unidade geradora é criada ao se enviar uma mensagem \texttt{ar} ou \texttt{kr} para um objeto da classe da respectiva unidade geradora. A mensagem \texttt{ar} cria uma UGen que é executada na velocidade da taxa de áudio. A mensagem \texttt{kr} cria uma UGen executada na velocidade da taxa de controle. UGens de controle são usados para sinais de controle de baixa frequência ou que mudem lentamente. UGens de controle produzem uma única amostra por ciclo de controle e, por isso, utilizam menos poder de processamento que UGens de áudio. \footnote{\url{http://doc.sccode.org/Guides/UGens-and-Synths.html}}
 \end{quotation}
 
-In other words: when you write \texttt{SinOsc.ar}, you are sending the message ``audio rate'' to the \texttt{SinOsc} UGen. Assuming your computer is running at the common sampling rate of 44100 Hz, this sine oscillator will generate 44100 samples per second to send out to the loudspeaker. Then we hear the sine wave.
+Em outras palavras: quando você escreve \texttt{SinOsc.ar}, você está madando a mensagem “taxa de áudio” para a UGen  \texttt{SinOsc} UGen. Assumindo que seu computador esteja rodando na taxa de amostragem comum de 44100 Hz, este oscilador senoidal vai gerar 44100 amostras por segundo para serem enviadas ao alto-falante. Então escutamos uma onda senoidal.
 
-Take a moment to think again about what you just read: when you send the \texttt{ar} message to a UGen, you are telling it to generate \emph{forty-four thousand and one hundred} numbers per second. That's a lot of numbers. You write \texttt{\{SinOsc.ar\}.play} in the language, and the language communicates your request to the server. The actual job of generating all those samples is done by the server, the ``sound engine'' of SuperCollider.
+Reflita por um momento sobre o que você acabou de ler: quando você manda a mensagem \texttt{ar} para uma UGen, você esta pedindo que que ela gere \emph{quarenta e quatro mil e cem} números por segundo. Isso é um monte de números. Você escreve \texttt{\{SinOsc.ar\}.play} na linguagem e a linguagem comunica seu pedido ao servidor. O verdadeiro trabalho de gerar todas estas amostras é feito pelo servidor, o “motor sonoro” do SuperCollider.
 
-Now, when you use \texttt{kr} instead of \texttt{ar}, the job is also done by the server, but there are a couple of differences:
+Agora, quando você usa \texttt{kr} em vez de \texttt{ar}, o trabalho tambem é feito pelo servidor, mas há algumas diferenças:
 \begin{enumerate}
-\item The amount of numbers generated per second with \texttt{.kr} is much smaller.\texttt{\{SinOsc.ar\}.play} generates 44100 numbers per second, while \texttt{\{SinOsc.kr\}.play} outputs a little under 700 numbers per second (if you are curious, the exact amount is 44100 / 64, where 64 is the so-called ``control period.'')
-\item The signal generated with \texttt{kr} does not go to your loudspeakers. Instead, it is normally used to control parameteres of other signals---for example, the \texttt{MouseX.kr} in your theremin was controlling the frequency of a \texttt{SinOsc}.
+\item A quantidade de números gerados por segundo com \texttt{.kr} é muito menor. \texttt{\{SinOsc.ar\}.play} gera 44100 números por segundo, enquanto \texttt{\{SinOsc.kr\}.play} fornece um pouco menos de 700 números por segundo (se você tiver curiosidade, a quantidade exata é 44100 / 64, sendo que 64 é o chamado “período de controle”.)
+\item O sinal gerado com \texttt{kr} não vai para os alto-falantes. Em vez disso, é normalmente utilizado para controlar parâmetros de outros sinais—por exemplo, o \texttt{MouseX.kr} no seu theremim estava controlando a frequência de um \texttt{SinOsc}.
 
 \end{enumerate} 
 
-OK, so UGens are these incredibly fast generators of numbers. Some of these numbers become sound signals; others become control signals. So far so good. But what numbers are these, after all? Big? Small? Positive? Negative? It turns out they are very small numbers, often between -1 and +1, sometimes just between 0 and 1. All UGens can be divided in two categories according to the range of numbers they generate: unipolar UGens, and bipolar UGens.
+OK, então UGens são estes geradores de números incrivelmente velozes. Alguns destes números se tornam sinais sonoros; outros se tornam sinais de controle. Até aí, tudo bem. Mas que números são estes, afinal de contas? Grandes? Pequenos? Positivos? Negativos? Na verdade, eles são números bem pequenos, muitas vezes entre -1 e +1, às vezes somente entre 0 e 1. Todos os UGens podem ser divididos em duas categorias, de acordo com a abrangência dos números que eles geram: UGens unipolares e UGens bipolares.
+
 \begin{description}
-\item[Unipolar UGens] generate numbers between 0 and 1.
-\item[Bipolar UGens] generate numbers between -1 and +1.
+\item[UGens unipolares] gera números entre 0 e 1.
+\item[UGens bipolares] gera números entre -1 e +1.
+
 \end{description}
 
-\subsection{The \texttt{poll} method}
+\subsection{O método \texttt{poll}}
 
-Snooping into the output of some UGens should make this clearer. We can't possibly expect SuperCollider to print thousands of numbers per second in the Post window, but we can ask it to print a few of them every second, just for a taste. Type and run the following lines one at a time (make sure your server is running), and watch the Post window:
+Examinar a saída de alguns UGens pode esclarecer isso. Não podemos esperar que o SuperCollider imprima milhares de números na janela Post, mas podemos pedir que ele imprima alguns deles, apenas para termos uma ideia. Digite e rode as seguintes linhas, uma de cada vez (garanta que seu servidor esteja rodando), e observe a janela Post: 
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// just watch the Post window (no sound)
+// apenas observe a janela Post (sem som)
 {SinOsc.kr(1).poll}.play;
-// hit ctrl+period, then evaluate the next line:
+// pressione ctrl+ponto final, então rode a próxima linha:
 {LFPulse.kr(1).poll}.play;
 \end{lstlisting}
 
-The examples make no sound because we are using \texttt{kr}---the result is a control signal, so nothing is sent to the loudspeakers. The point here is just to watch the typical output of a \texttt{SinOsc}. The message \texttt{poll} grabs 10 numbers per second from the \texttt{SinOsc} output
-and prints them out in the Post window. The argument 1 is the frequency, which just means the the sine wave will take one second to complete a whole cycle. Based on what you observed, is \texttt{SinOsc} unipolar or bipolar? What about \texttt{LFPulse}?\endnote{\texttt{SinOsc} is bipolar because it outputs numbers between -1 and +1. \texttt{LFPulse} is unipolar because its output range is 0-1 (in fact, \texttt{LFPulse} in particular only outputs zeros or ones, nothing in between)}
+Os exemplos não produzem som algum porque estamos usando \texttt{kr}—o resultado é um sinal de controle, então nada é enviado para os alto-falantes. O objetivo aqui é apenas observar a saída típica de um \texttt{SinOsc}. A mensagem \texttt{poll} pega 10 números por segundo da saída do \texttt{SinOsc}
+e as imprime na janela Post. O argumento 1 é a frequência, que apenas quer dizer que a onda senoidal vai demorar um segundo para completar um ciclo inteiro. Baseado no que você observou, o \texttt{SinOsc} é unipolar ou bipolar? E o \texttt{LFPulse}?\endnote{\texttt{SinOsc} é bipolar porque dá saída a números entre 1- e +1. \texttt{LFPulse} é unipolar porque o âmbito da saída é 0-1 (de fato, o \texttt{LFPulse} em particular somente dá saída a zeros e uns, sem nada intermediário}
 
-Bring down the volume before evaluating the next line, then bring it back up slowly. You should hear soft clicks.
+Abaixe todo o volume antes de rodar a próxima linha, depois aumente-o devagar. Você deve ouvir cliques suaves.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 {LFNoise0.ar(1).poll}.play;
 \end{lstlisting}
 
-Because we sent it the message \texttt{ar}, this Low Frequency Noise generator is churning out 44100 samples per second to your sound card---it's an audio signal. Each sample is a number between -1 and +1 (so it's a bipolar UGen). With \texttt{poll} you are only seeing ten of those per second. \texttt{LFNoise0.ar(1)} picks a new random number every second. All of this is done by the server.
+Como mandamos para ele uma mensagem \texttt{ar}, este gerador de ruído de baixa frequência (“Low Frequency Noise”) o gerador esta enviando 44100 amostras por segundo para a sua placa de som---é um sinal de áudio. Cada amostra é um número entre -1 e +1 (então é uma UGen bipolar). Com \texttt{poll} você está vendo somente dez deles por segundo. \texttt{LFNoise0.ar(1)} escolhe um novo número randômico a cada segundo. Tudo isto é feito pelo servidor.
 
-Stop the clicks with [ctrl+.] and try changing the frequency of \texttt{LFNoise0}. Try numbers like 3, 5, 10, and then higher. Watch the output numbers and hear the results.
+Pare os clicks com [ctrl+.] e experimente mudar a frequência de \texttt{LFNoise0}. tente números como 3, 5, 10 e depois mais altos. Observe os números produzidos e ouça os resultados.
