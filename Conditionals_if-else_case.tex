@@ -33,9 +33,9 @@ Note a distinção entre um sinal de igual simples (\texttt{x = 10}) e o sinal d
 \hline 
 \texttt{even} & é par? & \texttt{22.even} & \texttt{21.even} \\ 
 \hline 
-\texttt{isInteger} & é integer? & \texttt{3.isInteger} & \texttt{3.1415.isInteger} \\ 
+\texttt{isInteger} & é um número inteiro? & \texttt{3.isInteger} & \texttt{3.1415.isInteger} \\ 
 \hline 
-\texttt{isFloat} & é float? & \texttt{3.1415.isFloat} & \texttt{3.isFloat} \\ 
+\texttt{isFloat} & é um número decimal? & \texttt{3.1415.isFloat} & \texttt{3.isFloat} \\ 
 \hline 
 \texttt{and} & ambas as condições & \texttt{11.odd.and(12.even)} & \texttt{11.odd.and(13.even)} \\ 
 \hline 
@@ -45,7 +45,7 @@ Note a distinção entre um sinal de igual simples (\texttt{x = 10}) e o sinal d
 \end{center}
  
 
-As últimas duas linhas (\texttt{and}, \texttt{or}) mostram como escrever as expressões mais longas tanto em notação receiver quanto funcional.
+As últimas duas linhas (\texttt{and}, \texttt{or}) mostram como escrever as expressões mais longas tanto em notação de objeto recebedor quanto em notação funcional.
 
 Outra estrutura útil é \texttt{case}. Ela funciona definindo pares de funções a serem executadas na ordem até que um dos testes retorne verdadeiro:
 
@@ -77,6 +77,6 @@ case
 )
 \end{lstlisting}
  
-Tente modificar o código acima para obter todos os resultados possíveis. Perceba o truque útil (e opcional) na última linha de \texttt{case} no exemplo acima: como \texttt{true} sempre retorna verdadeiro, pode-se definir um “em último caso” que vai sempre acontecer mesmo que aconteça de todas as condições anteriores serem falsas.
+Tente modificar o código acima para obter todos os resultados possíveis. Perceba o truque útil (e opcional) na última linha de \texttt{case} no exemplo acima: como \texttt{true} sempre retorna verdadeiro, pode-se definir uma ação para acontecer “em último caso” que vai sempre ocorrer, mesmo no caso de todas as condições anteriores serem falsas.
 
 Para saber mais, verifique o arquivo de ajuda de Control Structures (“Estruturas de Controle”).
