@@ -1,40 +1,41 @@
-\section{Control Buses}
+\section{Canais de Controle}
 \label{sec:control-buses}
 
-Earlier in this tutorial we talked about Audio Buses (section \ref{sec:audiobus}) and the Bus Object (section \ref{sec:busobject}). We chose to leave aside the topic of Control Buses at that time in order to focus on the concept of audio routing.
+Em uma seção anterior deste tutorial, falamos sobre canais de áudio (“Audio Buses”) (seção \ref{sec:audiobus}) e o objeto Bus (section \ref{sec:busobject}). Naquele momento, escolhemos deixar de lado o tópico dos Canais de Controle (“Control Buses”) para nos focarmos no conceito de de roteamento de áudio.
 
-Control Buses in SuperCollider are for routing control signals, not audio. Except for this difference, there is no other practical or conceptual distinction between audio and control buses. You create and manage a control bus the same way you do with audio buses, simply using \texttt{.kr} instead of \texttt{.ar}. SuperCollider has 4096 control buses by default.
+Canais de controle no SuperCollider são para o roteamento de sinais de controle, não de áudio. Exceto por esta diferença, não há nenhuma outra distinção prática ou conceitual entre canais de áudio de de controle. Você cria e gerencia um canal de controle da mesma maneira que você faz com os canais de áudio, simplesmente usando \texttt{.kr} em vez de \texttt{.ar}. O SuperCollider tem  4096 canais de controle como padrão.
 
-The first part of the example below uses an arbitrary bus number just for the sake of demonstration. The second part uses the Bus object, which is the recommended way of creating buses.
+A primeira parte do exemplo abaixo usa um número de canal arbitrário apenas com a finalidade de demonstração. A segunda parte usa o objeto Bus, que é a maneira recomendada de criar canais.
+
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Write a control signal into control bus 55
+// Escreva um sinal de controle no canal de controle 55
 {Out.kr(55, LFNoise0.kr(1))}.play;
-// Read a control signal from bus 55
+// Leia um sinal de controle do canal 55
 {In.kr(55).poll}.play;
 
-// Using the Bus object
-~myControlBus = Bus.control(s, 1);
-{Out.kr(~myControlBus, LFNoise0.kr(5).range(440, 880))}.play;
-{SinOsc.ar(freq: In.kr(~myControlBus))}.play;
+// Usando o objeto Bus
+~meuCanalDeControle = Bus.control(s, 1);
+{Out.kr(~meuCanalDeControle, LFNoise0.kr(5).range(440, 880))}.play;
+{SinOsc.ar(freq: In.kr(~meuCanalDeControle))}.play;
 \end{lstlisting}
 
-The next example shows a single control signal being used to modulate two different synths at the same time. In the \texttt{Blip} synth, the control signal is rescaled to control number of harmonics between 1 and 10. In the second synth, the same control signal is rescaled to modulate the frequency of the \texttt{Pulse} oscillator.
+O próximo exemplo mostra um único sinal de controle sendo utilizado para modular dois diferentes sintetizadores ao mesmo tempo. No sintetizador \texttt{Blip}, o sinal de controle e reescalonado para controlar o número de harmónicos entre 1 e 10. No segundo sintetizador, o mesmo sinal de controle é reescalonado para modular a frequência do oscilador \texttt{Pulse}.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Create the control bus
-~myControl = Bus.control(s, 1);
+// Crie o canal de controle
+~meuControle = Bus.control(s, 1);
 
-// Feed the control signal into the bus
-c = {Out.kr(~myControl, Pulse.kr(freq: MouseX.kr(1, 10), mul: MouseY.kr(0, 1)))}.play;
+// Direcione o sinal de controle para o canal
+c = {Out.kr(~meuControle, Pulse.kr(freq: MouseX.kr(1, 10), mul: MouseY.kr(0, 1)))}.play;
 
-// Play the sounds being controlled
-// (move the mouse to hear changes)
+// Toque os sons que estão sendo controlados
+// (mova o mouse para ouvir as mudanças)
 (
 {
 	Blip.ar(
 		freq: LFNoise0.kr([1/2, 1/3]).range(50, 60),
-		numharm: In.kr(~myControl).range(1, 10),
+		numharm: In.kr(~meuControle).range(1, 10),
 		mul: LFTri.kr([1/4, 1/6]).range(0, 0.1))
 }.play;
 
@@ -42,32 +43,32 @@ c = {Out.kr(~myControl, Pulse.kr(freq: MouseX.kr(1, 10), mul: MouseY.kr(0, 1)))}
 	Splay.ar(
 		Pulse.ar(
 			freq: LFNoise0.kr([1.4, 1, 1/2, 1/3]).range(100, 1000)
-			* In.kr(~myControl).range(0.9, 1.1),
+			* In.kr(~meuControle).range(0.9, 1.1),
 			mul: SinOsc.ar([1/3, 1/2, 1/4, 1/8]).range(0, 0.03))
 	)
 }.play;
 )
 
-// Turn off control signal to compare
+// Desligue o sinal de controle para comparar
 c.free;
 \end{lstlisting}
 
 \subsection{asMap}
 
-In the next example, the method \texttt{asMap} is used to directly map a control bus to a running synth node. This way you don't even need \texttt{In.kr} in the synth definition.
+No próximo exemplo, o método \texttt{asMap} (“como mapa”) é usado para mapear um canal de controle diretamente para um nó de um sintetizador que esteja rodando. Desta maneira, você não precisara sequer de um \texttt{In.kr} na definição do sintetizador.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Create a SynthDef
-SynthDef("simple", {arg freq = 440; Out.ar(0, SinOsc.ar(freq, mul: 0.2))}).add;
-// Creat control buses
-~oneBus = Bus.control(s, 1);
-~anotherBus = Bus.control(s, 1);
-// Start controls
-{Out.kr(~oneBus, LFSaw.kr(1).range(100, 1000))}.play;
-{Out.kr(~anotherBus, LFSaw.kr(2, mul: -1).range(500, 2000))}.play;
-// Start a note
-x = Synth("simple", [\freq, 800]);
-x.set(\freq, ~oneBus.asMap);
-x.set(\freq, ~anotherBus.asMap);
+// Crie um SynthDef
+SynthDef("simples”, {arg freq = 440; Out.ar(0, SinOsc.ar(freq, mul: 0.2))}).add;
+// Crie um canal de controle
+~umCanal = Bus.control(s, 1);
+~outroCanal = Bus.control(s, 1);
+// Iniciar controles
+{Out.kr(~umCanal, LFSaw.kr(1).range(100, 1000))}.play;
+{Out.kr(~outroCanal, LFSaw.kr(2, mul: -1).range(500, 2000))}.play;
+// Toque um nota
+x = Synth("simples", [\freq, 800]);
+x.set(\freq, ~umCanal.asMap);
+x.set(\freq, ~outroCanal.asMap);
 x.free;
 \end{lstlisting}
