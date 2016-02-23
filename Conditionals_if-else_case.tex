@@ -1,66 +1,67 @@
-\section{Conditionals: if/else and case}
+\section{Condicionais: if/else e case}
 
-If it's raining, I'll take an umbrella when I go out. If it's sunny, I'll take my sunglasses. Our days are filled with this kind of decision making. In programming, these are the moments when your code has to test some condition, and take different courses of action depending on the result of the test (true or false). There are many types of conditional structures. Let's take a look at two simple ones: \emph{if/else} and \emph{case}.
+Se estiver chovendo, eu levarei um guarda-chuva quando sair. Se estiver sol, levarei meus óculos escuros. Nossos dias estão repletos desse tipo de tomada de decisão. Em programação, estes são os momentos em que o seu código tem de testar alguma condição e realizar ações diferentes, dependendo do resultado do teste (verdadeiro ou falso). Há muitos tipos de estruturas condicionais. Vamos dar uma olhada em dois casos simples: \emph{if/else} (“se/senão”) e \emph{case} (“no caso de”).
 
-The syntax for an if/else in SC is: \texttt{if(condition, \{true action\}, \{false action\})}. The condition is a Boolean test (it must return \texttt{true} or \texttt{false}). If the test returns true, the first function is evaluated; otherwise, the second function is. Try it:
+A sintaxe de um if/else no SC é: \texttt{if(condition, \{true action\}, \{false action\})}. A condição é um teste booleano, ou seja, precisa retornar um \texttt{true} (“verdadeiro”) ou \texttt{false}(“falso”). Se o teste retorna verdadeiro, a primeira função roda. Se não, roda-se a segunda. Experimente:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// if / else
-if(100 > 50, { "very true".postln }, { "very false".postln });
+// if / else 
+if(100 > 50, { “muito verdadeiro”.postln }, { “muito falso“.postln });
 \end{lstlisting}
 
-The table below, borrowed from the SuperCollider book\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, p. 33}, presents some common Boolean operators that you can use. Note the distinction between a single equal sign (\texttt{x = 10}) and two equal signs (\texttt{x == 10}). The single sign means ``\textit{assign 10 to the variable x},'' while the double sign means ``\textit{is x equal to 10?}'' Type and run some of the examples from the true or false columns, and you will actually see \texttt{true} or \texttt{false} results in the Post window.
+A tabela abaixo, emprestada do The SuperCollider Book \footnote{Cottle, D. “Beginner's Tutorial.” The SuperCollider Book, MIT Press, 2011, p. 33}, apresenta alguns operadores booleanos comuns que podem ser usados.
+Note a distinção entre um sinal de igual simples (\texttt{x = 10}) e o sinal de igual duplo (\texttt{x == 10}). O simples significa “\textit{atribua 10 à variável x},” ao passo que o duplo significa “\textit{é x igual a 10?}” Digite e rode alguns exemplos da coluna de verdadeiro ou falso e você verá parecerem os resultados \texttt{true} ou  \texttt{false} aparecerem na Post window.
  
 \begin{center}
 \begin{tabular}{llll}
 \hline 
-\textbf{Symbol} & \textbf{Meaning} & \textbf{True Example} & \textbf{False Example} \\ 
+\textbf{Símbolo} & \textbf{Significado} & \textbf{Exemplo verdadeiro} & \textbf{Exemplo falso} \\ 
 \hline 
-\texttt{==} & equal to? & \texttt{10 == 10} & \texttt{10 == 99} \\ 
+\texttt{==} & igual a? & \texttt{10 == 10} & \texttt{10 == 99} \\ 
 \hline 
-\texttt{!=} & not equal to? & \texttt{10 != 99} & \texttt{10 != 10} \\ 
+\texttt{!=} & não é igual a? & \texttt{10 != 99} & \texttt{10 != 10} \\ 
 \hline 
-\texttt{>} & greater than? & \texttt{10 > 5} & \texttt{10 > 99} \\ 
+\texttt{>} & maior que? & \texttt{10 > 5} & \texttt{10 > 99} \\ 
 \hline 
-\texttt{<} & less than? & \texttt{10 < 99} & \texttt{10 < 5} \\ 
+\texttt{<} & menor que? & \texttt{10 < 99} & \texttt{10 < 5} \\ 
 \hline 
-\texttt{>=} & greater than or equal to?  & \texttt{10 >= 10}, \texttt{10 >= 3} & \texttt{10 >= 99} \\ 
+\texttt{>=} & maior ou igual a?  & \texttt{10 >= 10}, \texttt{10 >= 3} & \texttt{10 >= 99} \\ 
 \hline 
-\texttt{<=} & less than or equal to? & \texttt{10 <= 99}, \texttt{10 <= 10} & \texttt{10 <= 9} \\ 
+\texttt{<=} & menor ou igual a? & \texttt{10 <= 99}, \texttt{10 <= 10} & \texttt{10 <= 9} \\ 
 \hline 
-\texttt{odd} & is it odd? & \texttt{15.odd} & \texttt{16.odd} \\ 
+\texttt{odd} & é ímpar? & \texttt{15.odd} & \texttt{16.odd} \\ 
 \hline 
-\texttt{even} & is it even? & \texttt{22.even} & \texttt{21.even} \\ 
+\texttt{even} & é par? & \texttt{22.even} & \texttt{21.even} \\ 
 \hline 
-\texttt{isInteger} & is it an integer? & \texttt{3.isInteger} & \texttt{3.1415.isInteger} \\ 
+\texttt{isInteger} & é um número inteiro? & \texttt{3.isInteger} & \texttt{3.1415.isInteger} \\ 
 \hline 
-\texttt{isFloat} & is it a float? & \texttt{3.1415.isFloat} & \texttt{3.isFloat} \\ 
+\texttt{isFloat} & é um número decimal? & \texttt{3.1415.isFloat} & \texttt{3.isFloat} \\ 
 \hline 
-\texttt{and} & both conditions & \texttt{11.odd.and(12.even)} & \texttt{11.odd.and(13.even)} \\ 
+\texttt{and} & ambas as condições & \texttt{11.odd.and(12.even)} & \texttt{11.odd.and(13.even)} \\ 
 \hline 
-\texttt{or} & either condition & \texttt{or(1.odd, 1.even)} & \texttt{or(2.odd, 1.even)} \\ 
+\texttt{or} & uma das condições & \texttt{or(1.odd, 1.even)} & \texttt{or(2.odd, 1.even)} \\ 
 \hline 
 \end{tabular} 
 \end{center}
  
 
-The last two lines (\texttt{and}, \texttt{or}) show how to write the longer expressions in either receiver notation or functional notation.
+As últimas duas linhas (\texttt{and}, \texttt{or}) mostram como escrever as expressões mais longas tanto em notação de objeto recebedor quanto em notação funcional.
 
-Another useful structure is \texttt{case}. It works by defining pairs of functions to be evaluated in order until one of the tests returns true:
+Outra estrutura útil é \texttt{case}. Ela funciona definindo pares de funções a serem executadas na ordem até que um dos testes retorne verdadeiro:
 
 \texttt{case}
 
-\texttt{\{test1\} \{action1\}}
+\texttt{\{teste1\} \{ação1\}}
 
-\texttt{\{test2\} \{action2\}}
+\texttt{\{teste2\} \{ação2\}}
 
-\texttt{\{test3\} \{action3\}}
+\texttt{\{teste3\} \{ação3\}}
 
 \dots
 
-\texttt{\{testN\} \{actionN\}};
+\texttt{\{testeN\} \{açãoN\}};
 
-The expression inside each test has to return either \texttt{true} or \texttt{false}. If test1 returns false, the program ignores action1 and moves on to test2. If it's false, action2 is also ignored and we move on to test3. If that turns out to be true, then action3 is executed, and \texttt{case} stops (no further tests or actions are executed). Note that there are no commas between functions. Simply use a semicolon at the very end to mark the end of the \texttt{case} statement.
+A expressão dentro de cada teste tem de retornar ou \texttt{true} ou \texttt{false}. Se o teste1 retorna falso, o programa ignora a ação1 e segue para o teste2. Se for um falso, ação2 também é ignorada e seguimos para o teste3. Se este for verdadeiro, então a ação3 é executada e o \texttt{case} para (mais nenhum teste ou ação é executado). Note que não há vírgulas entre as funções. Simplesmente use um ponto-e-vírgula no fim para marcar o final do enunciado \texttt{case}.
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -69,13 +70,13 @@ The expression inside each test has to return either \texttt{true} or \texttt{fa
 ~num = -2;
 
 case
-{~num == 0} {"WOW".postln}
-{~num == 1} {"ONE!".postln}
-{~num < 0} {"negative number!".postln}
-{true} {"last case scenario".postln};
+{~num == 0} {“UAU”.postln}
+{~num == 1} {“UM!”.postln}
+{~num < 0} {“número negativo!”.postln}
+{true} {“em último caso“.postln};
 )
 \end{lstlisting}
  
-Try changing the code above to get all possible results. Notice the useful (and optional) trick in the last line of \texttt{case} in the example above: since \texttt{true} always evaluate to true, you can define a ``last case scenario'' action that will always happen if all previous conditions happen to be false.
+Tente modificar o código acima para obter todos os resultados possíveis. Perceba o truque útil (e opcional) na última linha de \texttt{case} no exemplo acima: como \texttt{true} sempre retorna verdadeiro, pode-se definir uma ação para acontecer “em último caso” que vai sempre ocorrer, mesmo no caso de todas as condições anteriores serem falsas.
 
-For more, check out the Control Structures Help file.
+Para saber mais, verifique o arquivo de ajuda de Control Structures (“Estruturas de Controle”).
