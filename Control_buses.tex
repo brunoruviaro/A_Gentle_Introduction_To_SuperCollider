@@ -59,7 +59,7 @@ In the next example, the method \texttt{asMap} is used to directly map a control
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // Create a SynthDef
 SynthDef("simple", {arg freq = 440; Out.ar(0, SinOsc.ar(freq, mul: 0.2))}).add;
-// Creat control buses
+// Create control buses
 ~oneBus = Bus.control(s, 1);
 ~anotherBus = Bus.control(s, 1);
 // Start controls
