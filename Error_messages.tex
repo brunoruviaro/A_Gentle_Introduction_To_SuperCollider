@@ -1,6 +1,6 @@
-\section{Error messages}
+\section{Mensagens de Erro}
 
-No sound when you evaluated the last example? If so, your code probably had a typo: a wrong character, a missing comma or parenthesis, etc. When something goes wrong in your code, the Post window gives you an error message. Error messages can be long and cryptic, but don't panic: with time you will learn how to read them. A short error message could look like this:
+Não saiu nenhum som quando você rodou o último exemplo? Se isso aconteceu, provavelemente seu código tem um erro de digitação: um caracter errado, uma vírgula ou um parênteses a menos, etc. Quando algo acontece de errado no seu código, a Post window mostra uma mensagem de erro. Mensagens de erro podem ser longas e obscuras, mas não entre em pânico: com o tempo você aprenderá como lê-las. Uma mensagem de erro curta poderia ter a seguinte aparência:
 
 \begin{verbatim}
 ERROR: Class not defined.
@@ -13,11 +13,11 @@ ERROR: Class not defined.
 nil
 \end{verbatim}
 
-This error message says, ``Class not defined,'' and points to the approximate location of the error (``line 1 char 19''). Classes in SC are those blue words that start with a capital letter (like \texttt{SinOsc} and \texttt{LFNoise0}). It turns out this error was due to the user typing LFNoiseO with a capital letter ``O'' at the end. The correct class is LFNoise0, with the number zero at the end. As you can see, attention to detail is crucial.
+Esta mensagem de erro diz "Class not defined" (Classe não definida) e aponta a localização aproximada do erro ("line 1 char 19", ou seja: linha 1, caracter 19). Classes no SC são aquelas palavras azuis que começam com uma letra maiúscula (como \texttt{SinOsc} e \texttt{LFNoise0}). Acontece que este erro foi causado pelo usuário ao digitar LFNoiseO com uma letra "O" maiúscula ao final. A classe correta é LFNoise0, com o número zero ao final. Como você pode ver, atenção aos detalhes é crucial.
 
-If you have an error in your code, proofread it, change as needed, and try again until it's fixed. If you had no error at first, try introducing one now so you can see how the error message would look like (for example, remove a comma).
+Se você tem um erro no seu código, revise-o, mude o que for necessário e tente novamente até que ele esteja corrigido. Se você ainda não cometeu um erro, experimente introduzir um para que você possa ver como é uma mensagem de erro (por exemplo, remova uma vírgula).
 
 \bigskip
 \todo[inline, color=green!40]{ 
-TIP: Learning SuperCollider is like learning another language like German, Portuguese, Japanese\dots \  just keep trying to speak it, work on expanding your vocabulary, pay attention to grammar and syntax, and learn from your mistakes. The worst it can happen here is to crash SuperCollider. Not nearly as bad as taking the wrong bus in São Paulo because of a mispronounced request for directions.
+DICA: Aprender SuperCollider é como aprender uma outra língua como Alemão, Inglês ou Japonês\dots \  apenas continue tentando a falá-la, esforce-se em expandir seu vocabulário, preste atenção na gramática e na sintaxe e aprenda com seus erros. A pior coisa que pode acontecer é você travar o SuperCollider. Algo muito menos pior do que pegar um ônibus errado em São Paulo por ter cometido erros de pronúncia na hora de pedir informações.
 }
