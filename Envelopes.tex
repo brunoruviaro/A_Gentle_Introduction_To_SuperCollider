@@ -1,65 +1,61 @@
 \section{Envelopes}
 
-Up to now most of our examples have been continuous sounds. It is about time to learn how to shape the amplitude envelope of a sound. A good example to start with is a percussive envelope. Imagine a cymbal crash. The time it takes for the sound to go from silence to maximum amplitude is very small---a few miliseconds, perhaps. This is called the \emph{attack time}. The time it takes for the sound of the cymbal to decrease from maximum amplitude back to silence (zero) is a little longer, maybe a few seconds. This is called the \emph{release time}.
+Até agora, a maioria dos nossos exemplos foi de sons contínuos. Já está na hora de aprender a modelar o envelope de amplitude de um som. Um bom exemplo para começar é um envelope percussivo. Imagine um ataque em um prato suspenso. O tempo que o som leva para ir do silêncio à amplitude máxima é muito curto---alguns milissegundos talvez. Isto é chamado \emph{tempo de ataque}. O tempo que leva para o som do prato diminuir da máxima amplitude de volta ao silêncio (zero) é um pouco mais longo, talvez alguns segundos. Isto é chamado o \emph{tempo de repouso}.
 
-Think of an amplitude envelope simply as a number that changes over time to be used as the multiplier (\texttt{mul}) of any sound-producing UGen. These numbers should be between 0 (silence) and 1 (full amp), because that's how SuperCollider understands amplitude. You may have realized by now that the last example already included an amplitude envelope: in \texttt{\{WhiteNoise.ar(Line.kr(0.2, 0, 2, doneAction: 2))\}.play}, we make the amplitude of the white noise go from 0.2 to 0 in 2 seconds. A \texttt{Line.kr}, however, is not a very flexible type of envelope.
+Pense em um envelope de amplitude simplesmente como um número que muda ao longo do tempo e pode ser utilizado como o multiplicador (\texttt{mul}) de qualquer UGen que produz som. Estes números devem estar entre 0 (silêncio) e 1 (amplitude máxima), porque é assim que o SuperCollider entende a amplitude. Talvez agora você se dê conta de que o último exemplo já continha um envelope de amplitude: em \texttt{\{WhiteNoise.ar(Line.kr(0.2, 0, 2, doneAction: 2))\}.play}, fazemos a amplitude do ruído branco ir de 0.2 a 0 em 2 segundos. Um \texttt{Line.kr}, no entanto, não é um tipo de envelope muito flexível.
 
-\texttt{Env} is the object you will be using all the time to define all sorts of envelopes.\texttt{Env} has many useful methods; we can only look at a few here. Feel free to explore the \texttt{Env} Help file to learn more.
+\texttt{Env} é o objeto que você usará o tempo todo para definir todo tipo de envelopes. O \texttt{Env} tem muitos métodos úteis; só conseguiremos ver alguns deles aqui. Sinta-se à vontade para explorar a Ajuda de \texttt{Env} para aprender mais. 
 
 \subsection{Env.perc}
 
-\texttt{Env.perc} is a handy way to get a percussive envelope. It takes in four arguments: attackTime, releaseTime, level, and curve. Let's take a look at some typical shapes, outside of any synth.
+\texttt{Env.perc} é uma maneira prática de conseguir um envelope percussivo. Ele aceita quatro argumentos:  attackTime, releaseTime, level e curve (que podemos traduzir como: "tempo de ataque, tempo de repouso, nível e curva"). Vejamos algumas formas típicas, ainda fora de qualquer sintetizador.
 
- 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-Env.perc.plot; // using all default args
+Env.perc.plot; // usando todos os argumentos padrão
 Env.perc(0.5).plot; // attackTime: 0.5
 Env.perc(attackTime: 0.3, releaseTime: 2, level: 0.4).plot;
-Env.perc(0.3, 2, 0.4, 0).plot; // same as above, but curve:0 means straight lines
+Env.perc(0.3, 2, 0.4, 0).plot; // o mesmo que acima, mas curve:0 produz uma linha reta
 \end{lstlisting}
  
+Agora simplesmente o encaixamos dentro de um sintetizador:
 
-Now we can simply hook it up in a synth like this:
-
- 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-{PinkNoise.ar(Env.perc.kr(doneAction: 2))}.play; // default Env.perc args
+{PinkNoise.ar(Env.perc.kr(doneAction: 2))}.play; // argumentos padrão do Env.perc
 {PinkNoise.ar(Env.perc(0.5).kr(doneAction: 2))}.play; 
 {PinkNoise.ar(Env.perc(0.3, 2, 0.4).kr(2))}.play;
 {PinkNoise.ar(Env.perc(0.3, 2, 0.4, 0).kr(2))}.play;
 \end{lstlisting}
  
-
-All you have to do is to add the bit \texttt{.kr(doneAction: 2)} right after \texttt{Env.perc}, and you are good to go. In fact, you can even remove the explicit declaration of doneAction in this case and simply have \texttt{.kr(2)}. The \texttt{.kr} is telling SC to ``perform'' this envelope at control rate (like other control rate signals we have seen before).
+Tudo o que você tem de fazer é adicionar \texttt{.kr(doneAction: 2)} logo depois de \texttt{Env.perc} e pronto. Na verdade, neste caso você pode até remover a declaração explícita do argumento doneAction e simplesmente ficar com \texttt{.kr(2)}. O \texttt{.kr} está esta dizendo para o SC rodar este envelope na velocidade da taxa de controle (como outros sinais de controle que vimos antes).
 
 \subsection{Env.triangle}
 
-\texttt{Env.triangle} takes only two arguments: duration, and level. Examples:
+\texttt{Env.triangle} recebe apenas dois argumentos: duração e nível. Exemplos:
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// See it:
+// Veja-o:
 Env.triangle.plot;
-// Hear it:
+// Ouça-o:
 {SinOsc.ar([440, 442], mul: Env.triangle.kr(2))}.play;
-// By the way, an envelope can be a multiplier anywhere in your code
+// Aliás, um envelope pode ser um multiplicador em qualquer lugar do seu código:
 {SinOsc.ar([440, 442]) * Env.triangle.kr(2)}.play;
 \end{lstlisting}
 
 \subsection{Env.linen}
 
-\texttt{Env.linen} describes a line envelope with attack, sustain portion, and release. You can also specify level and curve type. Example:
+\texttt{Env.linen} descreve um envelope linear com ataque, porção de sustentação e repouso. Você também pode especificar o nível e tipo de curva. Exemplo:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// See it:
+// Veja-o:
 Env.linen.plot;
-// Hear it:
+// Ouça-o:
 {SinOsc.ar([300, 350], mul: Env.linen(0.01, 2, 1, 0.2).kr(2))}.play;
 \end{lstlisting}
 
 \subsection{Env.pairs}
 
-Need more flexibility? With \texttt{Env.pairs} you can have envelopes of any shape and duration you want. \texttt{Env.pairs} takes two arguments: an array of [time, level] pairs, and a type of curve (see the Env Help file for all available curve types).
+Precisa de mais flexibilidade? Com \texttt{Env.pairs} você pode ter envelopes com qualquer forma e duração que quiser. \texttt{Env.pairs} recebe dois argumentos: um arranjo (“array”) de pares de [tempo, nível] e um tipo de curva (veja na Ajuda de Env todos os tipos de curva disponíveis).
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -72,19 +68,18 @@ Need more flexibility? With \texttt{Env.pairs} you can have envelopes of any sha
 )
 \end{lstlisting}
  
-
-Read the array of pairs like this:
+Leia o arranjo de pares assim:
 \begin{center}
-At time 0, be at level 0;\\
-At time 0.4, be at level 1;\\
-At time 1, be at level 0.2;\\
-At time 1.1, be at level 0.5;\\
-At time 2, be at level 0.
+No tempo 0, esteja no nível 0;\\
+No tempo 0.4, esteja no nível 1;\\
+No tempo 1, esteja no nível 0.2;\\
+No tempo 1.1, esteja no nível 0.5;\\
+No tempo 2, esteja no nível 0;
 \end{center}
 
-\subsubsection{Envelopes---not just for amplitude}
+\subsubsection{Envelopes---não apenas para amplitude}
 
-Nothing is stopping you from using these same shapes to control something other than amplitude. You just need to scale them to the desired range of numbers. For example, you can create an envelope to control change of frequencies over time:
+Nada impede você de usar as estas mesmas formas para controlar algo além da amplitude. Você só precisa escaloná-las para o âmbito de números desejado. Por exemplo, Você pode criar um envelope para controlar a mudança de frequências ao longo do tempo:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 (
@@ -95,25 +90,25 @@ Nothing is stopping you from using these same shapes to control something other 
 )
 \end{lstlisting}
 
-Envelopes are a powerful way to control any synth parameters that need to change over time.
+Envelopes são uma maneira poderosa de controlar qualquer parâmetro de um sintetizador que precisa variar ao longo do tempo.
 
-\subsection{ADSR Envelope}
+\subsection{Envelope ADSR}
 
-All envelopes seen up to now have one thing in common: they have a fixed, pre-defined duration. There are situations, however, when this type of envelope is not adequate. For example, imagine you are playing on a MIDI keyboard. The \textit{attack} of the note is triggered when you press a key. The \textit{release} is when you take your finger off the key. But the amount of time that you keep the finger down is not known in advance. What we need in this case is a so-called ``sustained envelope.'' In other words, after the attack portion, the envelope must hold the note for an indefinite amount of time, and only trigger the release portion after some kind of cue, or message---i.e., the moment you 'release the key'.
+Todos os envelopes vistos até agora têm uma coisa em comum: eles têm uma duração fixa, pré-definida. Há situações, no entanto, em que este tipo de envelope não é adequado. Por exemplo, imagine que você está tocando em um teclado MIDI. o \textit{ataque} da nota é disparado quando você pressiona a tecla. O \textit{repouso}, quando você tira seu dedo da tecla. Mas a quantidade de tempo que você permanece com o dedo sobre a tecla não é conhecido de antemão. O que precisamos neste caso é de um "envelope sustentado". Em outras palavras, depois da porção de ataque, o envelope precisa segurar a nota por uma quantidade de tempo indefinida e apenas disparar a porção de repouso depois de algum sinal, ou mensagem--- isto é, o momento em que você "solta a tecla".
 
-An ASR (Attack, Sustain, Release) envelope fits the bill. A more popular variation of it is the ADSR envelope (Attack, Decay, Sustain, Release). Let's look at both.
+Um envelope ASR (Ataque, Sustentação, Repouso) se encaixa perfeitamente. Uma variação mais popular é o envelope ADSR (Ataque, Decaimento, Sustentação, Repouso). Vamos dar uma olhada nos dois.
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // ASR
-// Play note ('press key')
+// Toque nota (‘aperte tecla’)
 // attackTime: 0.5 seconds, sustainLevel: 0.8, releaseTime: 3 seconds
 x = {arg gate = 1, freq = 440; SinOsc.ar(freq: freq, mul: Env.asr(0.5, 0.8, 3).kr(doneAction: 2, gate: gate))}.play;
-// Stop note ('finger off the key' - activate release stage)
-x.set(\gate, 0); // alternatively, x.release
+// Pare nota (‘tirar dedo da tecla’ - ativar a porção de repouso)
+x.set(\gate, 0); // uma alternativa é x.release
 
-// ADSR (attack, decay, sustain, release)
-// Play note:
+// ADSR (ataque, decaimento, sutentação, repouso)
+// Toque nota:
 (
 d = {arg gate = 1;
 	var snd, env;
@@ -122,33 +117,32 @@ d = {arg gate = 1;
 	Out.ar(0, snd * env.kr(doneAction: 2, gate: gate));
 }.play;
 )
-// Stop note:
-d.release; // this is equivalent to d.set(\gate, 0);
+// Pare nota:
+d.release; // isto é equivalente a d.set(\gate, 0);
 \end{lstlisting}
  
-
-Key concepts:
+Conceitos-chave:
 
 \begin{description}
-\item[Attack] The time (in seconds) that it takes to go from zero (silence) to peak amplitude
-\item[Decay] The time (in seconds) that it takes to go down from peak amplitude to sustain amplitude
-\item[Sustain] The amplitude (between 0 and 1) at which to hold the note (important: this has nothing to do with time)
-\item[Release] The time (in seconds) that it takes to go from sustain level to zero (silence).
+\item[Ataque (“Attack”)] O tempo (em segundos) que leva para ir do silêncio (zero) até o pico de amplitude
+\item[Decaimento (“Decay”)] O tempo (em segundos) que leva para ir do pico de amplitude para a amplitude de sustentação
+\item[Sustentação (”Sustain”)] A amplitude (entre 0 e 1) na qual a nota é sustentada (importante: isto não tem nada a ver com tempo)
+\item[Repouso (“Release”)] O tempo (em segundos) que leva para ir do nível de sustentação para o zero (silêncio).
 \end{description}
 
-Since sustained envelopes do not have a total duration known in advance, they need a notification as to when to start (trigger the attack) and when to stop (trigger the release). This notification is called a \emph{gate}. The gate is what tells the envelope to 'open' (1) and 'close' (0), thus starting and stopping the note.
+Como envelopes sustentados não tem uma duração total conhecida de antemão, eles precisam de uma notificação tanto de quando começar (disparar o ataque) e quando parar (disparar o repouso). Esta notificação é chamada um \emph{gate} (“portão”). O gate é o que diz para que o envelope se ‘abra’ (1) ou se ‘feche’ (0), portanto começando e terminando a nota.
 
-For an ASR or ADSR envelope to work in your synth, you must declare a \texttt{gate} argument. Normally the default is \texttt{gate = 1} because you want the synth to start playing right away. When you want the synth to stop, simply send either the \texttt{.release} or \texttt{.set(\textbackslash gate, 0)} message: the release portion of the envelope will be then triggered. For example, if your release time is 3, the note will take three seconds to fade away \emph{from the moment you send the message} \texttt{.set(\textbackslash gate, 0)}.
+Para que um envelope ASR ou ADSR funcione no seu sintetizador, você precisa declarar um argumento \texttt{gate}. Normalmente, o padrão é \texttt{gate = 1} porque você quer que o sintetizador comece logo a tocar. Quando você quer que o sintetizador pare, simplesmente mande uma mensagem \texttt{.release} ou \texttt{.set(\textbackslash gate, 0)}: a porção de repouso do envelope será então disparada. Por exemplo, se seu tempo de repouso é 3, a nota vai levar três segundos para se extinguir completamente \emph{desde o momento em que você enviou a mensagem} \texttt{.set(\textbackslash gate, 0)}. 
 
 \subsection{EnvGen}
 
-For the record, you should know that the construction you learned in this section to generate envelopes is a shortcut, as shown in the code below.
+Vale registrar que a construção que você aprendeu nesta seção para gerar envelopes é um atalho, como mostrado no código abaixo.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// This:
+// Isso:
 { SinOsc.ar * Env.perc.kr(doneAction: 2) }.play;
-// ... is a shortcut for this:
+// ... é um atalho disso:
 { SinOsc.ar * EnvGen.kr(Env.perc, doneAction: 2) }.play;
 \end{lstlisting}
 
-\texttt{EnvGen} is the UGen that actually plays back breakpoint envelopes defined by \texttt{Env}. For all practical purposes, you can continue to use the shortcut. However, it is useful to know that these notations are equivalent, as you will often see \texttt{EnvGen} being used in the Help files or other online examples.
+\texttt{EnvGen} é a UGen que de fato toca os envelopes segmentados (“breakpoint envelopes”) definidos por \texttt{Env}. Para todos os propósitos práticos, você pode continuar a usar o atalho. Mas é útil saber que estas notações são equivalentes, já que você muitas vezes verá  \texttt{EnvGen} sendo utilizado nos arquivos de Ajuda e outros exemplos online.
