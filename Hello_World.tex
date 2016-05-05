@@ -1,38 +1,40 @@
-\section{Hello World}
+\section{Olá mundo}
 
-Ready for creating your first SuperCollider program? Assuming you have SC up and running in front of you, open a new document (menu File$\rightarrow$New, or shortcut [ctrl+N]) and type the following line:
+Pronto para criar seu primeiro programa em SuperCollider? Assumindo que você tem um SC aberto e funcionando à sua frente, abra um novo documento (menu File$\rightarrow$New (“Arquivo$\rightarrow$Novo”) ou o atalho [ctrl+N]) e digite a seguinte linha:
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize ]
-"Hello World".postln;
+“Olá mundo“.postln;
 \end{lstlisting}
  
-
-Leave your cursor anywhere in that line (in doesn't matter if beginning, middle, or end). Press [ctrl+Enter] to evaluate the code. ``Hello world'' appears in the Post window. Congratulations! That was your first SuperCollider program.
+Posicione o cursor em qualquer lugar desta linha (não importa se início, meio ou fim). Pressione [ctrl+Enter] para executar o código. “Olá mundo” aparece no seu Post window (“Janela de postagem”). Parabéns! Este foi seu primeiro programa em SuperCollider.
 
  
 \bigskip
-\todo[inline, color=green!40]{ TIP: Throughout this document, ctrl (control) indicates the modifier key for keyboard shortcuts that is used on Linux and Windows platforms. On Mac OSX, use cmd (command) instead. }
+\todo[inline, color=green!40]{ DICA: Em todo este documento, ctrl (control) indica a tecla modificadora para atalhos de teclado que é usada nas plataformas Linux e Windows. No Mac OSX, use cmd (command). }
 \bigskip
  
 
-Figure \ref{fig:scidegui} shows a screenshot of the SuperCollider IDE (Integrated Development Environment) when you first open it. Let's take a moment to get to know it a bit.
+A figura \ref{fig:scidegui} mostra uma foto de tela da IDE (Integrated Development Environment ou “Ambiente de desenvolvimento integrado) do SuperCollider no momento em que é aberta. Tomemos um tempo para conhecê-la melhor.
 
 \begin{figure}[t]
 \centerline{\framebox{
 	\includegraphics[width=0.7\columnwidth]{fig-supercollider-ide-2.png}}}
-\caption{SuperCollider IDE interface.}
+\caption{A interface IDE do SuperCollider.}
 \label{fig:scidegui}
 \end{figure}
 
-What is the SuperCollider IDE? It is ``a cross-platform coding environment developed specifically for SuperCollider (\dots), easy to start using, handy to work with, and sprinkled with powerful features for experienced coders. It is also very customizable. It runs equally well and looks almost the same on Mac OSX, Linux and Windows.''\footnote{Quoted from the SuperCollider Documentation: \url{http://doc.sccode.org/Guides/SCIde.html}. Visit that page to learn more about the IDE interface.}
+O que é a IDE do SuperCollider? É um “ambiente de programação multiplataforma desenvolvido especificamente para o SuperCollider (\dots), 
+fácil de começar a usar, prática de lidar e adornada com características poderosas para programadores experientes. Ela também é bastante personalizável. Roda igualmente bem e tem quase a mesma aparência no 
+Mac OSX, Linux and Windows.”\footnote{Citado da documentação do SuperCollider: \url{http://doc.sccode.org/Guides/SCIde.html}. Visite esta página para aprender mais sobre a interface da IDE.}
 
-The main parts you see on the SC window are the Code Editor, the Help Browser, and Post Window. If you don't see any of these when you open SuperCollider, simply go to the menu View$\rightarrow$Docklets (that's where you can show or hide each of them). There is also the Status Bar, always located on the bottom right corner of the window.
+As principais partes que você vê são o Editor de Código, o Navegador de Ajuda (“Help browser”) e a Janela de Postagem (“Post window”). Se você não estiver vendo qualquer uma dessas quando abre o Super Collider, simplesmente vá para o menu View$\rightarrow$Docklets (é onde você pode mostrar ou esconder cada uma delas). Há também a Barra de Status, sempre localizada no canto inferior direito da janela.
 
-Always keep the Post window visible, even if you don't understand yet all the stuff being printed there. The Post window displays the responses of the program to our commands: results of code evaluation, various notifications, warnings, errors, etc.
+Sempre mantenha a Post window visível, mesmo se você ainda não entende todas as coisas que são mostradas ali. A Post window mostra as reações do programa aos seus comandos: resultados da execução de códigos, notificações diversas, avisos, erros, etc.
 
 \bigskip
-\todo[inline, color=green!40]{ TIP: You can temporarily enlarge and reduce the editor font size with the shortcuts [Ctrl++] and [Ctrl+-] (that's the control key together with the plus or minus keys, respectively). If you are on a laptop without a real plus key, use [Ctrl+shift+=].}
+\todo[inline, color=green!40]{ 
+DICA: Você pode aumentar ou reduzir temporariamente o tamanho da fonte do editor com os atalhos [Ctrl++] e [Ctrl+-] (ou seja, a tecla control junto com as teclas de mais ou menos, respectivamente). Se você está em um laptop que não tem uma tecla de mais de verdade, use [Ctrl+shift+=].}
 \bigskip
 
 
