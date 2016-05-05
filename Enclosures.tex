@@ -1,68 +1,68 @@
-\section{Enclosures}
+\section{Fechamentos}
 
-There are four types of enclosures: \texttt{(parentheses)}, \texttt{[brackets]}, \texttt{\{braces\}}, and \texttt{"quotation marks"}.
+Há quatro tipos de fechamento: \texttt{(parênteses)}, \texttt{[colchetes]}, \texttt{\{chaves\}} e \texttt{"aspas duplas"}.
 
-Each one that you open will need to be closed at a later point. This is called ``balancing,'' that is, keeping properly matched pairs of enclosures throughout your code.
+Cada um que você abre, deve ser fechado mais adiante. Isso é chamado "balancear", ou seja, manter devida correspondência entre os pares de fechamento em todo o seu código.
 
-The SuperCollider IDE automatically indicates matching parentheses (also brackets and braces) when you close a pair---they show up in red. If you click on a parenthesis that lacks an opening/closing match, you will see a dark red selection telling you something is missing. Balancing is a quick way to select large sections of code for evaluation, deletion, or copy/paste operations. You can double click an opening or closing parenthesis (also brackets and braces) to select everything within.
+A IDE do SuperCollider automaticamente indica o fechamento de parênteses (também de colchetes e chaves) quando você fecha um par--- eles são destacados em vermelho. Se você clicar um parênteses que não tem um par de abertura/fechamento, você verá uma seleção em vermelho escuro indicando que algo está faltando. Balancear é uma maneira rápida de selecionar grandes seções de código para ser executado, deletado ou para operações de copiar/colar. Você pode fazer um clique duplo em um parênteses de abertura ou fechamento para selecionar tudo o que está contido (o mesmo vale para colchetes e chaves).
 
-\subsection{Quotation marks}
+\subsection{Aspas duplas}
 
-Quotation marks are used to enclose a sequence of characters (including spaces) as a single unit. These are called Strings. Single quotes create Symbols, which are slightly different than Strings. Symbols can also be created with a backslash immediately before the text. Thus \texttt{'greatSymbol'} and \texttt{\textbackslash greatSymbol} are equivalent.
+Aspas duplas são usadas para englobar uma sequência de caracteres (incluindo espaços) como uma única unidade. Estas são chamadas Strings (“cadeias”). Aspas simples criam Símbolos ("Symbols"), que são ligeiramente diferentes de Strings. Símbolos também podem ser criados com uma barra invertida imediatamente antes do texto. Portanto, \texttt{'grandeSimbolo'} and \texttt{\textbackslash grandeSimbolo} são equivalentes.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-"Here's a nice string";
-'greatSymbol';
+"Aqui está um bom string";
+'grandeSimbolo';
 \end{lstlisting}
 
-\subsection{Parentheses}
+\subsection{Parênteses}
 
-Parentheses can be used to:
+Parênteses podem ser usados para:
 
 \begin{itemize}
-\item enclose argument lists: \texttt{rrand(0, 10);}
-\item force precedence: \texttt{5 + (10 * 4);}
-\item create code blocks (multiple lines of code to be evaluated together).
+\item englobar listas de argumentos: \texttt{rrand(0, 10);}
+\item forçar precedência: \texttt{5 + (10 * 4);}
+\item criar blocos de código (múltiplas linhas de código para serem rodadas simultaneamente).
 \end{itemize} 
 
-\subsection{Brackets}
+\subsection{Colchetes}
 
-Square brackets define a collection of items, like \texttt{[1, 2, 3, 4, "hello"]}. These are normally called Arrays. An array can contain anything: numbers, strings, functions, patterns, etc. Arrays understand messages such as \texttt{reverse}, \texttt{scramble}, \texttt{mirror}, \texttt{choose}, to name a few. You can also perform mathematical operations on arrays.
+Colchetes definem uma coleção de itens, como \texttt{[1, 2, 3, 4, "hello"]}. Estas são normalmente chamadas Arrays. Uma array pode conter qualquer coisa: números, strings, funções, padrões, etc. Arrays entendem mensagens como \texttt{reverse} (“inverter”), \texttt{scramble} (“embaralhar”), \texttt{mirror} (“espelhar”), \texttt{choose} (“escolher”), para mencionar algumas. Você também pode fazer operações matemáticas em arrays.
+
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-[1, 2, 3, 4, "hello"].scramble;
-[1, 2, 3, 4, "hello"].mirror;
+[1, 2, 3, 4, “alô”].scramble;
+[1, 2, 3, 4, "alô"].mirror;
 [1, 2, 3, 4].reverse + 10;
-// convert midi to frequency in Hz
+// converter notas MIDI para frequências em Hz 
 [60, 62, 64, 65, 67, 69, 71].midicps.round(0.1);
 \end{lstlisting}
 
-More on Arrays coming soon in section \ref{sec:arrays}.
+Mais sobre arrays, em breve na seção \ref{sec:arrays}.
 
-\subsection{Curly Braces}
+\subsection{Chaves}
 
-Braces (or ``curly braces'') define functions. Functions encapsulate some kind of operation or task that will probably be used and reused multiple times, possibly returning different results each time. The example below is from the SuperCollider book.
+Chaves definem funções. Funções encapsulam algum tipo de operação ou tarefa que será provavelmente reutilizada múltiplas vezes, possivelmente retornando diferentes resultados a cada vez. O exemplo abaixo é do The SuperCollider Book:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 exprand(1, 1000.0);
 {exprand(1, 1000.0)};
 \end{lstlisting}
 
-David Cottle walks us through his example: \textit{``the first line picks a random number, which is displayed in the post window. The second prints a very different result: a function. What does the function do? It picks a random number. How can that difference affect code? Consider the lines below. The first chooses a random number and duplicates it. The second executes the random-number-picking function 5 times and collects the results in an array.''}\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, p. 13.}
+David Cottle nos explica passo a passo seu exemplo: \textit{“a primeira linha seleciona um número randômico, que é mostrado na Post Window. O segundo imprime um resultado bastante diferente: uma função. O que a função faz? Ela seleciona um número randômico. Como pode esta diferença afetar o código? Considere as linhas abaixo. A primeira escolhe um número randômico e o duplica. A segunda executa  cinco vezes a função-seletora-de-números-randômicos e coleta os resultados em uma array.”}\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, p. 13.}
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-rand(1000.0).dup(5);  // picks a number, duplicates it
-{rand(1000.0)}.dup(5);  // duplicates the function of picking a number
-{rand(1000.0)}.dup(5).round(0.1); // all of the above, then round
-// essentially, this (which has a similar result)
+rand(1000.0).dup(5);  // seleciona um número e o duplica
+{rand(1000.0)}.dup(5);  // duplica a função de selecionar um número {rand(1000.0)}.dup(5).round(0.1); // tudo o que foi feito acima, depois arredondando os valores
+// essencialmente isto (que tem um resultado semelhante)
 [rand(1000.0), rand(1000.0), rand(1000.0), rand(1000.0), rand(1000.0)]
 \end{lstlisting}
  
+Mais sobre funções em breve. Por ora, aqui está um resumo de todos os fechamentos possíveis:
 
-More about functions soon. For now, here's a summary of all possible enclosures:
 \begin{description}
-\item[Collections] \texttt{[list, of, items]}
-\item[Functions] \texttt{\{ often multiple lines of code \}}
-\item[Strings] \texttt{"words inside quotes"}
-\item[Symbols] \texttt{'singlequotes'} or preceded by a \texttt{\textbackslash backslash}
+\item[Coleções] \texttt{[lista, de, itens]}
+\item[Funções] \texttt{\{ quase sempre, múltiplas linhas de código \}}
+\item[Strings] \texttt{“palavras entre aspas”}
+\item[Símbolos] \texttt{‘aspasSimples’} ou precedidas de uma \texttt{\textbackslash barra invertida}
 \end{description}
