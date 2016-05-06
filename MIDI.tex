@@ -1,85 +1,87 @@
 \section{MIDI}
 
-An extended presentation of MIDI concepts and tricks is beyond the scope of this tutorial. The examples below assume some familiarity with MIDI devices, and are provided just to get you started.
+Uma apresentação aprofundada dos conceitos e truques do MIDI está além do escopo deste tutorial. Os exemplos abaixo assumem alguma familiaridade com dispositivos MIDI e são fornecidos apenas como uma introdução.
+
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Quick way to connect all available devices to SC
+// Jeito rápido de conectar todos os dispositivos disponíveis ao SC
 MIDIIn.connectAll;
 
-// Quick way to see all incoming MIDI messages
+// Jeito rápido de ver todas as mensagens MIDI que estão chegando
 MIDIFunc.trace(true);
-MIDIFunc.trace(false); // stop it
+MIDIFunc.trace(false); // pare com isso
 
-// Quick way to inspect all CC inputs
+// Jeito rápido de inspecionar todas as entradas CC
 MIDIdef.cc(\someCC, {arg a, b; [a, b].postln});
 
-// Get input only from cc 7, channel 0
-MIDIdef.cc(\someSpecificControl, {arg a, b; [a, b].postln}, ccNum: 7, chan: 0);
+// Obter entrada somente do cc 7, canal 0
+MIDIdef.cc(\algumControleEspecifico, {arg a, b; [a, b].postln}, ccNum: 7, chan: 0);
 
-// A SynthDef for quick tests
-SynthDef("quick", {arg freq, amp; Out.ar(0, SinOsc.ar(freq) * Env.perc(level: amp).kr(2))}).add;
+// Um SynthDef para testes rápidos
+SynthDef(“rápido”, {arg freq, amp; Out.ar(0, SinOsc.ar(freq) * Env.perc(level: amp).kr(2))}).add;
 
-// Play from a keyboard or drum pad
+// Toque de um teclado ou pad de percussão
 (
-MIDIdef.noteOn(\someKeyboard, { arg vel, note;
-	Synth("quick", [\freq, note.midicps, \amp, vel.linlin(0, 127, 0, 1)]);
+MIDIdef.noteOn(\algumTeclado, { arg vel, nota;
+	Synth("rápido", [\freq, nota.midicps, \amp, vel.linlin(0, 127, 0, 1)]);
 });
 )
 
-// Create a pattern and play that from the keyboard
+// Criar um padrão e tocá-lo com um teclado
 (
 a = Pbind(
-	\instrument, "quick",
+	\instrument, “rápido”,
 	\degree, Pwhite(0, 10, 5),
 	\amp, Pwhite(0.05, 0.2),
 	\dur, 0.1
 );
 )
 
-// test
+// teste
 a.play;
 
-// Trigger pattern from pad or keyboard
+// Disparar padrão de um pad ou teclado
 MIDIdef.noteOn(\quneo, {arg vel, note; a.play});
 \end{lstlisting}
 
-A frequently asked question is how to manage note on and note off messages for sustained notes. In other words, when using an ADSR envelope, you want each note to be sustained for as long as a key is pressed. The release stage comes only when the finger comes off the corresponding key (review section on ADSR envelopes if needed).
+Uma dúvida frequente é como administrar mensagens de “liga nota” e “desliga nota” (“note on” e “note off”) para notas sustentadas. Em outras palavras, quando você utiliza um envelope ADSR, você quer que cada nota seja sustentada enquanto a tecla estiver pressionada. O estágio de repouso (“release”) inicia apenas quando o dedo sai da tecla correspondente (revise a seção sobre envelopes ADSR se necessário).
 
-In order to do that, SuperCollider simply needs to keep track of which synth node corresponds to each key. We can use an Array for that purpose, as shown in the example below.
+Para fazer isso, o SuperCollider simplesmente precisa monitorar qual nó de sintetizador corresponde a cada tecla. Podemos usar um Array para este fim, como demonstrado no exemplo abaixo. 
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
- // A SynthDef with ADSR envelope
-SynthDef("quick2", {arg freq = 440, amp = 0.1, gate = 1;
+ // Um SynthDef com envelope ADSR
+SynthDef(“rápido2", {arg freq = 440, amp = 0.1, gate = 1;
 	var snd, env;
 	env = Env.adsr(0.01, 0.1, 0.3, 2, amp).kr(2, gate);
 	snd = Saw.ar([freq, freq*1.5], env);	
 	Out.ar(0, snd)
 }).add;
 
-// Play it with a MIDI keyboard
-(
-var noteArray = Array.newClear(128); // array has one slot per possible MIDI note
+// Toque com um teclado MIDI
 
-MIDIdef.noteOn(\myKeyDown, {arg vel, note;
-	noteArray[note] = Synth("quick2", [\freq, note.midicps, \amp, vel.linlin(0, 127, 0, 1)]);
-	["NOTE ON", note].postln;
+(
+var arrayDeNotas = Array.newClear(128); // array com uma posição para cada nota MIDI possível
+
+MIDIdef.noteOn(\minhaTeclaApertada, {arg vel, nota;
+	arrayDeNotas[nota] = Synth(“rápido2", [\freq, nota.midicps, \amp, vel.linlin(0, 127, 0, 1)]);
+	["NOTA LIGADA", nota].postln;
 });
 	
-MIDIdef.noteOff(\myKeyUp, {arg vel, note;
-	noteArray[note].set(\gate, 0);
-	["NOTE OFF", note].postln;
+MIDIdef.noteOff(\minhaTeclaLiberada, {arg vel, nota;
+	arrayDeNotas[nota].set(\gate, 0);
+	["NOTA DESLIGADA”, nota].postln;
 });
 )
-// PS. Make sure SC MIDI connections are made (MIDIIn.connectAll)
+// PS. Garanta que as conexões MIDI do SC estejam ativas (MIDIIn.connectAll)
  \end{lstlisting} 
  
-To help you understand the code above:
+Para ajudar a entender o código acima:
 
 \begin{itemize}
-\item The SynthDef \texttt{"quick2"} uses an ADSR envelope. The \texttt{gate} argument is the one responsible for turning notes on and off.
-\item An Array called \texttt{"noteArray"} is created to keep track of notes being played. The indices of the array are meant to correspond to MIDI note numbers being played.
-\item Every time a key is pressed on the keyboard, a Synth starts playing (a synth node is created in the server), and \emph{the reference to that synth node is stored in a unique slot in the array}; the array index is simply the MIDI note number itself.
-\item Whenever a key is released, the message \texttt{.set(\textbackslash gate, 0)} is sent to the appropriate synth node, retrieved from the array by note number.
+\item O SynthDef \texttt{“rápido2”} usa um envelope ADSR. O argumento \texttt{gate} é responsável por ligar e desligar as notas.
+\item Um Array chamado \texttt{“arrayDeNotas”} é criado para monitorar quais notas estão sendo tocadas. Os índices do array devem corresponder aos números das notas MIDI sendo tocadas.
+\item Toda vez que uma tecla é pressionada no teclado, um Synth começa a tocar (um nó de sintetizador é criado no servidor) e \emph{a referência a este nó de sintetizador é armazenada em uma posição exclusiva no array}; o índice do array é simplesmente o próprio número de nota MIDI.
+\item Sempre que a tecla é liberada, a mensagem \texttt{.set(\textbackslash gate, 0)} é enviada para o nó de sintetizador apropriado, recuperado do array através do número da nota.
 \end{itemize}
 
-In this short MIDI demo we only discussed getting MIDI \emph{into} SuperCollider. To get MIDI messages \emph{out} of SuperCollider, take a look at the \texttt{MIDIOut} Help file.
+Nesta curta demonstração de MIDI apenas discutimos como enviar informação MIDI \emph{para dentro} do SuperCollider. Para enviar mensagens MIDI \emph{para fora} do SuperCollider, dê uma olhada no arquivo de Ajuda de \texttt{MIDIOut}.
