@@ -1,8 +1,8 @@
-\section{More Pattern tricks}
+\section{Mais truques com Patterns}
 
-\subsection{Chords}
+\subsection{Acordes}
 
-Want to write chords inside \texttt{Pbind}s? Write them as lists (comma-separated values enclosed in square brackets):
+Quer escrever acordes dentro de \texttt{Pbind}s? Escreva-os como listas (valores separados por vírgula entre colchetes):
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 (
@@ -11,7 +11,7 @@ Pbind(
 	\dur, 0.15
 ).play;
 )
-// Fun with strum
+// Diversão com “strum” (“dedilhar”)
 (
 Pbind(
 	\note, Pseq([[-7, 3, 7, 10], [0, 3, 5, 8]], 2),
@@ -23,9 +23,9 @@ Pbind(
 \end{lstlisting}
  
 
-\subsection{Scales}
+\subsection{Escalas}
 
-When using \texttt{\textbackslash degree} for your pitch specification, you can add another line with the keyword \texttt{\textbackslash scale} to change scales (note: this only works in conjunction with \texttt{\textbackslash degree}, not with \texttt{\textbackslash note}, \texttt{\textbackslash midinote}, or \texttt{\textbackslash freq}):
+Quando estiver usando \texttt{\textbackslash degree} (“grau”) para especificar alturas, pode-se acrescentar uma linha com a palavra-chave \texttt{\textbackslash scale} (“escala”) para mudar escalas (nota: isso só funciona em conjunção com \texttt{\textbackslash degree}, não com \texttt{\textbackslash note}, \texttt{\textbackslash midinote} ou \texttt{\textbackslash freq}):
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -37,61 +37,61 @@ Pbind(
 ).play;
 )
 
-// Evaluate this line to see a list of all available scales:
+// Execute esta linha para ver uma lista de todas as escalas disponíveis:
 Scale.directory;
 
-// If you need a chromatic note in between scale degrees, do this:
+// Se você precisa de uma nota cromática entre dois graus da escala, faça assim:
 (
 Pbind(
 	\degree, Pseq([0, 1, 2, 3, 3.1, 4], 1),
 ).play;
 )
 
-// The 3.1 above means one chromatic step above scale degree 3 (in this case, F# above F). Note that when you don't explicitly specify a \scale, Scale.major is assumed.
+// O 3.1 acima quer dizer um passo cromático sobre o grau 3 da escala (neste caso, fá# acima do fá). Note que quando você não especifica explicitamente uma escala \scale, Scale.major é subentendida.
 \end{lstlisting}
 
 \subsection{Transposition}
 
-Use the \texttt{\textbackslash ctranspose} keyword to achieve chromatic transposition. This will work in conjunction with \texttt{\textbackslash degree}, \texttt{\textbackslash note}, and \texttt{\textbackslash midinote}, but not with \texttt{\textbackslash freq}.
+Use a palavra-chave \texttt{\textbackslash ctranspose} para realizar uma transposição cromática. Isso funciona em conjunto com \texttt{\textbackslash degree}, \texttt{\textbackslash note} e \texttt{\textbackslash midinote}, mas não com \texttt{\textbackslash freq}.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 (
 Pbind(
 	\note, Pser([0, 2, 3, 5, 7, 8, 11, 12], 11),
-	\ctranspose, 12, // transpose an octave above (= 12 semitones)
+	\ctranspose, 12, // transpor oitava acima (= 12 semitons)
 	\dur, 0.15;
 ).play;
 )
 \end{lstlisting}
 
-\subsection{Microtones}
+\subsection{Microtons}
  
-How to write microtones:
+Como escrever microtons:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Microtones with \note and \midinote:
+// Microtons com \note e \midinote:
 Pbind(\note, Pseq([0, 0.5, 1, 1.5, 1.75, 2], 1)).play;
 Pbind(\midinote, Pseq([60, 69, 68.5, 60.25, 70], 1)).play;
 \end{lstlisting}
  
-\subsection{Tempo}
+\subsection{Andamento}
 
-The values you provide to the \texttt{\textbackslash dur} key of a Pbind are in \emph{number of beats}, that is, 1 means one beat, 0.5 means half a beat, and so on. Unless you specify otherwise, the default tempo is 60 BPM (beats per minute). To play at a different tempo, you simply create a new TempoClock. Here's a \texttt{Pbind} playing at 120 beats per minute (BPM):
+Os valores que você fornece para a palavra-chave \texttt{\textbackslash dur} de um Pbind estão em \emph{número de tempos}, isto é, 1 significa um tempo, 0.5 significa meio tempo e assim por diate. A não ser que você especifique outra coisa, o tempo padrão é 60 BPM (batidas por minuto). Para tocar em um andamento diferente, simplesmente crie um novo TempoClock. Aqui está um  \texttt{Pbind} tocando a 120 batidas por minuto (BPM):
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 (
 Pbind(\degree, Pseq([0, 0.1, 1, 2, 3, 4, 5, 6, 7]),
 	\dur, 1;
-).play(TempoClock(120/60)); // 120 beats over 60 seconds: 120 BPM
+).play(TempoClock(120/60)); // 120 batidas em 60 segundos: 120 BPM
 )
 \end{lstlisting}
  
+Por acaso, você percebeu que o \texttt{Pseq} recebe um único argumento (a lista)? Onde está o valor \texttt{repeats} que sempre veio após a lista? Você pode ouvir que o exemplo toca a sequência apenas uma vez, mas por que? Está é uma propriedade comum a todos os Patterns (e também de muitos outros objetos dentro do SuperCollider): se você omite um argumento, será utilizado um valor padrão que já vem embutido. Neste caso, o \texttt{repeats} padrão para \texttt{Pseq} é 1. Lembra-se do seu primeiro \texttt{Pbind} ridiculamente simples? Era um mero \texttt{Pbind(\textbackslash degree, 0).play} e ele somente sabia tocar uma nota. Você não forneceu nenhuma informação para duração, amplitude, legato, etc. Nestes casos \texttt{Pbind} simplesmente segue em frente e usa os valores padrão.
 
-By the way, did you see that the \texttt{Pseq} above is taking only one argument (the list)? Where is the \texttt{repeats} value that always came after the list? You can hear that the example plays through the sequence only once, but why? This is a common property of all Patterns (and in fact, of many other objects in SuperCollider): if you omit an argument, it will use a built-in default value. In this case, the default \texttt{repeats} for \texttt{Pseq} is 1. Remember your first ridiculously simple \texttt{Pbind}? It was a mere \texttt{Pbind(\textbackslash degree, 0).play} and it only knew how to play one note. You didn't provide any info for duration, amplitude, legato, etc. In theses cases \texttt{Pbind} simply goes ahead and uses its default values for those.
 
-\subsection{Rests}
+\subsection{Pausas}
 
-Here is how to write rests. The number inside \texttt{Rest} is the duration of the rest in beats. Rests can go anywhere in the Pbind, not just in the \texttt{\textbackslash dur} line.
+É assim que se escreve pausas. O número dentro de \texttt{Rest} é a duração da pausa em tempos. Pausas podem estar em qualquer lugar no Pbind, não somente na linha \texttt{\textbackslash dur}.
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -104,12 +104,12 @@ Pbind(
 \end{lstlisting}
  
 
-\subsection{Playing two or more Pbinds together}
+\subsection{Tocando dois ou mais Pbind juntos}
 
-To start a few Pbinds simultaneously, simply enclose all of them within a single code block:
+Para disparar alguns Pbind simultaneamente, simplesmente empacote todos eles em um único bloco de código:
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-( // open big block
+( // abrindo o grande bloco
 Pbind(
 	\freq, Pn(Pseries(110, 111, 10)),
 	\dur, 1/2,
@@ -127,23 +127,23 @@ Pbind(
 	\dur, 1/6,
 	\legato, 0.1
 ).play;
-) // close big block
+) // fechando o grande bloco
 \end{lstlisting}
 
-In order to play Pbinds in a time-ordered fashion (other than simply evaluating them manually one after the other), you can use \texttt{\{ \}.fork}:
+Para tocar Pbinds de uma maneira temporalmente ordenada (em vez de simplesmente executá-los manualmente um após o outro), você pode usar \texttt{\{ \}.fork} ("garfo", uma maneira abreviada de criar rotinas de programação):
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Basic fork example. Watch Post window:
+// Exemplo básico de fork. Observe o Post window:
 ( 
 {
-	"one thing".postln;
+	“uma coisa“.postln;
 	2.wait;
-	"another thing".postln;
+	“outra coisa“.postln;
 	1.5.wait;
-	"one last thing".postln;
+	“uma última coisa“.postln;
 }.fork;
 )
-// A more interesting example:
+// Um exemplo mais interessante:
 (
 t = TempoClock(76/60);
 {
@@ -174,40 +174,40 @@ t = TempoClock(76/60);
 )
 \end{lstlisting}
  
-For advanced ways of playing \texttt{Pbind}s simultaneously and in sequence, check out \texttt{Ppar} and \texttt{Pspawner}. For more about \texttt{fork}, check out the \texttt{Routine} Help file.
+Para formas avançadas de tocar \texttt{Pbins}s simultaneamente e em sequência, confira \texttt{Ppar} e \texttt{Pspawner}. Para saber mais sobre \texttt{fork}, veja o arquivo de Ajuda de  \texttt{Routine}.
 
-\subsection{Using variables}
+\subsection{Usando variáveis}
 
-In the earlier section ``Expanding your Pattern vocabulary,'' did you notice how you had to type the same note list [0, 2, 3, 5, 7, 8, 11, 12] several times for multiple \texttt{Pbind}s? Not very efficient to copy the same thing by hand over and over, right? In programming, whenever you find yourself doing the same task repeatedly, it's probably time to adopt a smarter strategy to accomplish the same goal. In this case, we can use variables. As you may remember, variables allow you to refer to any chunk of data in a flexible and concise way (review section  \ref{sec:variables} if needed). Here's an example:
+Na seção anterior, “Expandindo seu vocabulário de Patterns”, você percebeu quantas vezes teve de digitar a mesma lista de notas [0, 2, 3, 5, 7, 8, 11, 12] diversas vezes para múltiplas \texttt{Pbind}s? Não é muito eficiente ficar copiando a mesma coisa à mão, certo? Em programação sempre que você se vir fazendo a mesma tarefa repetidas vezes, é provavelmente hora de adotar uma estratégia mais inteligente de chegar ao mesmo objetivo. Neste caso, podemos usar variáveis. Como você deve se lembrar, variáveis permitem que você se refira a qualquer conjunto de dados de uma maneira flexível e concisa (releia a seção \ref{sec:variables} se necessário). Aqui está um exemplo:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Using the same sequence of numbers a lot? Save it in a variable:
+// Usando muito a mesma sequência de números? Guarde-a em uma variável:
 c = [0, 2, 3, 5, 7, 8, 11, 12];
 
-// Now you can just refer to it:
+// Agora você pode simplesmente se referir a elax
 Pbind(\note, Pseq(c, 1), \dur, 0.15).play;
 Pbind(\note, Prand(c, 6), \dur, 0.15).play;
 Pbind(\note, Pslide(c, 5, 3, 1), \dur, 0.15).play;
 \end{lstlisting}
  
-Another example to practice using variables: let's say we want to play two \texttt{Pbind}s simultaneously. One of them does an ascending major scale, the other does a descending major scale one octave above. Both use the same list of durations. Here is one way of writing this:
- 
+Outro exemplo para praticar o uso de variáveis: digamos que queremos tocar dois \texttt{Pbind}s simultaneamente. Uma delas faz uma escala maior ascendente e a outra faz uma escala maior descedente uma oitava acima. Ambas usam a mesma lista de durações. Eis um jeito de escrever isso:
+
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-~scale = [0, 1, 2, 3, 4, 5, 6, 7];
+~escala = [0, 1, 2, 3, 4, 5, 6, 7];
 ~durs = [0.4, 0.2, 0.2, 0.4, 0.8, 0.2, 0.2, 0.2];
 (
 Pbind(
-	\degree, Pseq(~scale),
+	\degree, Pseq(~escala),
 	\dur, Pseq(~durs)
 ).play;
 
 Pbind(
-	\degree, Pseq(~scale.reverse + 7),
+	\degree, Pseq(~escala.reverse + 7),
 	\dur, Pseq(~durs)
 ).play;
 )
 \end{lstlisting}
  
-Interesting tricks here: thanks to variables, we reuse the same list of scale degrees and durations for both \texttt{Pbind}s. We wanted the second scale to be descending and one octave above the first. To achieve this, we simply use the message \texttt{.reverse} to reverse the order of the list (type \texttt{$\sim$scale.reverse} on a new line and evaluate to see exactly what it does). Then we add 7 to transpose it one octave above (test it as well to see the result).\footnote{We could also have used \texttt{\textbackslash ctranspose, 12} to get the same transposition.} We played two \texttt{Pbind}s at the same time by enclosing them within a single code block.
+Alguns truques interessantes: graças às variáveis, reutilizamos a mesma lista de graus de escala e durações para ambas \texttt{Pbind}s. Quisemos que a segunda escala fosse descendente e uma oitava acima da primeira. Para obter isso, simplesmente utilizamos a mensagem \texttt{.reverse} para inverter a ordem da lista (digite \texttt{$\sim$scale.reverse} em um nova linha e execute para ver exatamente o que ela faz). Depois, adicionamos 7 para transpô-la uma oitava acima (teste isso também para ver o resultado).\footnote{Poderíamos também ter usado \texttt{\textbackslash ctranspose, 12} para obter a mesma transposição.} Tocamos dois \texttt{Pbind}s ao mesmo tempo fechando-os no mesmo bloco de código.
 
-Exercise: create one additional \texttt{Pbind} inside the code block above, so that you hear three simultaneous voices. Use both variables (\texttt{$\sim$scale} and \texttt{$\sim$durs}) in some different way---for example, use them inside a pattern other than Pseq; change transposition amount; reverse and/or multiply durations; etc.
+Exercício: crie uma \texttt{Pbind} adicional dentro do código acima, para que você ouça três vozes simultâneas. Use ambas as variáveis (\texttt{$\sim$scale} e \texttt{$\sim$durs}) de alguma maneira diferente---por exemplo, use-a dentro de um pattern diferente de Pseq; mude o intervalo de transposição; inverta e/ou multiplique as durações; 
