@@ -1,139 +1,136 @@
-\section{Fun with Arrays}
+\section{Divirta-se com Arrays}
 \label{sec:arrays}
 
-Arrays are the most common type of collections in SuperCollider. Every time you write a collection of items between square brackets, like \texttt{[0, 1, 2]}, it is an instance of the class \texttt{Array}. You will often find yourself manipulating arrays in various ways. Here is a small selection of some interesting methods that arrays understand:
+Arrays (N.T.: em computação, o termo “array” pode ser traduzido como “vetor”, mas é comum mantê-lo no original) são o tipo mais comum de coleção no SuperCollider. Toda vez que você escreve uma coleção de itens entre colchetes, como \texttt{[0, 1, 2]}, cria uma instância da classe \texttt{Array}. Frequentemente, você se verá manipulando arrays de diversas formas. Aqui está uma pequena seleção de métodos interessantes que arrays entendem:
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Create some array
+// Criar uma array
 a = [10, 11, 12, 13, 14, 15, 16, 17];
 
-a.reverse;  // reverse
-a.scramble; // scramble
-a.choose;  // picks one element at random
-a.size;	  // returns size of array
-a.at(0);   // retrieves item at specified position
-a[0]	;  // same as above
-a.wrapAt(9); // retrieves item at specified position, wrapping around if > a.size
-["wow", 99] ++ a; // concatenates the two arrays into a new one
-a ++ \hi;  // a Symbol is a single character
-a ++ 'hi'; // same as above
-a ++ "hi"; // a String is a collection of characters
-a.add(44);    // creates new array with new element at the end 
-a.insert(5, "wow"); // inserts "wow" at position 5, pushes other items forward (returns new array)
-a; // evaluate this and see that none of the above operations actually changed the original array
-a.put(2, "oops"); // put "oops" at index 2 (destructive; evaluate line above again to check)
-a.permute(3); // permute: item in position 3 goes to position 0, and vice-versa 
-a.mirror;  // makes it a palindrome
-a.powerset; // returns all possible combinations of the array's elements
+a.reverse;  // inverter
+a.scramble; // embaralhar
+a.choose;  // escolher um elemento ao acaso
+a.size;	  // retorna o tamanho da array
+a.at(0);   // recupera um item na posição especificada
+a[0]	;  // o mesmo que acima
+a.wrapAt(9); // recupera item na posição especificada, relendo do início se > a.size
+["wow", 99] ++ a; // concatena duas arrays em uma nova
+a ++ \oi;  // um Símbolo (“Symbol”) é entendido como um único caracter
+a ++ ‘oi’; // o mesmo que acima
+a ++ “oi”; // uma cadeia (“String”) é entendida como uma coleção de caracteres
+a.add(44);    // cria uma array adicionando o novo elemento ao final
+a.insert(5, “uau”); // insere “uau” na posição 5, empurra itens seguintes para a frente (retorna uma nova array)
+a; // rode isso e veja que nenhuma das operações acima mudou a array original
+a.put(2, "oops"); // colocar "oops" no índice 2 (destrutivo; volte a rodar a linha acima para verificar)
+a.permute(3); // permutar: item na posição 3 vai para a posição zero, e vice-versa
+a.mirror;  // faz um palíndromo
+a.powerset; // retorna todas as possíveis combinações dos elementos da array
 \end{lstlisting}
  
 
-You can do math with arrays:
+Você pode fazer contas com arrays:
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 [1, 2, 3, 4, 5] + 10;
 [1, 2, 3, 4, 5] * 10;
-([1, 2, 3, 4, 5] / 7).round(0.01); // notice the parentheses for precedence
-x = 11; y = 12; // try some variables
+([1, 2, 3, 4, 5] / 7).round(0.01); // note o uso de parênteses para precedência
+x = 11; y = 12; // experimente algumas variáveis
 [x, y, 9] * 100;
-// but make sure you only do math with proper numbers
-[1, 2, 3, 4, "oops", 11] + 10; // strange result
+// mas garanta que você só está fazendo contas com números de verdade
+[1, 2, 3, 4, "oops", 11] + 10; // resultado estranho
 \end{lstlisting}
  
 
 \subsection{Creating new Arrays}
 
-Here are a few ways of using the class \texttt{Array} to create new collections:
+Aqui há algumas maneiras de usar a classe \texttt{Array} para criar novas coleções:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Arithmetic series
+// Progressão aritmética (definindo tamanho, início e razão da progressão)
 Array.series(size: 6, start: 10, step: 3);
-// Geometric series
+// Progressão geométrica (definindo tamanho, início e razão da progressão)
 Array.geom(size: 10, start: 1, grow: 2);
-// Compare the two:
-Array.series(7, 100, -10); // 7 items; start at 100, step of -10
-Array.geom(7, 100, 0.9); // 7 items; start at 100; multiply by 0.9 each time
-// Meet the .fill method
-Array.fill(10, "same");
+// Compare as duas:
+Array.series(7, 100, -10); // 7 itens; começando em 100, razão de -10
+Array.geom(7, 100, 0.9); // 7 itens; começando em 100; multiplicar por 0.9 a cada vez
+// Conheça o método .fill
+Array.fill(10, “igual”);
 // Compare:
 Array.fill(10, rrand(1, 10)); 
-Array.fill(10, {rrand(1, 10)}); // function is re-evaluated 10 times
-// The function for the .fill method can take a default argument that is a counter.
-// The argument name can be whatever you want.
+Array.fill(10, {rrand(1, 10)}); // a função é reexecutada 10 vezes
+// A função definida para o método .fill pode receber um argumento padrão que é um contador.
+// O nome do argumento pode ser o que você quiser.
 Array.fill(10, {arg counter; counter * 10});
-// For example, generating a list of harmonic frequencies:
-Array.fill(10, {arg wow; wow+1 * 440}); 
-// The .newClear method
-a = Array.newClear(7); // creates an empty array of given size
-a[3] = "wow"; // same as a.put(3, "wow")
+// Por exemplo, gerando uma lista de frequências harmônicas:
+Array.fill(10, {arg uau; uau+1 * 440}); 
+// O método .newClear
+a = Array.newClear(7); // cria uma array vazia do tamanho pedido
+a[3] = “uau”; // mesmo que a.put(3, “uau”)
 \end{lstlisting}
 
 
-\subsection{That funny exclamation mark}
+\subsection{Aquele ponto de exclamação esquisito}
 
-It is just a matter of time until you see something like \texttt{30!4} in someone else's code. This shortcut notation simply creates an array containing the same item a number of times:
+É só uma questão de tempo até que você veja algo como \texttt{30!4} no código de alguém. Essa notação abreviada simplesmente cria uma array contendo o mesmo item um determinado número de vezes:
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Shortcut notation:
+// Notação abreviada:
 30!4;
-"hello" ! 10;
-// It gives the same results as the following:
+“alô” ! 10;
+// Dá o mesmo resultado que o seguinte:
 30.dup(4);
-"hello".dup(10);
-// or
+“alô”.dup(10);
+// ou
 Array.fill(4, 30);
-Array.fill(10, "hello");
+Array.fill(10, “alô”);
 \end{lstlisting}
  
 
-\subsection{The two dots between parentheses}
+\subsection{Os dois pontos entre parênteses}
 
-Here is another common syntax shortcut used to create arrays.
+Aqui está mais uma sintaxe abreviada muito usada para criar arrays.
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// What is this?
+// O que é isso?
 (50..79);
-// It's a shortcut to generate an array with an arithmetic series of numbers.
-// The above has the same result as:
+// É um atalho para gerar uma array com uma progressão aritmética de número.
+// O atalho acima tem o mesmo resultado que:
 series(50, 51, 79);
-// or
+// ou
 Array.series(30, 50, 1);
-// For a step different than 1, you can do this:
-(50, 53 .. 79); // step of 3
-// Same result as:
+// Para uma razão diferente de 1, você pode fazer o seguinte:
+(50, 53 .. 79); // razão de 3
+// Mesmo resultado que:
 series(50, 53, 79);
 Array.series(10, 50, 3);
 \end{lstlisting}
- 
 
-Note that each command implies a slightly different way of thinking. The \texttt{(50..79)} allows you to think this way: ``\emph{just give me an array from 50 to 79}.'' You don't necessarily think about how many items the array will end up having. On the other hand, \texttt{Array.series} allows you to think: ``\emph{just give me an array with 30 items total, counting up from 50}.'' You don't necessarily think about who is going to be the last number in the series.
+Note que cada comando implica um jeito de pensar ligeiramente diferente. O \texttt{(50..79)} permite que você pense assim: “\emph{apenas me dê um array de 50 a 79}.” Você não precisa necessariamente pensar a quantidade de itens que a array terá. Por outro lado, \texttt{Array.series} permite pensar: “\emph{apenas me dê uma array com 30 itens no total, começando a partir do 50}.” Você não precisa necessariamente pensar em qual será o último número da série.
 
-Also note that the shortcut uses parentheses, not square brackets. The resulting array, of course, will be in square brackets.
+Também note que o atalho usa parênteses, não colchetes. A array resultante, obviamente, virá entre colchetes.
+\subsection{Como “fazer” uma Array}
 
-\subsection{How to ``do'' an Array}
+Muitas vezes você terá de fazer alguma ação com cada um dos itens de uma coleção. Você pode usar o método \texttt{do} (“faça”) para isso:
 
-Often you will need to do some action over all items of a collection. We can use the method \texttt{do} for this:
 
- 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-~myFreqs = Array.fill(10, {rrand(440, 880)});
+~minhasFreqs = Array.fill(10, {rrand(440, 880)});
 
-// Now let's do some simple action on every item of the list:
-~myFreqs.do({arg item, count; ("Item " ++ count ++ " is " ++ item ++ " Hz. Closest midinote is " ++ item.cpsmidi.round).postln});
+//Agora vamos fazer uma ação simples com cada um dos itens da lista:
+~minhasFreqs.do({arg item, contador; ("Item " ++ contador ++ " é " ++ item ++ " Hz. A nota MIDI mais próxima é " ++ item.cpsmidi.round).postln});
 
-// If you don't need the counter, just use one argument:
-~myFreqs.do({arg item; {SinOsc.ar(item, 0, 0.1)}.play});
-~myFreqs.do({arg item; item.squared.postln});
+// Se você não precisa do contador, use apenas um argumento:
+~minhasFreqs.do({arg item; item.squared.postln});
 
-// Of course something as simple as the last one could be done like this:
-~myFreqs.squared;
+//Claro que algo simples como o exemplo anterior poderia ser feito assim:
+~minhasFreqs.squared;
 \end{lstlisting}
  
 
-In summary: when you ``do'' an array, you provide a function. The message \texttt{do} will iterate through the items of the array and evaluate that function each time. The function can take two arguments by default: the array item at current iteration, and a counter that keeps track of number of iterations. The names of these arguments can be whatever you want, but they are always in this order: item, count.
+Em resumo: quando você “faz” uma array, você fornece uma função. A mensagem \texttt{do} será iterada cada item da array e aquela função será executada todas as vezes. A função pode receber dois argumentos por definição: o item da array na iteração atual e um contador que acompanha o número de iterações. Os nomes destes argumentos podem ser o que você quiser, mas estarão sempre nesta ordem:: item, contador.
 
-See also the method \texttt{collect}, which is very similar to \texttt{do}, but returns a new collection with all intermediate results.
+Veja também o método \texttt{collect}, que é muito similar ao \texttt{do}, mas retorna uma nova coleção com todos os resultados intermediários.
