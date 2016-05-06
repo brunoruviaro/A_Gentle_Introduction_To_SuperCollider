@@ -1,14 +1,14 @@
-\section{Microphone Input}
+\section{Entrada de Microfone}
 
-The example below shows how you can easily access sound input from your sound card with the \texttt{SoundIn} UGen.\footnote{Since \texttt{In.ar} will read from any bus, and you know that your soundcard inputs are by default assigned to buses 8-15, you could write \texttt{In.ar(8)} to get sound from your microphone. That works just fine, but \texttt{SoundIn.ar} is a more convenient option.}
+O exemplo abaixo mostra como você pode facilmente acessar a entrada da sua placa de som com a UGen \texttt{SoundIn}.\footnote{Visto que \texttt{In.ar} irá ler de qualquer canal e você sabe que as entradas da sua placa de som são por padrão assinaladas para os canais 8-15, você poderia escrever \texttt{In.ar(8)} para obter som do seu microfone. Isso funciona bem, mas \texttt{SoundIn.ar} é uma opção mais conveniente.}
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Warning: use headphones to avoid feedback
-{SoundIn.ar(0)}.play; // same as In.ar(8): takes sound from the first input bus
+// Aviso: use fones de ouvido para evitar microfonia
+{SoundIn.ar(0)}.play; // o mesmo que In.ar(8): recebe som do primeiro canal de entrada
 
-// Stereo version
-{SoundIn.ar([0, 1])}.play; // first and second inputs
+// Versão estéreo
+{SoundIn.ar([0, 1])}.play; // primeira e segunda entradas
 
-// Some reverb just for fun?
+// Um pouco de reverb só para animar?
 {FreeVerb.ar(SoundIn.ar([0, 1]), mix: 0.5, room: 0.9)}.play;
 \end{lstlisting}
