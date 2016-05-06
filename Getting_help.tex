@@ -1,30 +1,33 @@
-\section{Getting Help}
+\section{Obtendo Ajuda}
 
-Learn how to make good use of the Help files. Often you will find useful examples at the bottom of each Help page. Be sure to scroll down to check them out, even (or specially) if you don't fully understand the text explanations at first. You can run the examples directly from the Help browser, or you can copy and paste the code onto a new window to play around with it. 
+Aprenda a usar bem os arquivos da Ajuda (“Help”). Muitas vezes, ao final de cada página da Ajuda, há exemplos úteis.  Role a página para baixo para conferi-los, mesmo que (ou especialmente se) você não entendeu completamente as explicações do texto. Você pode rodar os exemplos diretamente do browser da Ajuda ou você pode copiar e colar o código em uma nova janela para brincar com ele. 
 
-Select any valid class or method in your SuperCollider code (double-clicking the word will select it), and hit [ctrl+D] to open the corresponding Help file. If you select a class name (for example, \texttt{MouseX}), you will be directed to the class Help file. If you select a method, you will be directed to a list of classes that understand that method (for example, ask for help on the method \texttt{scramble}).\footnote{Attention: SuperCollider will display in blue any word that starts with a Capital letter. This means that the color blue \emph{does not guarantee} that the word is typo-free: for example, if you type Sinosc (with wrong lowercase "o"), it will still show up in blue.}
+Selecione qualquer classe ou método válidos no seu código de SuperCollider (um duplo-clique na palavra irá selecioná-la) e aperte [ctrl+D] para abrir o arquivo de Help correspondente. Se você selecionar o nome de uma classe (por exemplo, \texttt{MouseX}), você será direcionado para o arquivo de Ajuda da classe. Se você selecionar um método (por exemplo, peça ajuda do método \texttt{scramble}. \footnote{Atenção: O SuperCollider vai mostrar em azul qualquer palavra que começa com uma letra maiúscula. Isso significa que a cor azul \emph{não garante} que a palavra esteja livre de erros: por exemplo, se você digitar Sinosc (com o “o” minúsculo incorreto), ainda assim a palavra aparece em azul.}
 
-Other ways to explore the Help files in the SuperCollider IDE are the ``Browse'' and ``Search'' links. Use Browse to navigate the files by categories, and Search to look for words in all Help files. Important note about the Help Browser in the SuperCollider IDE:
+Outras maneiras de explorar os arquivos de Ajuda da IDE do SuperCollider são os links “Browse” (“Navegar”) e “Search” (“Pesquisar”). Use o Browse para navegar os arquivos por categorias e o Search para pesquisar palavras em todos os arquivos de Ajuda.
+Nota importante sobre o Browser de Ajuda na IDE do SuperCollider:
+
 \begin{itemize}
-\item Use the top-right field (where it says ``Find...'') to look for specific words \emph{within the currently open Help file} (like you would do a ``find'' on a website);
-\item Use the ``Search'' link (to the right of ``Browse'') to search text \emph{across all Help files}.
+\item Use o campo superior direito (onde se lê “Find…”) para procurar palavras específicas \emph{dentro do arquivo de Help que está aberto} (como você usaria um “find” para localizar algo em um website);
+\item Use o link “Search” (à direita de “Browse”) para procurar texto \emph{em todos os arquivos de Ajuda}.
 \end{itemize}
 
-When you first open parentheses to add arguments to a given method, SC displays a little ``tooltip help'' to show you what the expected arguments are. For example, type the beginning of line that you see in figure \ref{fig:tooltip}. Right after opening the first parenthesis, you see the tooltip showing that the arguments to a \texttt{SinOsc.ar} are \texttt{freq}, \texttt{phase}, \texttt{mul}, and \texttt{add}. It also shows us what the default values are. This is exactly the same information you would get from the \texttt{SinOsc} Help file. If the tooltip has disappeared, you can bring it back with [ctrl+Shift+Space].
+Quando você abrir o primeiro parênteses para adicionar argumentos para um método específico, o SC mostra uma pequena “dica de ajuda” para mostrar quais são os argumentos esperados. Por exemplo, digite o início de uma linha que você vê na figura \ref{fig:tooltip}. Logo depois de abrir o primeiro parênteses, a dica mostra que os argumentos para um \texttt{SinOsc.ar} são \texttt{freq}, \texttt{phase}, \texttt{mul} e \texttt{add}. Também aparecem os valores padrão. Esta é exatamente a mesma informação que você obteria no arquivo de Ajuda do \texttt{SinOsc}. Se a dica de ajuda desapareceu, você pode trazê-la de volta com [ctrl+Shift+Espaço].
 
 \begin{figure}[h]
 \centerline{\framebox{
 	\includegraphics[scale=0.3]{fig-help-tooltip-crop.png}}}
-\caption{Helpful info is displayed as you type.}
+\caption{Informação útil é mostrada conforme você vai digitando.}
 \label{fig:tooltip}
 \end{figure}
 
-Another shortcut: if you would like to explicitly name your arguments (like \texttt{SinOsc.ar(freq: 890)}), try hitting the tab key right after opening the parentheses. SC will autocomplete the correct argument name for you, in order, as you type (hit tab after the comma for subsequent argument names).
+Outro atalho: se você quiser explicitamente nomear seus argumentos (como \texttt{SinOsc.ar(freq: 890)}), experimente apertar a tecla Tab logo depois de abrir os parênteses. O SC vai autocompletar para você com o nome do argumento correto, na ordem, à medida que você digita (aperte Tab depois da vírgula para os nomes dos argumentos subsequentes).
 
 \bigskip
 \todo[inline, color=green!40]{ 
-TIP: Create a folder with your own ``personalized help files.'' Whenever you figure out some new trick or learn a new object, write a simple example with explanations in your own words, and save it for the future. It may come in handy a month or a year from now. 
+DICA: Crie uma pasta com seus próprios “arquivos pessoais de ajuda”. Sempre que você descobrir um novo truque ou aprender um novo objeto, escreva um exemplo simples com explicações em suas próprias palavras e salve-o para o futuro. Isso pode ser útil daqui um mês ou um ano.
+
 }
 \bigskip
 
-The exact same Help files can also be found online at \url{http://doc.sccode.org/}.
+Os mesmos arquivos de Ajuda podem ser também encontrados onlin \url{http://doc.sccode.org/}.
