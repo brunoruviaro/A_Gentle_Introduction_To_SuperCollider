@@ -1,43 +1,42 @@
 \section{OSC}
 
-OSC (Open Sound Control) is a great way to communicate any kind of message between different applications or different computers over a network. In many cases, it is a much more flexible alternative to MIDI messages. We don't have space to explain it in more detail here, but the example below should serve as a good starting point.
+OSC (Open Sound Control ou “Controle de Som Aberto”) é uma excelente maneira de comunicar qualquer tipo de mensagem entre diferentes programas ou diferentes computadores em uma rede. Em muitos caos, é uma alternativa muito mais flexível às mensagens MIDI. Não temos espaço para explicar isso em mais detalhes aqui, mas o exemplo abaixo deve servir como um bom ponto de partida.
 
-The goal of the demo is to send OSC messages from a smartphone to your computer, or computer to computer.
+O objetivo desta demonstração é mandar mensagens OSC de um smartphone para seu computador ou de um computador para outro computador.
 
-On the receiver computer, evaluate this simple snippet of code:
+No computador receptor, rode este fragmento simples de código:
 
 \bigskip
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 (
 OSCdef(
-	key: \whatever,
+	key: \seiLa,
 	func: {arg ...args; args.postln},
-	path: '/stuff')
+	path: ‘/coisas’)
 )
 \end{lstlisting}
 
-Note: hitting [ctrl+.] will interrupt the \texttt{OSCdef} and you won't receive any more messages.
+Nota: pressionando [ctrl+.] interromperá o \texttt{OSCdef} e você não receberá mais mensagens.
 
-\subsection{Sending OSC from another computer}
+\subsection{Mandando OSC para um outro computador}
 
-This assumes that both computers are running SuperCollider and connected to a network. Find the IP address of the receiver computer, and evaluate the following lines in the sender computer:
+Isso assume que ambos os computadores estejam rodando o SuperCollider e conectados a uma rede. Descubra o endereço IP do computador receptor e rode as seguintes linhas no computador emissor:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Use this on the machine sending messages
-~destination = NetAddr("127.0.0.1", 57120); // use correct IP address of destination computer
+// Use isso na máquina que está mandando mensagens
+~destino = NetAddr("127.0.0.1", 57120); // use o endereço IP correto para o computador de destino
 
-~destination.sendMsg("/stuff", "heelloooo");
+~destino.sendMsg(“/coisas”, “aaloooo");
 \end{lstlisting}
 
-
-\subsection{Sending OSC from a smartphone}
+\subsection{Mandando OSC de um smartphone}
 
 \begin{itemize}
-\item Install any free OSC app on the phone (for example, gyrosc);
-\item Enter the IP address of the receiver computer into the OSC app (as 'target');
-\item Enter SuperCollider's receiving port into the OSC app (usually 57120);
-\item Check the exact message path that the app uses to send OSC to, and change your OSCdef accordingly;
-\item Make sure your phone is connected to the network
+\item Instale qualquer aplicativo grátis de OSC no telefone (por exemplo, gyrosc);
+\item Entre o endereço IP do computador receptor no aplicativo OSC (como ‘target’);
+\item Entre a porta de entrada do SuperCollider no app OSC (geralmente 57120);
+\item Verifique o caminho de mensagem (“message path”) que o aplicativo usa para mandar OSC e mude o seu OSCdef de acordo;
+\item Tenha certeza que seu telefone está conectado à rede
 \end{itemize}
 
-As long as your phone is sending messages to the proper path, you should see them arriving on the computer.
+Desde que seu telefone esteja enviando mensagens para o caminho correto, você deve vê-las chegando no computador.
