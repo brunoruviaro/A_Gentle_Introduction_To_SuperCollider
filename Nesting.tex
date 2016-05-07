@@ -1,40 +1,39 @@
-\section{Nesting}
+\section{Aninhamento}
 \label{sec:nesting}
 
-The solution to the last exercise has led you to nest things one inside the other. David Cottle has an excellent explanation of nesting in the SuperCollider book, so we will just quote it here.\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, pp. 8-9.}
+A solução do último exercício levou você a aninhar coisas uma dentro da outra. David Cottle tem uma explicação excelente para aninhamento no The SuperCollider Book, então simplesmente o citaremos aqui.\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, pp. 8-9.}
 
 \begin{quotation}
-\textit{To further clarify the idea of nesting, consider a hypothetical example in which SC will make you lunch. To do so, you might use a} \texttt{serve} message. \textit{The arguments might be salad, main course, and dessert. But just saying} \texttt{serve(lettuce, fish, banana)} \textit{may not give you the results you want. So to be safe you could clarify those arguments, replacing each with a nested message and argument.}
+\textit{Para explicar melhor a ideia de aninhamento considere um exemplo hipotético no qual o SC vai preparar sua refeição. Para fazer isso você pode usar uma mensagem} \texttt{servir}. \textit{Os argumentos podem ser salada, prato principal e sobremesa. Mas apenas dizer} \texttt{servir(alface, peixe, banana)} \textit{talvez não produza o resultado que você quer. Então para ficar seguro você pode explicar estes argumentos, substituindo-os por uma mensagem aninhada e um argumento.}
 \end{quotation}
 
-\texttt{serve(toss(lettuce, tomato, cheese), bake(fish, 400, 20), mix(banana, icecream))
+\texttt{servir(misturar(alface, tomate, queijo), assar(peixe, 400, 20), bater(banana, sorvete))
 }
 \begin{quotation}
-\textit{SC would then serve not just lettuce, fish, and banana, but a tossed salad with lettuce, tomato, and cheese; a baked fish; and a banana sundae. These inner commands can be further clarified by nesting a message(arg) for each ingredient: lettuce, tomato, cheese, and so on. Each internal message produces a result that is in turn used as an argument by the outer message.}
+\textit{o SC então não apenas servirá alface peixe e banana, mas uma salada mista com alface, tomate e queijo; um peixe assado e um sundae de banana. Estes comandos internos podem ser ainda mais explicados, aninhando uma mensagem(arg) para cada ingrediente: alface, tomate, queijo e assim por diante. Cada mensagem interna produz um resultado que por sua vez é usado como argumento pela mensagem exterior.}
 \end{quotation}
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize, label=code-dinner]
-// Pseudo-code to make dinner: 
-serve(
-	toss(
-		wash(lettuce, water, 10),
-		dice(tomato, small),
-		sprinkle(choose([blue, feta, gouda]))
+// Pseudo-código para fazer o jantar: 
+servir(
+	misturar(
+		lavar(alface, água, 10),
+		picar(tomate, pequendo),
+		salpicar(escolher([gorgonzola, feta, gouda]))
 	),
-	bake(catch(lagoon, hook, bamboo), 400, 20),
-	mix(
-		slice(peel(banana), 20),
-		cook(mix(milk, sugar, starch), 200, 10)
+	assar(pegar(lagoa, anzol, vara), 400, 20),
+	misturar(
+		fatiar(descascar(banana), 20),
+		cozinhar(misturar(leite, açúcar, amido), 200, 10)
 	)
 );
 \end{lstlisting}
 
 \begin{quotation}
-\textit{When the nesting has several levels, we can use new lines and indents for clarity. Some messages and arguments are left on one line, some are spread out with one argument per line---whichever is clearer. Each indent level should indicate a level of nesting. (Note that you can have any amount of white space---new lines, tabs, or spaces---between bits of code.)}
+\textit{Quando o aninhamento tem diversos níveis, podemos usar novas linhas e indentações para uma maior clareza. Algumas mensagens e argumentos estão à esquerda em uma linha, alguns estão distribuídos com um argumento por linha---o que quer seja mais claro. Cada nível de indentação deve indicar um nível de aninhamento. (Note que você pode ter qualquer quantidade de espaço em branco---novas linhas, tabulações e espaços---entre trechos de código.)}
 
-[In the dinner example]\textit{ the lunch program is now told to wash the lettuce in water for 10 minutes and to dice the tomato into small pieces before tossing them into the salad bowl and sprinkling them with cheese. You've also specified where to catch the fish and to bake it at 400 degrees for 20 minutes before serving, and so on.}
-
-\textit{To ``read'' this style of code you start from the innermost nested message and move out to each successive layer. Here is an example aligned to show how the innermost message is nested inside the outer messages.}
+[No exemplo do jantar,]\textit{ ao programa de refeições agora se pede para lavar a alface em água por 10 minutos e para picar o tomate em pequenos pedaços antes de misturá-los na travessa da salada e salpicá-los com queijo. Você também especificou onde pegar o peixe e disse para assá-lo a 400 graus por 20 minutos antes de servir e assim por diante.} 
+\textit{Para “ler” este estilo de código, você começa da mensagem aninhada mais interna e vai seguindo para fora camada por camada. Aqui está um exemplo alinhado de maneira a mostrar como a mensagem mais interna é aninhada dentro das outras mensagens.}
 \end{quotation}
 
 %\lstinputlisting[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]{code-nesting.scd}
@@ -46,13 +45,13 @@ serve(
 round(sort(dup({exprand(1.0, 1000.0)}, 100)), 0.01);
 \end{lstlisting}
 
-The code below is another example of nesting. Answer the questions that follow. You don't have to explain what the numbers are doing---the task is simply to identify the arguments in each layer of nesting. (Example and exercise questions also borrowed and slightly adapted from Cottle's tutorial.)
+O código abaixo é um outro exemplo de aninhamento. Responda às perguntas que se seguem. Você não precisa explicar o que os números estão fazendo---a tarefa é simplesmente idenftificar os argumetnos em cada camada de aninhamento. (Este exemplo e as questões do exercício também são emprestadas e ligeiramente modificadas do tutorial do Cottle.)
 
  
 %\lstinputlisting[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize, label=code-nested-music]{code-nested-music.scd}
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Nesting and proper indentation
+// Aninhamento e indentação apropriada
 (
 {
 	CombN.ar(
@@ -70,24 +69,22 @@ The code below is another example of nesting. Answer the questions that follow. 
 \end{lstlisting}
 
 \begin{enumerate}[a)]
-\item What number is the second argument for \texttt{LFNoise1.ar}?
-\item What is the first argument for \texttt{LFSaw.ar}?
-\item What is the third argument for \texttt{LFNoise1.ar}?
-\item How many arguments are in \texttt{midicps}?
-\item What is the third argument for \texttt{SinOsc.ar}?
-\item What are the second and third arguments for \texttt{CombN.ar}?
+\item Qual número é o segundo argumento para \texttt{LFNoise1.ar}?
+\item Qual o primeiro argumento para \texttt{LFSaw.ar}?
+\item Qual o terceiro argumento para \texttt{LFNoise1.ar}?
+\item Quantos argumentos estão em \texttt{midicps}?
+\item Qual o terceiro argumento para \texttt{SinOsc.ar}?
+\item Qual o segundo e terceiro argumentos para \texttt{CombN.ar}?
 \end{enumerate}
 
-
- 
-See the end of this document for the answers.\endnote{ Answers: 
+Confira as respostas ao final deste documento.\endnote{ Respostas: 
 \begin{enumerate}[a)]
 \item 24
-\item $\left[5, 5.123\right]$ [both numbers and brackets)
-\item Entire \texttt{LFSaw} line
-\item Only one
+\item $\left[5, 5.123\right]$ (tanto números quanto colchetes)
+\item Toda a linha do \texttt{LFSaw}
+\item Somente um
 \item 0.4
-\item 1 and 0.3
+\item 1 e 0.3
 \end{enumerate}
  }
 
@@ -95,6 +92,6 @@ See the end of this document for the answers.\endnote{ Answers:
  
 \bigskip
 \todo[inline, color=green!40]{ 
-TIP: If for whatever reason your code has lost proper indentation, simply select all of it and go to menu Edit$\rightarrow$Autoindent Line or Region, and it will be fixed.
+DICA: Se por qualquer motivo, seu código perdeu a indentação apropriada, simplesmente selecione tudo e vá para o menu Edit$\rightarrow$Autoindent Line or Region (“Autoindentar Linha ou Região”) e isto será consertado.
 }
 \bigskip
