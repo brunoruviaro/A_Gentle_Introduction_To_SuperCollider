@@ -1,7 +1,7 @@
 \section{Divirta-se com Arrays}
 \label{sec:arrays}
 
-Arrays (N.T.: em computação, o termo “array” pode ser traduzido como “vetor”, mas é comum mantê-lo no original) são o tipo mais comum de coleção no SuperCollider. Toda vez que você escreve uma coleção de itens entre colchetes, como \texttt{[0, 1, 2]}, cria uma instância da classe \texttt{Array}. Frequentemente, você se verá manipulando arrays de diversas formas. Aqui está uma pequena seleção de métodos interessantes que arrays entendem:
+Arrays [N.T.: em computação, o termo “array” pode ser traduzido como “vetor”, mas é comum mantê-lo no original] são o tipo mais comum de coleção no SuperCollider. Toda vez que você escreve uma coleção de itens entre colchetes, como \texttt{[0, 1, 2]}, cria uma instância da classe \texttt{Array}. Frequentemente, você se verá manipulando arrays de diversas formas. Aqui está uma pequena seleção de métodos interessantes que arrays entendem:
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -73,7 +73,7 @@ a[3] = “uau”; // mesmo que a.put(3, “uau”)
 
 \subsection{Aquele ponto de exclamação esquisito}
 
-É só uma questão de tempo até que você veja algo como \texttt{30!4} no código de alguém. Essa notação abreviada simplesmente cria uma array contendo o mesmo item um determinado número de vezes:
+É só uma questão de tempo até que você veja algo como \texttt{30!4} no código de alguém. Essa notação abreviada simplesmente cria um array contendo o mesmo item um determinado número de vezes:
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -97,7 +97,7 @@ Aqui está mais uma sintaxe abreviada muito usada para criar arrays.
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // O que é isso?
 (50..79);
-// É um atalho para gerar uma array com uma progressão aritmética de número.
+// É um atalho para gerar um array com uma progressão aritmética de número.
 // O atalho acima tem o mesmo resultado que:
 series(50, 51, 79);
 // ou
@@ -109,10 +109,10 @@ series(50, 53, 79);
 Array.series(10, 50, 3);
 \end{lstlisting}
 
-Note que cada comando implica um jeito de pensar ligeiramente diferente. O \texttt{(50..79)} permite que você pense assim: “\emph{apenas me dê um array de 50 a 79}.” Você não precisa necessariamente pensar a quantidade de itens que a array terá. Por outro lado, \texttt{Array.series} permite pensar: “\emph{apenas me dê uma array com 30 itens no total, começando a partir do 50}.” Você não precisa necessariamente pensar em qual será o último número da série.
+Note que cada comando implica um jeito de pensar ligeiramente diferente. O \texttt{(50..79)} permite que você pense assim: “\emph{apenas me dê um array de 50 a 79}.” Você não precisa necessariamente pensar a quantidade de itens que o array terá. Por outro lado, \texttt{Array.series} permite pensar: “\emph{apenas me dê um array com 30 itens no total, começando a partir do 50}.” Você não precisa necessariamente pensar em qual será o último número da série.
 
-Também note que o atalho usa parênteses, não colchetes. A array resultante, obviamente, virá entre colchetes.
-\subsection{Como “fazer” uma Array}
+Também note que o atalho usa parênteses, não colchetes. O array resultante, obviamente, virá entre colchetes.
+\subsection{Como “fazer” um Array}
 
 Muitas vezes você terá de fazer alguma ação com cada um dos itens de uma coleção. Você pode usar o método \texttt{do} (“faça”) para isso:
 
@@ -131,6 +131,6 @@ Muitas vezes você terá de fazer alguma ação com cada um dos itens de uma col
 \end{lstlisting}
  
 
-Em resumo: quando você “faz” uma array, você fornece uma função. A mensagem \texttt{do} será iterada cada item da array e aquela função será executada todas as vezes. A função pode receber dois argumentos por definição: o item da array na iteração atual e um contador que acompanha o número de iterações. Os nomes destes argumentos podem ser o que você quiser, mas estarão sempre nesta ordem:: item, contador.
+Em resumo: quando você “faz” um array, você fornece uma função. A mensagem \texttt{do} será iterada cada item do array e aquela função será executada todas as vezes. A função pode receber dois argumentos por definição: o item do array na iteração atual e um contador que acompanha o número de iterações. Os nomes destes argumentos podem ser o que você quiser, mas estarão sempre nesta ordem:: item, contador.
 
 Veja também o método \texttt{collect}, que é muito similar ao \texttt{do}, mas retorna uma nova coleção com todos os resultados intermediários.
