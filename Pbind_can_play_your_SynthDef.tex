@@ -1,23 +1,23 @@
-\section{Pbind can play your SynthDef}
+\section{Pbind pode tocar seu SynthDef}
 
-One of the beauties of creating your synths as \texttt{SynthDef}s is that you can use \texttt{Pbind} to play them.
+Uma das belezas de se criar seus sintetizadores como \texttt{SynthDef}s é que você pode usar \texttt{Pbind} para tocá-los.
 
-Assuming the \texttt{"wow"} SynthDef is still loaded in memory (it should, unless you quit and reopened SC after the last example), try the \texttt{Pbind}s below:
+Assumindo que o SynthDef \texttt{“uau”} ainda esteja armazenado na memória (deveria estar, a não ser que você tenha fechado e reaberto o SC depois do último exemplo), experimente os \texttt{Pbind}s abaixo:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 (
 Pbind(
-	\instrument, "wow",
+	\instrument, “uau”,
 	\degree, Pwhite(-7, 7),
 	\dur, Prand([0.125, 0.25], inf),
 	\amp, Pwhite(0.5, 1),
-	\wowrelease, 1
+	\uaurelease, 1
 ).play;
 )
 
 (
 Pbind(
-	\instrument, "wow",
+	\instrument, “uau”,
 	\scale, Pstutter(8, Pseq([
 		Scale.lydian,
 		Scale.major,
@@ -27,43 +27,38 @@ Pbind(
 	\degree, Pseq([0, 1, 2, 3, 4, 5, 6, 7], inf),
 	\dur, 0.2,
 	\amp, Pwhite(0.5, 1),
-	\wowrelease, 4,
+	\uaurelease, 4,
 	\legato, 0.1
 ).play;
 )
 \end{lstlisting}
  
-
-When using \texttt{Pbind} to play one of your custom \texttt{SynthDef}s, just keep in mind the following points:
+Ao usar \texttt{Pbind} para tocar um dos seus \texttt{SynthDef}s personalizados, apenas esteja atento aos seguintes pontos:
 
 \begin{itemize}
-\item Use the \texttt{Pbind} key \texttt{\textbackslash instrument} to declare the name of your \texttt{SynthDef}.
+\item Use a chave ("key") \texttt{\textbackslash instrument} do \texttt{Pbind} para declarar o nome do seu \texttt{SynthDef}.
+\item Todos os argumentos do seu SynthDef são controláveis a partir do \texttt{Pbind}: simplesmente use-os como chaves do \texttt{Pbind}. Por exemplo, note o argumento cuamado \texttt{\textbackslash uaurelease} utilizado acima. Esta não é uma das chaves padrão entendidas pelo \texttt{Pbind}---mas sim, é exclusiva da definição de sintetizador  \texttt{uau} (o nome bobo foi escolhido de propósito).
 
-\item All the arguments of your SynthDef are accessible and controllable from inside \texttt{Pbind}: simply use them as \texttt{Pbind} keys. For example, notice the argument called \texttt{\textbackslash wowrelease} used above. It is not one of the default keys understood by \texttt{Pbind}---rather, it is unique to the synth definition \texttt{wow} (the silly name was chosen on purpose).
-
-\item In order to use all of the pitch conversion facilities of \texttt{Pbind} (the keys \texttt{\textbackslash degree}, \texttt{\textbackslash note}, and \texttt{\textbackslash midinote}), make sure your \texttt{SynthDef} has an argument input for \texttt{freq} (it has to be spelled exactly like that). Pbind will do the math for you.
-
-\item If using a sustained envelope such as \texttt{Env.adsr}, make sure your synth has a default argument \texttt{gate = 1} (\texttt{gate} has to be spelled exactly like that, because \texttt{Pbind} uses it behind the scenes to stop notes at the right times).
-
-\item If not using a sustained envelope, make sure your SynthDef includes a doneAction: 2 in an appropriate UGen, in order to automatically free synth nodes in the server.
-
+\item Para utilizar todas as facildades de conversão de alturas do \texttt{Pbind} (as chaves \texttt{\textbackslash degree}, \texttt{\textbackslash note} e \texttt{\textbackslash midinote}), tenha certeza de que seu \texttt{SynthDef} tem um argumento de entrada \texttt{freq} (tem que ser escrito exatamente assim). Pbind fará a matemática para você.
+\item Se for usar um envelope sustentado como \texttt{Env.adsr}, garanta que seu sintetizador tem o argumento padrão \texttt{gate = 1} (\texttt{gate} tem que ser excrito exatamente assim, porque o \texttt{Pbind} o utiliza nos bastidores para parar as notas nos momentos certos).
+\item Se você não estiver usando um envelope sustentado, tenha certeza que seu SynthDef inclui um doneAction: 2 em uma UGen apropriada, para liberar automaticamente os nós de sintetizador no servidor.
 \end{itemize}
 
-Exercise: write one or more \texttt{Pbind}s to play the \texttt{"pluck"} SynthDef provided below. For the \texttt{mutedString} argument, try values between 0.1 and 0.9. Have one of your \texttt{Pbind}s play a slow sequence of chords. Try arpeggiating the chords with \texttt{\textbackslash strum}.
+Exercício: escreva uma ou mais \texttt{Pbind}s para tocar o SyntDef \texttt{"pluck"} fornecido abaixo. Para o argumento \texttt{cordaAbafada}, tente valores entre  0.1 e 0.9. Faça com que seu \texttt{Pbind}s toque uma sequência lenta de acordes. Tente arpejar os acordes com \texttt{\textbackslash strum}.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 (
-SynthDef("pluck", {arg amp = 0.1, freq = 440, decay = 5, mutedString = 0.1;
-var env, snd;
-env = Env.linen(0, decay, 0).kr(doneAction: 2);
+SynthDef("pluck", {arg amp = 0.1, freq = 440, decaimento = 5, cordaAbafada = 0.1;
+var env, som;
+env = Env.linen(0, decaimento, 0).kr(doneAction: 2);
 snd = Pluck.ar(
         in: WhiteNoise.ar(amp),
         trig: Impulse.kr(0),
         maxdelaytime: 0.1,
         delaytime: freq.reciprocal,
-        decaytime: decay,
-        coef: mutedString);
-    Out.ar(0, [snd, snd]);
+        decaytime: decaimento,
+        coef: cordaAbafada);
+    Out.ar(0, [som, som]);
 }).add;
 )
 \end{lstlisting}
