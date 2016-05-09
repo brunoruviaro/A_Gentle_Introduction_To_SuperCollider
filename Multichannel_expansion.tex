@@ -1,26 +1,26 @@
-\section{Multichannel Expansion}
+\section{Expansão Multicanal}
 
-With your Meter window open---[ctrl+M]---, watch this.
+Com sua janela Meter aberta---[ctrl+M]---, observe isso.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 {Out.ar(0, Saw.ar(freq: [440, 570], mul: Line.kr(0, 1, 10)))}.play;
 \end{lstlisting}
 
-We are using a nice \texttt{Line.kr} UGen to ramp up the amplitude from 0 to 1 in 10 seconds. That's neat. But there is a more interesting magic going on here. Did you notice that there are 2 channels of output (left and right)? Did you hear that there is a different note on each channel? And that those two notes come from a \emph{list}---[440, 570]---that is passed to \texttt{Saw.ar} as its \texttt{freq} argument?
+Estamos utilizando uma simpática UGen \texttt{Line.kr} para aumentar a amplitude de 0 a 1 em 10 segundos. Isso é bacana. Mas há outras mágicas interessantes acontecendo aqui. Você percebeu que há dois canais de saída (esquerdo e direito)? Você ouviu que há uma nota diferente em cada canal? Que que estas duas notas vêm de um \emph{list}---[440, 570]---que passa para o \texttt{Saw.ar} como argumento \texttt{freq}?
 
-This is called Multichannel Expansion.
+Isto se chama Expansão Multicanal.
 
-David Cottle jokes that ``multichannel expansion is one [application of arrays] that borders on voodoo.''\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, p. 14} It is one of the most powerful and unique features of SuperCollider, and one that may puzzle people at first.
+David Cottle brinca que “expansão multicanal é uma [aplicação de arrays] que beira o vodu”\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, p. 14} Esta é uma das características do SuperCollider mais poderosas e únicas. E também uma que mais intriga as pessoas no início.
 
-In a nutshell: if you use an array anywhere as one of the arguments of a UGen, \emph{the entire patch is duplicated}. The number of copies created is \textit{the number of items in the array}. These duplicated UGens are sent out to as many \textit{adjacent buses} as needed, starting from the bus specified as the first argument of \texttt{Out.ar}.
+Em poucas palavras: se você utilizar um array como qualquer argumento de uma UGen, \emph{todo o patch é duplicado}. O número de cópias criado é \textit{o número de itens no array}. Estas UGens são enviadas para tantos \textit{canais adjacentes} quanto for necessário, começando pelo primeiro canal especificado como primeiro argumento de \texttt{Out.ar}.
 
-In the example above, we have \texttt{Out.ar(0, ... )}. The \texttt{freq} of the Saw wave is an array of two items: \texttt{[440, 570]}. What does SC do? It ``multichannel expands,'' creating two copies of the entire patch. The first copy is a sawtooth wave with frequency 440 Hz, sent out to bus 0 (your left channel); the second copy is a sawtooth wave with frequency 570 Hz, sent out to bus 1 (your right channel)!
+No exemplo acima, temos \texttt{Out.ar(0, ... )}. O \texttt{freq} da onda dente-de-serra (“Saw”) é um array de dois itens: \texttt{[440, 570]}. O que o SC faz? Ele “expande multicanal”, criando duas cópias de todo o patch. A primeira cópia é uma onda dente-de-serra com uma frequência de 440 Hz, enviada para o canal 0 (seu canal esquerdo); a segunda cópia é uma dente-de-serra com uma frequência de 570 Hz, enviada para o canal 1 (seu canal direito)!
 
-Go ahead and check that for yourself. Change those two frequencies to any other values you like. Listen to the results. One goes to the left channel, the other goes to the right channel. Go even further, and add a third frequency to the list (say, \texttt{[440, 570, 980]}). Watch the Meter window. You will see that the first three outputs are lighting up (but you will only be able to hear the third one if you have a multichannel sound card).
+Vamos lá e verifique você mesmo. Mude estas duas frequências para qualquer outros valores que você quiser. Escute os resultados. Um vai para o canal esquerdo e o outro vai para o direito. Vá além e adicione uma terceira frequência para a lista (digamos, \texttt{[440, 570, 980]}). Observe a janela Meter. Você verá que as três primeiras saídas estão acendendo (mas você só conseguirá ouvir a terceira se tiver uma placa de som multicanal).
 
-What's more: you can use additional arrays in other arguments of the same UGen, or in arguments of other UGens in the same synth. SuperCollider will do the housekeeping and generate synths that follow those values accordingly. For example: right now both frequencies [440, 570] are fading in from 0 to 1 in 10 seconds. But change the code to \texttt{Line.kr(0, 1, [1, 15])} and you'll have the 440 Hz tone take 1 second to fade in, and the 570 Hz tone take 15 seconds to fade in. Try it.
+Além disso: você pode usar arrays adicionais em outros argumentos da mesma UGen ou em argumentos de outras UGens no mesmo sintetizador. O SuperCollider vai manter a casa em ordem e gerar sintetizadores que seguem estes valores corretamente. Por exemplo: agora ambas as frequências [440, 570] estão entrando suavemente (“fade in”) de 0 a 1 em 10 segundos. Mas mude o código para \texttt{Line.kr(0, 1, [1, 15])} e você fará com que o som de 440 Hz demore 1 segundo para crescer e o de 570 Hz leve 15. Experimente.
 
-Exercise: listen to this simulation of a ``busy tone'' of an old telephone. It uses multichannel expansion to create two sine oscillators, each playing a different frequency on a different channel. Make the left channel pulse 2 times per second, and the right channel pulse 3 times per second.\endnote{Solution: \texttt{a = \{Out.ar(0, SinOsc.ar(freq: [800, 880], mul: LFPulse.ar([2, 3])))\}.play;}}
+Exercício: escute esta simulação de um “sinal de ocupado” de um telefone antigo. Ela usa a expansão multicanal para criar dois osciladores senoidais, cada um tocando uma frequência em um canal diferente. Faça o canal esquerdo pulsar 2 vezes por segundo e o canal direito pulsar 3 vezes por segundo. \endnote{Solução: \texttt{a = \{Out.ar(0, SinOsc.ar(freq: [800, 880], mul: LFPulse.ar([2, 3])))\}.play;}}
 
 \medskip
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
