@@ -76,7 +76,7 @@ Pbind(\midinote, Pseq([60, 69, 68.5, 60.25, 70], 1)).play;
  
 \subsection{Andamento}
 
-Os valores que você fornece para a palavra-chave \texttt{\textbackslash dur} de um Pbind estão em \emph{número de tempos}, isto é, 1 significa um tempo, 0.5 significa meio tempo e assim por diate. A não ser que você especifique outra coisa, o tempo padrão é 60 BPM (batidas por minuto). Para tocar em um andamento diferente, simplesmente crie um novo TempoClock. Aqui está um  \texttt{Pbind} tocando a 120 batidas por minuto (BPM):
+Os valores que você fornece para a palavra-chave \texttt{\textbackslash dur} de um Pbind estão em \emph{número de tempos}, isto é, 1 significa um tempo, 0.5 significa meio tempo e assim por diate. A não ser que você especifique outra coisa, o tempo padrão é 60 BPM (batidas por minuto). Para tocar em um andamento diferente, simplesmente crie um novo TempoClock. Aqui está um \texttt{Pbind} tocando a 120 batidas por minuto (BPM):
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 (
@@ -86,7 +86,7 @@ Pbind(\degree, Pseq([0, 0.1, 1, 2, 3, 4, 5, 6, 7]),
 )
 \end{lstlisting}
  
-Por acaso, você percebeu que o \texttt{Pseq} recebe um único argumento (a lista)? Onde está o valor \texttt{repeats} que sempre veio após a lista? Você pode ouvir que o exemplo toca a sequência apenas uma vez, mas por que? Está é uma propriedade comum a todos os Patterns (e também de muitos outros objetos dentro do SuperCollider): se você omite um argumento, será utilizado um valor padrão que já vem embutido. Neste caso, o \texttt{repeats} padrão para \texttt{Pseq} é 1. Lembra-se do seu primeiro \texttt{Pbind} ridiculamente simples? Era um mero \texttt{Pbind(\textbackslash degree, 0).play} e ele somente sabia tocar uma nota. Você não forneceu nenhuma informação para duração, amplitude, legato, etc. Nestes casos \texttt{Pbind} simplesmente segue em frente e usa os valores padrão.
+Por acaso, você percebeu que o \texttt{Pseq} recebe um único argumento (a lista)? Onde está o valor \texttt{repeats} que sempre veio após a lista? Você pode ouvir que o exemplo toca a sequência apenas uma vez, mas por que? Está é uma propriedade comum a todos os Patterns (e também de muitos outros objetos dentro do SuperCollider): se você omite um argumento, será utilizado um valor padrão que já vem embutido. Neste caso, o \texttt{repeats} padrão para \texttt{Pseq} é 1. Lembra-se do seu primeiro \texttt{Pbind} ridiculamente simples? Era um mero \texttt{Pbind(\textbackslash degree, 0).play} e ele somente sabia tocar uma nota. Você não forneceu nenhuma informação para duração, amplitude, legato, etc. Nestes casos o \texttt{Pbind} simplesmente segue em frente e usa os valores padrão.
 
 
 \subsection{Pausas}
@@ -104,9 +104,9 @@ Pbind(
 \end{lstlisting}
  
 
-\subsection{Tocando dois ou mais Pbind juntos}
+\subsection{Tocando dois ou mais Pbinds juntos}
 
-Para disparar alguns Pbind simultaneamente, simplesmente empacote todos eles em um único bloco de código:
+Para disparar alguns Pbinds simultaneamente, simplesmente empacote todos eles em um único bloco de código:
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 ( // abrindo o grande bloco
@@ -130,7 +130,7 @@ Pbind(
 ) // fechando o grande bloco
 \end{lstlisting}
 
-Para tocar Pbinds de uma maneira temporalmente ordenada (em vez de simplesmente executá-los manualmente um após o outro), você pode usar \texttt{\{ \}.fork} ("garfo", uma maneira abreviada de criar rotinas de programação):
+Para tocar Pbinds de uma maneira temporalmente ordenada (em vez de simplesmente executá-los manualmente um após o outro), você pode usar \texttt{\{ \}.fork} [N.T.: "garfo", uma maneira abreviada de criar rotinas de programação]:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // Exemplo básico de fork. Observe o Post window:
@@ -178,7 +178,7 @@ Para formas avançadas de tocar \texttt{Pbins}s simultaneamente e em sequência,
 
 \subsection{Usando variáveis}
 
-Na seção anterior, “Expandindo seu vocabulário de Patterns”, você percebeu quantas vezes teve de digitar a mesma lista de notas [0, 2, 3, 5, 7, 8, 11, 12] diversas vezes para múltiplas \texttt{Pbind}s? Não é muito eficiente ficar copiando a mesma coisa à mão, certo? Em programação sempre que você se vir fazendo a mesma tarefa repetidas vezes, é provavelmente hora de adotar uma estratégia mais inteligente de chegar ao mesmo objetivo. Neste caso, podemos usar variáveis. Como você deve se lembrar, variáveis permitem que você se refira a qualquer conjunto de dados de uma maneira flexível e concisa (releia a seção \ref{sec:variables} se necessário). Aqui está um exemplo:
+Na seção anterior, “Expandindo seu vocabulário de Patterns”, você percebeu quantas vezes teve de digitar a mesma lista de notas [0, 2, 3, 5, 7, 8, 11, 12] diversas vezes para múltiplos \texttt{Pbind}s? Não é muito eficiente ficar copiando a mesma coisa à mão, certo? Em programação sempre que você se vir fazendo a mesma tarefa repetidas vezes, é provavelmente hora de adotar uma estratégia mais inteligente de chegar ao mesmo objetivo. Neste caso, podemos usar variáveis. Como você deve se lembrar, variáveis permitem que você se refira a qualquer conjunto de dados de uma maneira flexível e concisa (releia a seção \ref{sec:variables} se necessário). Aqui está um exemplo:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // Usando muito a mesma sequência de números? Guarde-a em uma variável:
@@ -208,6 +208,6 @@ Pbind(
 )
 \end{lstlisting}
  
-Alguns truques interessantes: graças às variáveis, reutilizamos a mesma lista de graus de escala e durações para ambas \texttt{Pbind}s. Quisemos que a segunda escala fosse descendente e uma oitava acima da primeira. Para obter isso, simplesmente utilizamos a mensagem \texttt{.reverse} para inverter a ordem da lista (digite \texttt{$\sim$scale.reverse} em um nova linha e execute para ver exatamente o que ela faz). Depois, adicionamos 7 para transpô-la uma oitava acima (teste isso também para ver o resultado).\footnote{Poderíamos também ter usado \texttt{\textbackslash ctranspose, 12} para obter a mesma transposição.} Tocamos dois \texttt{Pbind}s ao mesmo tempo fechando-os no mesmo bloco de código.
+Alguns truques interessantes: graças às variáveis, reutilizamos a mesma lista de graus de escala e durações para ambos os \texttt{Pbind}s. Quisemos que a segunda escala fosse descendente e uma oitava acima da primeira. Para obter isso, simplesmente utilizamos a mensagem \texttt{.reverse} para inverter a ordem da lista (digite \texttt{$\sim$scale.reverse} em um nova linha e execute para ver exatamente o que ela faz). Depois, adicionamos 7 para transpô-la uma oitava acima (teste isso também para ver o resultado).\footnote{Poderíamos também ter usado \texttt{\textbackslash ctranspose, 12} para obter a mesma transposição.} Tocamos dois \texttt{Pbind}s ao mesmo tempo fechando-os no mesmo bloco de código.
 
-Exercício: crie uma \texttt{Pbind} adicional dentro do código acima, para que você ouça três vozes simultâneas. Use ambas as variáveis (\texttt{$\sim$scale} e \texttt{$\sim$durs}) de alguma maneira diferente---por exemplo, use-a dentro de um pattern diferente de Pseq; mude o intervalo de transposição; inverta e/ou multiplique as durações; 
+Exercício: crie um \texttt{Pbind} adicional dentro do código acima, para que você ouça três vozes simultâneas. Use ambas as variáveis (\texttt{$\sim$scale} e \texttt{$\sim$durs}) de alguma maneira diferente---por exemplo, use-a dentro de um Pattern diferente de Pseq; mude o intervalo de transposição; inverta e/ou multiplique as durações; etc.
