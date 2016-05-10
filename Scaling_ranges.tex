@@ -1,61 +1,64 @@
-\section{Scaling ranges}
+\section{Redimensionando âmbitos (“ranges”)}
 
-The real fun starts when you use some UGens to control the parameters of other UGens. The theremin example did just that. Now you have all the tools to understand exactly what was going on in one of the examples of section \ref{sec:first-sine}. The three last lines of the example demonstrate step-by-step how the \texttt{LFNoise0} is used to control frequency:
+A verdadeira diversão começa quando você usa algumas UGens para controlar os parâmetros de outras UGens. O exemplo do theremin fez exatamente isto. Agora você tem todas as ferramentas para entender exatamente o que está acontecendo em um dos exemplos da seção \ref{sec:first-sine}. As três últimas linhas do exemplo demonstram passo a passo como o \texttt{LFNoise0} é usado para controlar a frequência:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 {SinOsc.ar(freq: LFNoise0.kr(10).range(500, 1500), mul: 0.1)}.play;
 
-// Breaking it down:
-{LFNoise0.kr(1).poll}.play; // watch a simple LFNoise0 in action
-{LFNoise0.kr(1).range(500, 1500).poll}.play; // now with .range
-{LFNoise0.kr(10).range(500, 1500).poll}.play; // now faster
+// Separando em partes:
+{LFNoise0.kr(1).poll}.play; // veja um simples LFNoise0 em ação
+{LFNoise0.kr(1).range(500, 1500).poll}.play; // agora com .range
+{LFNoise0.kr(10).range(500, 1500).poll}.play; // agora mais rápido
 \end{lstlisting}
 
-\subsection{Scale with the method \texttt{range}}
-The method \texttt{range} simply rescales the output of a UGen. Remember, \texttt{LFNoise0} produces numbers between -1 and +1 (it is a bipolar UGen). Those raw numbers would not be very useful to control frequency (we need sensible numbers in the human hearing range). The \texttt{.range} takes the output betwen -1 and +1 and scales it to whatever low and high values you provide as arguments (in this case, 500 and 1500). The number 10, which is the argument to \texttt{LFNoise0.kr}, specifies the frequency of the UGen: how many times per second it will pick a new random number.
+\subsection{Redimensione com o método \texttt{range}}
+O método  \texttt{range} simplesmente redimensiona a saída de uma UGen. Lembre-se, \texttt{LFNoise0} produz números entre -1 e +1 (é uma UGen bipolar). Estes números brutos não seriam muito úteis para controlar frequência (precisamos de números perceptíveis na escala de audição humana). O \texttt{.range} pega esta saída entre -1 e +1 e a redimensiona entre qualquer valor mínimo e máximo que você fornecer como argumentos (neste caso, 500 e 1500). O número 10, que é o argumento para \texttt{LFNoise0.kr}, especifica a frequência da UGen: quantas vezes por segundos ele escolhe um novo número aleatório.
 
-In short: in order to use a UGen to control some parameter of another UGen, first you need to know what range of numbers you want. Are the numbers going to be frequencies? Do you want them between, say, 100 and 1000? Or are they amplitudes? Perhaps you want amplitudes to be between 0.1 (soft) and 0.5 (half the maximum)? Or are you trying to control number of harmonics? Do you want it to be between 5 and 19? 
+Resumindo: para usar a UGen para controlar algum parâmetro de outra UGen, primeiro você tem que saber qual o âmbito numérico que você quer. Os números serão frequências? Você os quer entre, digamos, 10 e 1000? Ou são amplitudes? Talvez você queira que as amplitudes estejam entre 0.1 (suave) e 0.5 (metade do máximo)? Ou você está tentando controlar o número de harmônicos? Você quer que ele esteja entre 5 e 19?
 
-Once you know the range you need, use the method \texttt{.range} to make the controlling UGen do the right thing.
+Uma vez que você sabe o âmbito que você precisa, use o método \texttt{.range} para fazer com que a UGen controladora faça a coisa certa.
 
-Exercise: write a simple line code that plays a sine wave, the frequency of which is controlled by a \texttt{LFPulse.kr} (provide appropriate arguments to it). Then, use the \texttt{.range} method to scale the output of \texttt{LFPulse} into something that you want to hear. 
+Exercício: escreva uma linha de código simples que toca uma onda senoidal, cuja frequência é controlada por um \texttt{LFPulse.kr} (forneça agumentos apropriados para ele). Então, use o método \texttt{.range} para redimensionar a saída do \texttt{LFPulse} em algo que você queira escutar. 
 
-\subsection{Scale with \texttt{mul} and \texttt{add}}
+\subsection{Redimensionando com \texttt{mul} e \texttt{add}}
 
-Now you know how to scale the output of UGens in the server using the method \texttt{.range}. The same thing can be accomplished on a more fundamental level by using the arguments \texttt{mul} and \texttt{add}, which pretty much all UGens have. The code below shows the equivalence between \texttt{range} and \texttt{mul/add} approaches, both with a bipolar UGen and a unipolar UGen.
+Agora você sabe redimensionar a saída de UGens no servidor usando o método \texttt{.range}. A mesma coisa pode ser obtida em um nível mais fundamental usando os argumentos \texttt{mul} e \texttt{add}, que quase todos os UGens têm. O código abaixo mostra a equivalência entre as abordagens com \texttt{range} e de \texttt{mul/add}, ambos com uma UGen bipolar e uma UGen unipolar.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// This:
+// Isso:
 {SinOsc.kr(1).range(100, 200).poll}.play;
-// ...is the same as this:
+// …é o mesmo que isso:
 {SinOsc.kr(1, mul: 50, add: 150).poll}.play;
 
-// This:
+// Isso:
 {LFPulse.kr(1).range(100, 200).poll}.play;
-// ...is the same as this:
+// …é o mesmo que isso:
 {LFPulse.kr(1, mul: 50, add: 100).poll}.play;
 \end{lstlisting}
 
-Figure \ref{fig:mul-add-scale} helps visualize how \texttt{mul} and \texttt{add} work in rescaling UGen outputs (a \texttt{SinOsc} is used as demonstration).
+A figura \ref{fig:mul-add-scale} ajuda a visualizar como \texttt{mul} e \texttt{add} trabalham redimensionando as saídas de UGens (um \texttt{SinOsc} é usado como demonstração).
 
 \begin{figure}[h!]
 \centerline{\framebox{
 	\includegraphics[scale=0.6]{fig-mul-add-scale.pdf}}}
-\caption{Scaling UGen ranges with mul and add}
+\caption{Redimensionando âmbitos de UGens com mul e add}
 \label{fig:mul-add-scale}
 \end{figure}
 
-\subsection{\texttt{linlin} and friends}
+\subsection{\texttt{linlin} e seus amigos}
 
-For any other arbitrary scaling of ranges, you can use the handy methods \texttt{linlin}, \texttt{linexp}, \texttt{explin}, \texttt{expexp}. The method names hint at what they do: convert a linear range to another linear range (\texttt{linlin}), linear to exponential (\texttt{linexp}), etc.
+Para qualquer outro redimensionamento arbitrário de âmbitos, você pode usar os práticos métodos \texttt{linlin}, \texttt{linexp}, \texttt{explin} e \texttt{expexp}. Os nomes nos métodos dão uma dica do que eles fazem: converter um âmbito linear em outro âmbito linear (\texttt{linlin}), linear para exponencial (\texttt{linexp}), etc.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// A bunch of numbers
+// Um punhado de números
 a = [1, 2, 3, 4, 5, 6, 7];
-// Rescale to 0-127, linear to linear
+// Redimensione para 0-127, linear para linear
 a.linlin(1, 7, 0, 127).round(1);
-// Rescale to 0-127, linear to exponential
-a.linexp(1, 7, 0.01, 127).round(1); // don't use zero for an exponential range
+// Redimensione para 0-127, linear para exponencial
+a.linexp(1, 7, 0.01, 127).round(1); // não use zero para um âmbito exponencial
 \end{lstlisting}
 
-For a review of linear and exponential, look up online the difference between arithmetic and geometric sequences. Briefly, linear (arithmetic) sequences are like "1, 2, 3, 4, 5, 6" or "3, 6, 9, 12, 15", etc; and exponential (geometric) sequences are like "1, 2, 4, 8, 16, 32" or "3, 9, 27, 81, 243", etc.
+Para uma revisão acerca de linear e exponencial, procure online a diferença entre progressões aritméticas e geométricas. Brevemente, sequências lineares (aritméticas) são como "1, 2, 3, 4, 5, 6" or "3, 6, 9, 12, 15", etc; e sequências exponenciais (geométricas) são como "1, 2, 4, 8, 16, 32" or "3, 9, 27, 81, 243", etc.
+
+
+
