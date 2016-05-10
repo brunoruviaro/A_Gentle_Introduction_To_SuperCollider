@@ -1,64 +1,64 @@
-\section{Synth Definitions}
+\section{Definições de sintetizador}
 \label{sec:synthdef}
 
-So far we have been seamlessly \emph{defining} synths and  \emph{playing} them right away. In addition, the \texttt{.set} message gave us some flexibility to alter synth controls in real time. However, there are situations when you may want to just define your synths first (without playing them immediately), and only play them later. In essence, this means we have to separate the moment of writing down the recipe (the synth definition) from the moment of baking the cake (creating the sound).
+Até aqui, sem dificuldade alguma, pudemos \emph{definir} sintetizadores e fazê-los \emph{tocar} imediatamente. Para além disso, a mensagem \texttt{.set} nos deu alguma flexibilidade para alterar os controles do sintetizador em tempo real. No entanto, há situações em que você pode querer definir seus sintetizadores antes (sem tocá-los imediatamente) e tocá-los somente depois. Em essência, isso significa que temos de separar o momento de escrever a receita (a definição de sintetizador) do momento de assar o bolo (criar o som).
 
-\subsection{SynthDef and Synth}
 
-\texttt{SynthDef} is what we use to ``write the recipe'' for a synth. Then you can play it with \texttt{Synth}. Here is a simple example.
+\subsection{SynthDef e Synth}
+
+\texttt{SynthDef} é o que usamos para “escrever a receita” de um sintetizador. Depois você pode tocá-lo com \texttt{Synth}. Aqui está um exemplo simples.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Synth definition with SynthDef object
-SynthDef("mySine1", {Out.ar(0, SinOsc.ar(770, 0, 0.1))}).add;
-// Play a note with Synth object
-x = Synth("mySine1");
+// Definição de sintetizador com o objeto SynthDef
+SynthDef("minhaSenoide1", {Out.ar(0, SinOsc.ar(770, 0, 0.1))}).add;
+// Toque uma nota com o objeto Synth
+x = Synth("minhaSenoide1");
 x.free;
 
-// A slightly more flexible example using arguments
-// and a self-terminating envelope (doneAction: 2)
-SynthDef("mySine2", {arg freq = 440, amp = 0.1; 
+// Um exemplo ligeiramente mais flexível usando argumentos
+// e um envelope com desligamento automático (doneAction: 2)
+SynthDef("minhaSenoide2”, {arg freq = 440, amp = 0.1; 
 	var env = Env.perc(level: amp).kr(2);
 	var snd = SinOsc.ar(freq, 0, env);
 	Out.ar(0, snd);
 }).add;
 
-Synth("mySine2"); // using default values
-Synth("mySine2", [\freq, 770, \amp, 0.2]);
-Synth("mySine2", [\freq, 415, \amp, 0.1]);
-Synth("mySine2", [\freq, 346, \amp, 0.3]);
-Synth("mySine2", [\freq, rrand(440, 880)]);
+Synth("minhaSenoide2"); // usando os valores pré-definidos;
+Synth("minhaSenoide2", [\freq, 770, \amp, 0.2]);
+Synth("minhaSenoide2", [\freq, 415, \amp, 0.1]);
+Synth("minhaSenoide2", [\freq, 346, \amp, 0.3]);
+Synth("minhaSenoide2", [\freq, rrand(440, 880)]);
 \end{lstlisting}
 
-The first argument to \texttt{SynthDef} is a user-defined name for the synth. The second argument is a function where you specify the UGen graph (that's how your combination of UGens is called). Note that you have to explicitly use \texttt{Out.ar} to indicate to which bus you want to send the signal to. Finally, \texttt{SynthDef} receives the message \texttt{.add} at the end, which means you are adding it to the collection of synths that SC knows about. This will be valid until you quit SuperCollider.
+O primeiro argumento para o \texttt{SynthDef} é um nome para o sintetizador definido pelo usuário. O segundo argumento é uma função na qual você especifica um gráfico de UGens (assim é chamada uma combinação de UGens). Note que você tem de usar \texttt{Out.ar} explicitamente para indicar para qual canal você quer enviar o sinal. Finalmente, o \texttt{SynthDef} recebe a mensagem  \texttt{.add} ao final, que diz que você está a adicionando a uma coleção de sintetizadores que o SC conhece. Isso é somente válido até você fechar o SuperCollider.
 
-After you have created one or more synth definitions with \texttt{SynthDef}, you can play them with \texttt{Synth}: the first argument is the name of the synth definition you want to use, and the second (optional) argument is an array with any parameters you may want to specify (freq, amp, etc.)
+Depois que você criar uma ou mais definições de sintetizador com \texttt{SynthDef}, você pode tocá-las com \texttt{Synth}: o primeiro argumento é o nome do sintetizador que você quer usar e o segundo argumento (opcional) é um array com quaisquer parâmetros que você queira especificar (freq, amp, etc.)
 
-\subsection{Example}
+\subsection{Exemplo}
 
-Here's a longer example. After the SynthDef is added, we use an array trick to create a 6-note chord with random pitches and amplitudes. Each synth is stored in one of the slots of the array, so we can release them independently.
-
+Eis um exemplo mais longo. Depois que o SynthDef é adicionado, nós utilizamos um truque com um array para criar um acode de 6 notas com alturas e amplitudes aleatórias. Cada sintetizador é armazenado em uma das posições do array, para que possamos desligá-los individualmente. 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Create SynthDef
+// Criar SynthDef
 (
-SynthDef("wow", {arg freq = 60, amp = 0.1, gate = 1, wowrelease = 3;
-	var chorus, source, filtermod, env, snd;
+SynthDef(“uau”, {arg freq = 60, amp = 0.1, gate = 1, uaurelease = 3;
+	var chorus, fonte, filtromod, env, som;
 	chorus = Lag.kr(freq, 2) * LFNoise2.kr([0.4, 0.5, 0.7, 1, 2, 5, 10]).range(1, 1.02);
-	source = LFSaw.ar(chorus) * 0.5;
-	filtermod = SinOsc.kr(1/16).range(1, 10);
-	env = Env.asr(1, amp, wowrelease).kr(2, gate);
-	snd = LPF.ar(in: source, freq: freq * filtermod, mul: env);
-Out.ar(0, Splay.ar(snd))
+	fonte = LFSaw.ar(chorus) * 0.5;
+	filtromod = SinOsc.kr(1/16).range(1, 10);
+	env = Env.asr(1, amp, uaurelease).kr(2, gate);
+	som = LPF.ar(in: fonte, freq: freq * filtromod, mul: env);
+Out.ar(0, Splay.ar(som))
 }).add;
 )
 
-// Watch the Node Tree
+// Observe a Node Tree
 s.plotTree;
 
-// Create a 6-note chord
-a = Array.fill(6, {Synth("wow", [\freq, rrand(40, 70).midicps, \amp, rrand(0.1, 0.5)])}); // all in a single line
+// Criar um acorde de 6 notas
+a = Array.fill(6, {Synth(“uau”, [\freq, rrand(40, 70).midicps, \amp, rrand(0.1, 0.5)])}); // tudo em uma única linha
 
-// Release notes one by one
+// Encerrar notas uma por uma
 a[0].set(\gate, 0);
 a[1].set(\gate, 0);
 a[2].set(\gate, 0);
@@ -66,44 +66,44 @@ a[3].set(\gate, 0);
 a[4].set(\gate, 0);
 a[5].set(\gate, 0);
 
-// ADVANCED: run 6-note chord again, then evaluate this line.
-// Can you figure out what is happening?
+// AVANÇADO: rode o acorde de 6 notas novamente e depois execute esta linha.
+// Você consegue imaginar o que está acontecendo?
 SystemClock.sched(0, {a[5.rand].set(\freq, rrand(40, 70).midicps); rrand(3, 10)});
 \end{lstlisting}
 
-To help you understand the SynthDef above:
+Para ajudá-lo a entender o SynthDef acima:
 
 \begin{itemize}
-\item The resulting sound is the sum of seven closely-tuned sawtooth oscillators going through a low pass filter.
-\item These seven oscillators are created through multichannel expansion.
-\item What is the variable \texttt{chorus}? It is the frequency \texttt{freq} multiplied by a \texttt{LFNoise2.kr}. The multichannel expansion starts here, because an array with 7 items is given as an argument to LFNoise2. The result is that seven copies of LFNoise2 are created, each one running at a different speeds taken from the list \texttt{[0.4, 0.5, 0.7, 1, 2, 5, 10]}. Their outputs are constrained to the range 1.0 to 1.02.
-\item As an extra feature, notice that \texttt{freq} is enclosed within a \texttt{Lag.kr}. Whenever a new frequency value is fed into this Synth, the Lag UGen simply creates a ramp between the old value and the new value. The "lag time" (duration of the ramp), in this case, is 2 seconds. This is what causes the glissando effect you hear after running the last line of the example.  
-\item The source sound \texttt{LFSaw.ar} takes the variable \texttt{chorus} as its frequency. In a concrete example: for a \texttt{freq} value of 60 Hz, the variable \texttt{chorus} would result in an expression like
+\item O som resultante é a soma de sete osciladores dentes-de-serra com afinações muito próximas passando por um filtro passa-baixa (“low pass”).
+\item Estes sete osciladores são criador por expansão multicanal.
+\item O que é a variável \texttt{chorus}? É a frequência \texttt{freq} multiplicada por um \texttt{LFNoise2.kr}. Aqui começa a expansão multicanal, porque um array de 7 itens é fornecido como argumento para o LFNoise2. O resultado é que sete cópias do LFNoise2 são criadas, cada uma rodando a uma velocidade diferente retirada da lista \texttt{[0.4, 0.5, 0.7, 1, 2, 5, 10]}. Suas saídas são restritas ao âmbito de 1.0 a 1.02.
+\item Como um atributo extra, note que \texttt{freq} está empacotado em um \texttt{Lag.kr}. Sempre que uma nova frequência alimenta o Synth, a UGen Lag simplesmente cria uma rampa entre o valor velho e o valor novo. O "lag time" (duração da rampa), neste caso, é 2 segundos. Isso é o que causa o efeito de glissando que você ouve após rodar a última linha do exemplo.  
+\item A fonte sonora \texttt{LFSaw.ar} recebe a variável \texttt{chorus} como sua frequência. Em um exemplo concreto: para um valor \texttt{freq} de 60 Hz, a variável \texttt{chorus} resultaria em uma expressão como
 
 $$60 * [1.01, 1.009, 1.0, 1.02, 1.015, 1.004, 1.019]$$
 
-in which the numbers inside the list would be constantly changing up and down according to the speeds of each LFNoise2. The final result is a list of seven frequencies always sliding between 60 and 61.2 (60 * 1.02). This is called \textit{chorus effect}, thus the variable name.
-\item When the variable \texttt{chorus} is used as freq of \texttt{LFSaw.ar}, multichannel expansion happens: we have now seven sawtooth waves with slightly different frequencies.
-\item The variable \texttt{filtermod} is just a sine oscillator moving very slowly (1 cycle over 16 seconds), with its output range scaled to 1-10. This will be used to modulate the cutoff frequency of the low pass filter.
-\item The variable \texttt{snd} holds the low pass filter (LPF), which takes \texttt{source} as input, and filters out all frequencies above its cutoff frequency. This cutoff is not a fixed valued: it is the expression \texttt{freq * filtermod}. So in the example assuming freq = 60, this becomes a number between 60 and 600. Remember that filtermod is a number oscillating between 1 and 10, so the multiplication would be 60 * (1 to 10).
-\item \texttt{LPF} also multichannel expands to seven copies. The amplitude envelope \texttt{env} is also applied right there.
-\item Finally, \texttt{Splay} takes this array of seven channels and mixes it down to stereo.
+na qual os números da lista estariam constantemente subindo e descendo de acordo com as velocidades de cada LFNoise2. O resultado final é uma lista de sete frequências sempre deslizando entre 60 e 61.2 (60 * 1.02). Isso é chamado \textit{efeito chorus}, por isso o nome da variável. 
+\item Quando a variável \texttt{chorus} é usada como freq de \texttt{LFSaw.ar}, acontece expansão multicanal: tempos agora sete ondas dentes-de-serra com frequências ligeiramente diferentes.
+\item A variável \texttt{filtromod} é só um oscilador senoidal movendo-se muito lentamente (1 ciclo a cada 16 segundos), com seu âmbito de saída escalonado para 1-10. Isso será usado para modular a frequência de corte do filtro passa-baixa.
+\item A variável \texttt{som} guarda o filtro passa-baixa (LPF), que recebe \texttt{fonte} como entrada e atenua todas as frequências acima de sua frequência de corte. Este corte não é um valor fixo: ele é a expressão \texttt{freq * filtromod}. Então no exemplo, ao assumir freq = 60, isso torna-se um número entre 60 e 600. Lembre-se que filtromod é um número oscilando entre 1 e 10, de maneira que a multiplicação seria 60 * (1 a 10).
+\item \texttt{LPF} também expande multicanal para sete cópias. O envelope de amplitude \texttt{env} também é aplicado neste ponto.
+\item Finalmente, \texttt{Splay} pega esse array de sete canais e mixa em estéreo.
 
 \end{itemize}
  
-\subsection{Under the hood}
+\subsection{Nos bastidores}
 
-This two-step process of first creating the SynthDef (with a unique name) and then calling a Synth is what SC does all the time when you write simple statements like \texttt{\{SinOsc.ar\}.play}. SuperCollider unpacks that into (a) the creation of a temporary SynthDef, and (b) the immediate playback of it (thus the names temp\_01, temp\_02 that you see in the Post window). All of it behind the scenes, for your convenience.
+Este processo em duas etapas de primeiro criar o SynthDef (com um nome próprio) e depois chamar um Synth é o que o SC faz o tempo quando você escreve comandos simples como \texttt{\{SinOsc.ar\}.play}. SuperCollider desdobra isso em (a) criar um SynthDef temporário e (b) tocá-lo imediatamente (essa é a razão dos nomes temp\_01, temp\_02 que você vê na Post window). Tudo isso nos bastidores, para sua conveniência.
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// When you do this:
+// Quando você faz isso:
 {SinOsc.ar(440)}.play;
-// What SC is doing is this:
+//O que o SC está fazendo é isso:
 {Out.ar(0, SinOsc.ar(440))}.play;
-// Which in turn is really this:
-SynthDef("tempName", {Out.ar(0, SinOsc.ar(440))}).play;
+// O que por sua vez na verdade é isso:
+SynthDef(“nomeTemporario", {Out.ar(0, SinOsc.ar(440))}).play;
 
-// And all of them are shortcuts to this two-step operation:
-SynthDef("tempName", {Out.ar(0, SinOsc.ar(440))}).add; // create a synth definition
-Synth("tempName"); // play it
+// E todos eles são atalhos desta operação em duas etapas:
+SynthDef(“nomeTemporario", {Out.ar(0, SinOsc.ar(440))}).add; // criar a definição de um sintetizador
+Synth("nomeTemporario"); // tocá-lo
 \end{lstlisting}
