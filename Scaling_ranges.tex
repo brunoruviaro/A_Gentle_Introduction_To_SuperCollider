@@ -12,7 +12,7 @@ The real fun starts when you use some UGens to control the parameters of other U
 \end{lstlisting}
 
 \subsection{Scale with the method \texttt{range}}
-The method \texttt{range} simply rescales the output of a UGen. Remember, \texttt{LFNoise0} produces numbers between -1 and +1 (it is a bipolar UGen). Those raw numbers would not be very useful to control frequency (we need sensible numbers in the human hearing range). The \texttt{.range} takes the output betwen -1 and +1 and scales it to whatever low and high values you provide as arguments (in this case, 500 and 1500). The number 10, which is the argument to \texttt{LFNoise0.kr}, specifies the frequency of the UGen: how many times per second it will pick a new random number.
+The method \texttt{range} simply rescales the output of a UGen. Remember, \texttt{LFNoise0} produces numbers between -1 and +1 (it is a bipolar UGen). Those raw numbers would not be very useful to control frequency (we need sensible numbers in the human hearing range). The \texttt{.range} takes the output between -1 and +1 and scales it to whatever low and high values you provide as arguments (in this case, 500 and 1500). The number 10, which is the argument to \texttt{LFNoise0.kr}, specifies the frequency of the UGen: how many times per second it will pick a new random number.
 
 In short: in order to use a UGen to control some parameter of another UGen, first you need to know what range of numbers you want. Are the numbers going to be frequencies? Do you want them between, say, 100 and 1000? Or are they amplitudes? Perhaps you want amplitudes to be between 0.1 (soft) and 0.5 (half the maximum)? Or are you trying to control number of harmonics? Do you want it to be between 5 and 19? 
 
