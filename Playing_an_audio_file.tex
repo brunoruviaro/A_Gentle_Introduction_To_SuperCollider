@@ -1,31 +1,31 @@
-\section{Playing an audio file}
+\section{Tocando um arquivo de áudio}
 
-First, you have to load the sound file into a buffer. The second argument to \texttt{Buffer.read} is the path of your sound file between double quotes. You will need to change that accordingly so that it points to a WAV or AIFF file on your computer. After buffers are loaded, simply use the \texttt{PlayBuf} UGen to play them back in various ways.
+Primeiro, você tem que carregar o arquivo de som em um buffer (“retentor”). O segundo argumento para \texttt{Buffer.read} é o caminho (“path”) para o seu arquivo de som entre aspas duplas. Você precisará fazer com que ele aponte para um arquivo WAV ou AIFF no seu computador. Depois que os buffers são carregados, simplesmente use a UGen \texttt{PlayBuf} para tocá-lo de diversas maneiras.
 
 \bigskip
-\todo[inline, color=green!40]{ TIP: A quick way to get the correct path of a sound file saved on your computer is drag the file onto a blank SuperCollider document. SC will give you the full path automatically, already in double quotes! }
+\todo[inline, color=green!40]{ DICA: Um jeito rápido de obter o caminho correto para um arquivo de som no seu computador é arrastar o arquivo para um documento em branco do SuperCollider. O SC fornecerá automaticamente o camninho completo, já entre aspas duplas! }
 \bigskip
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Load files into buffers:
-~buf1 = Buffer.read(s, "/home/Music/wheels-mono.wav"); // one sound file
-~buf2 = Buffer.read(s, "/home/Music/mussorgsky.wav"); // another sound file
+// Carregar arquivos nos buffers:
+~buf1 = Buffer.read(s, "/home/Music/wheels-mono.wav"); // um arquivo de som
+~buf2 = Buffer.read(s, "/home/Music/mussorgsky.wav"); // outro arquivo de som
 
-// Playback:
-{PlayBuf.ar(1, ~buf1)}.play; // number of channels and buffer
+// Tocar:
+{PlayBuf.ar(1, ~buf1)}.play; // número de canais e buffer
 {PlayBuf.ar(1, ~buf2)}.play;
 
-// Get some info about the files:
+// Obter alguma informação sobre os arquivos:
 [~buf1.bufnum, ~buf1.numChannels, ~buf1.path, ~buf1.numFrames];
 [~buf2.bufnum, ~buf2.numChannels, ~buf2.path, ~buf2.numFrames];
 
-// Changing playback speed with 'rate'
+// Mudar a velocidade de reprodução com ‘rate’ 
 {PlayBuf.ar(numChannels: 1, bufnum: ~buf1, rate: 2, loop: 1)}.play;
-{PlayBuf.ar(1, ~buf1, 0.5, loop: 1)}.play; // play at half the speed
-{PlayBuf.ar(1, ~buf1, Line.kr(0.5, 2, 10), loop: 1)}.play; // speeding up
-{PlayBuf.ar(1, ~buf1, MouseY.kr(0.5, 3), loop: 1)}.play; // mouse control
+{PlayBuf.ar(1, ~buf1, 0.5, loop: 1)}.play; // tocar na metade da velocidade
+{PlayBuf.ar(1, ~buf1, Line.kr(0.5, 2, 10), loop: 1)}.play; // acelerando
+{PlayBuf.ar(1, ~buf1, MouseY.kr(0.5, 3), loop: 1)}.play; // controlando com mouse
 
-// Changing direction (reverse)
-{PlayBuf.ar(1, ~buf2, -1, loop: 1)}.play; // reverse sound
-{PlayBuf.ar(1, ~buf2, -0.5, loop: 1)}.play; // play at half the speed AND reversed
+// Inverter direção (ao contrário)
+{PlayBuf.ar(1, ~buf2, -1, loop: 1)}.play; // inverter som
+{PlayBuf.ar(1, ~buf2, -0.5, loop: 1)}.play; // tocar o som na metade da velocidade E ao contrário
 \end{lstlisting}
