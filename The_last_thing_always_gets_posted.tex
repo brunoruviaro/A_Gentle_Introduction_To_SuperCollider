@@ -1,13 +1,13 @@
-\section{The last thing always gets posted}
+\section{A última coisa é sempre postada}
 
-A small but useful detail to understand: SuperCollider, by default, always posts to the Post window the result of whatever was the \emph{last thing to be evaluated}. This explains why your Hello World code prints twice when you evaluate. Type the following lines onto a new document, then select all with [ctrl+A] and evaluate all lines at once:
+Um detalhe pequeno mas útil para se entender: o SuperCollider, tem como padrão sempre postar na Post window o resultado de qualquer que tenha sido a \emph{última coisa a ser executada}. Isso explica porque o seu código Olá mundo imprime duas vezes quando você o executa. Digite as próximas linhas em um novo documento, depois selecione tudo com [ctrl+A] e rode todas as linhas de uma vez:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-"First Line".postln;
-"Second Line".postln;
+"Primeira linha".postln;
+"Segunda linha".postln;
 (2 + 2).postln;
 3 + 3;
-"Finished".postln;
+"Terminado".postln;
 \end{lstlisting}
 
-All five lines are executed by SuperCollider. You see the result of \texttt{2 + 2} in the Post window because there was an explicit \texttt{postln} request. The result of \texttt{3 + 3} was calculated, but there was no request to post it, so you don't see it. Then the command of the last line is executed (the word ``Finished'' gets posted due to the \texttt{postln} request). Finally, the result of the very last thing to be evaluated is posted by default: in this case, it happened to be the word ``Finished.''
+Todas as cinco linhas são executadas pelo SuperCollider. Você vê o resultado de \texttt{2 + 2} na Post window porque existia um pedido de \texttt{postln} explícito. O resultado de \texttt{3 + 3} foi calculado, mas não houve um pedido para postá-lo, então você não o vê. Então o comando na última linha é executado (a palavra "Terminado" é postada por conta da solicitação \texttt{postln}). Finalmente, como padrão, o resultado da última coisa a ser rodada é postado: neste caso, acabou sendo a palavra "Terminado".
