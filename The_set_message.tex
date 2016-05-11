@@ -1,6 +1,6 @@
-\section{The \texttt{set} message}
+\section{A mensagem \texttt{set}}
 
-Just like with any function (review section \ref{sec:functions}), arguments specified at the beginning of your synth function are accessible by the user. This allows you to change synth parameters on the fly (while the synth is running). The message \texttt{set} is used for that purpose. Simple example:
+Assim como com qualquer função (reveja a seção \ref{sec:functions}), argumentos especificados no início da sua função de sintetizador ficam acessíveis ao usuário. Isso permite que você modifique parâmetros em tempo real (enquanto o sintetizador está rodando). A mensagem \texttt{set} ("definir") é usada para este fim. Exemplo simples:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 x = {arg freq = 440, amp = 0.1; SinOsc.ar(freq, 0, amp)}.play;
@@ -10,4 +10,4 @@ x.set(\freq, 920, \amp, 0.2);
 x.free;
 \end{lstlisting}
 
-It's good practice to provide default values (like the 440 and 0.1 above), otherwise the synth won't play until you set a proper value to the 'empty' parameters.
+É um bom hábito fornecer valores pré-definidos (como 440 e 0.1 acima), de outra forma o sintetizador não vai tocar até que você defina um valor apropriado para os parâmetros 'vazios'.
