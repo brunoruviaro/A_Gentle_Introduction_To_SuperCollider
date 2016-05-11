@@ -1,36 +1,35 @@
-\section{The Bus object}
+\section{O objeto Bus}
 \label{sec:busobject}
 
-Here's an example that uses everything you just learned in the previous two sections: audio buses, and multichannel expansion.
-
+Aqui está um exemplo que utiliza tudo o que você aprendeu nas duas seções anteriores: canais de áudio e expansão multicanal.
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Run this first ('turn reverb on' -- you won't hear anything at first)
+// Rode isso primeiro (‘ligar reverb' -- inicialmente você não vai ouvir nada)
 r = {Out.ar(0, FreeVerb.ar(In.ar(55, 2), mix: 0.5, room: 0.9, mul: 0.4))}.play;
 
-// Now run this second ('feed the busy tone into the reverb bus')
+// Agora rode isto em seguida (‘envie o sinal de ocupado para o canal de reverb')
 a = {Out.ar(55, SinOsc.ar([800, 880], mul: LFPulse.ar(2)))}.play;
 a.free;
 \end{lstlisting}
  
 
-Thanks to multichannel expansion, the busy tone uses two channels. When (in synth \texttt{a}) we route the busy tone to bus 55, two buses are actually being used up---number 55, and the immediately adjacent bus 56. In the reverb (synth \texttt{r}), we indicate with \texttt{In.ar(55, 2)} that we want to read 2 channels starting from bus 55: so both 55 and 56 get into the reverb. The output of the reverb is in turn also expanded to two channels, so synth \texttt{r} sends sound out to buses 0 and 1 (left and right channels of our sound card).
+Graças à expansão multicanal, o sinal de ocupado usa dois canais. Quando (no sintetizador \texttt{a}) enviamos o sinal de ocupado para o canal 55, na verdade, dois canais estão sendo utilizados---o número 55 e o canal imediatamente adjacente, 56. No reverb (sintetizador \texttt{r}), indicamos com \texttt{In.ar(55, 2)} que queremos ler 2 canais, começando pelo canal 55: então tanto 55 quanto 56 vão entrar no reverb. A saída do reverb também é expandida para dois canais, de maneira que o sintetizador \texttt{r} manda som para os canais 0 e 1 (canais esquerdo e direito da sua placa de som).
 
-Now, this choice of bus number (55) to connect a source synth to an effect synth was arbitrary: it could have been any other number between 16 and 127 (remember, buses 0-15 are reserved for sound card outputs and inputs). How inconvenient it would be if we had to keep track of bus numbers ourselves. As soon as our patches grew in complexity, imagine the nightmare: ``What bus number did I choose again for reverb? Was it 59 or 95? What about the bus number for my delay? I guess it was 27? Can't recall...'' and so on and so forth.
+Bem, esta escolha de canal (55) para conectar uma fonte sonora a um efeito foi arbitrária: poderia ter sido qualquer outro número entre 16 e 127 (lembre-se, canis 0-15 são reservados para a as saídas e entradas da placa de som). Como seria inconveniente termos que ficar monitorando estes números. Logo que nossos patches ficarem mais complexos, imagine que pesadelo: “Qual foi mesmo o canal que escolhi para o reverb? Era 59 ou 95? E o canal do meu delay? Será que era 27? Não lembro...” e assim por diante.
 
-SuperCollider takes care of this for you with Bus objects. We only hand-assigned the infamous bus 55 in the examples above for the sake of demonstration. In your daily SuperCollider life, you should simply use the Bus object. The Bus object does the job of choosing an available bus for you and keeping track of it. This is how you use it:
+O SuperCollider toma conta disso para você com objetos Bus. Apenas definimos manualmente o infame canal 55 nos exemplos acima como forma de demonstração. No nosso dia-a-dia com o SuperCollider, você deveria simplesmente usar o objeto Bus. O objeto Bus faz o trabalho de escolher um canal disponível para você e monitorá-lo. Eis como o utilizamos:
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Create the bus
-~myBus = Bus.audio(s, 2);
-// Turn on the reverb: read from myBus (source sound)
-r = {Out.ar(0, FreeVerb.ar(In.ar(~myBus, 2), mix: 0.5, room: 0.9, mul: 0.4))}.play;
-// Feed the busy tone into ~myBus
-b = {Out.ar(~myBus, SinOsc.ar([800, 880], mul: LFPulse.ar(2)))}.play;
-// Free both synths
+// Criar o bus
+~meuBus = Bus.audio(s, 2);
+// Ligar o reverb: ler de ~meuBus (fonte sonora)
+r = {Out.ar(0, FreeVerb.ar(In.ar(~meuBus, 2), mix: 0.5, room: 0.9, mul: 0.4))}.play;
+// Alimente o ~meuBus com o sinal de ocupado
+b = {Out.ar(~meuBus, SinOsc.ar([800, 880], mul: LFPulse.ar(2)))}.play;
+// Libere ambos os sintetizadores
 r.free; b.free;
 \end{lstlisting}
  
 
-The first argument of \texttt{Bus.audio} is the variable \texttt{s}, which stands for the server. The second argument is how many channels you need (2 in the example). Then you store that into a variable with a meaningful name (\texttt{$\sim$myBus} in the example, but it could be \texttt{$\sim$reverbBus}, \texttt{$\sim$source}, \texttt{$\sim$tangerine}, or whatever makes sense to you in your patch). After that, whenever you need to refer to that bus, just use the variable you created.
+O primeiro argumento do \texttt{Bus.audio} é a variável \texttt{s}, que representa o servidor. O segundo argumento é quantos canais você precisa (2 no exemplo). Então você armazena isso em uma variável com um nome significativo (\texttt{$\sim$meuBus} no exemplo, mas poderia ser \texttt{$\sim$reverbBus}, \texttt{$\sim$fonte}, \texttt{$\sim$tangerina} ou o que fizer sentido para você dentro do seu patch). Depois disso, sempre que você precisar se referir àquele bus, apenas use a variável que você criou.
