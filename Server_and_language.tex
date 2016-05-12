@@ -1,19 +1,19 @@
-\section{Server and Language}
+\section{Servidor e Linguagem}
 
-On the Status Bar you can see the words ``Interpreter'' and ``Server.'' The Interpreter starts up turned on by default (``Active''), while ``Server'' is turned off (that's what all the zeros  mean). What is the Interpreter, and what is the Server?
+Na Barra de Status você pode ver as palavras “Interpreter” (“Interpretador”) e “Server” (“Servidor”). Por definição, o Interpretador fica ligado (“Active”) na abertura do programa, enquanto o “Servidor” fica desligado (é isso o que todos aqueles zeros querem dizer). O que é o Interpretador é o que é o Servidor?
 
-SuperCollider is actually made of two distinct applications: the server and the language. The server is responsible for making sounds. The language (also referred to as \emph{client} or \emph{interpreter}) is used to control the server. The first is called scsynth (SC-synthesizer), the second sclang (SC-language). The Status Bar tell us the status (on/off) of each one of these two components.
+O SuperCollider, na realidade, é feito de dois aplicativos distintos: o servidor e a linguagem. O servidor é responsável por fazer sons. A linguagem (também chamada \emph{cliente} ou \emph{interpretador}) é usada para controlar o servidor. O primeiro é chamado scsynth (SC-synthesizer) e o segundo, sclang (SC-language). A Barra de Status diz o status (ligado/desligado) de cada um destes dois componentes.
 
-Don't worry if this distinction does not make much sense for you just now. The two main things you need to know at this point are:
+Não se preocupe se esta distinção não faz muito sentido para você agora. As duas principais coisas que você precisa saber neste ponto são:
 
 \begin{enumerate}
-\item Everything that you type in SuperCollider is in the SuperCollider language (the client): that's where you write and execute commands, and see results in the Post window.
-\item Everything that makes sound in SuperCollider is coming from the server---the ``sound engine'', so to speak---, controlled by you through the SuperCollider language.
+\item Tudo o que você digita no SuperCollider está na linguagem do SuperCollider (o cliente): é onde você escreve e executa comandos e vê os resultados na Post window.
+\item Tudo o que faz som no SuperCollider está vindo do servidor---o “motor sonoro”, por assim dizer---, controlado por você através da linguagem do SuperCollider.
 \end{enumerate}
 
-\subsection{Booting the Server}
-Your ``Hello World'' program produced no sound: everything happened in the language, and the server was not used at all. The next example will make sound, so we need to make sure the Server is up and running.
+\subsection{Iniciando o Servidor}
+Seu programa “Olá Mundo” não produziu som algum: tudo aconteceu na linguagem e o servidor nem chegou a ser usado. O próximo exemplo fará som, então precisamos ter certeza que o Servidor está ligado e funcionando.
 
-The easiest way to boot the server is with the shortcut [ctrl+B]. Alternatively, you can also click on the zeros in the Status Bar: a menu pops up, and one of the options is ``Boot Server.'' You will see some activity in the Post window as the server boots up. After you have successfully started the server, the numbers on the Status Bar will turn green. You will have to do this each time you launch SC, but only once per session.
+O jeito mais fácil de iniciar o servidor é com o atalho [ctrl+B]. Alternativamente, você pode clicar nos zeros da Barra de Status: um menu aparece e uma das opções é “Boot Server” (“Iniciar Servidor”). Você verá alguma atividade na Post Window enquanto o servidor está iniciando. Depois que você tiver iniciado o servidor com sucesso, os números na Barra de Status vão ficar verdes. Você terá de fazer isso todas as vezes que você iniciar o SC, mas apenas uma vez por sessão.
 
 
