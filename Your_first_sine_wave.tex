@@ -1,25 +1,24 @@
-\section{Your first sine wave \label{sec:first-sine}}
+\section{Sua primeira senoide \label{sec:first-sine}}
 
 
-``Hello World'' is traditionally the first program that people create when learning a new programming language. You've already done that in SuperCollider.
+“Olá Mundo” é tradicionalmente o primeiro programa que as pessoas criam quando estão aprendendo uma nova linguagem de programação. Você já fez isso no SuperCollider.
 
-Creating a simple sine wave might be the ``Hello World'' of computer music languages. Let's jump right to it. Type and evaluate the following line of code. Careful---this can be loud. Bring your volume all the way down, evaluate the line, then increase the volume slowly.
-
+Criar uma onda senoidal simples talvez seja o “Olá Mundo” das linguagens de computador para música. Então vamos pular direto para isso. Digite e avalie a seguinte linha de código. Cuidado---isso pode ser alto. Abaixe todo seu volume, rode a linha e aumente o volume devagar.
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 {SinOsc.ar}.play;
 \end{lstlisting}
  
 
-That's a beautiful, smooth, continuous, and perhaps slightly boring, sine wave. You can stop the sound with [ctrl+.] (That's the \emph{control} key plus the \emph{period} key.) Memorize this key combination, because you will be using it a lot to stop any and all sounds in SC.
+Trata-se de uma senoide bela, suave, contínua e talvez um pouco entediante. Você pode parar o som com [ctrl+.] (Isso é a tecla \emph{control} mais a tecla de \emph{ponto final}.) Memorize esta combinação de teclas, porque você a utilizará muito para interromper todo e qualquer som no SC.
 
 \bigskip
 \todo[inline, color=green!40]{ 
-TIP: On a separate line, type and run \texttt{s.volume.gui} if you would like to have a graphical slider to control the volume of SuperCollider output.
+DICA: Em uma linha separada, digite e rode \texttt{s.volume.gui} se você quiser um slider gráfico para controlar o volume da saída do SuperCollider.
 }
 \bigskip
 
-Now let's make this sine wave a bit more interesting. Type this:
+Agora vamos tornar esta senoide um pouco mais interessante. Digite isso:
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize ]
@@ -27,10 +26,10 @@ Now let's make this sine wave a bit more interesting. Type this:
 \end{lstlisting}
  
 
-Remember, you just need to leave your cursor anywhere within the line and hit [ctrl+Enter] to evaluate. Alternatively, you could also select the entire line before evaluating it.
+Lembre-se, você só precisa deixar o cursor em qualquer lugar da linha e apertar [ctrl+Enter] para executar. Alternativamente, você pode também selecionar toda a linha antes de executá-la.
 
  
 \bigskip
 \todo[inline, color=green!40]{ 
-TIP: Typing the code examples by yourself is a great learning tool. It will help you to build confidence and familiarize yourself with the language. When reading tutorials in digital format, you may be tempted to simply copy and paste short snippets of code from the examples. That's fine, but you will learn more if you type it up yourself---try that at least in the first stages of your SC learning.
+DICA: Digitar os próprios exemplos é uma grande ferramenta de aprendizagem. Isso irá ajudar a criar confiança e familiaridade com a linguagem. Quando ler tutoriais em formato digital, você pode sentir a tentação de simplesmente copiar e colar pequenos pedaços de código dos exemplos. Isso está bem, mas você aprenderá mais se digitar tudo por conta própria---tente ao menos nos primeiros estágios da sua aprendizagem com o SC.
 }
