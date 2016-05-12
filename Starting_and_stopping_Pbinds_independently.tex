@@ -1,98 +1,98 @@
-\section{Starting and stopping Pbinds independently}
+\section{Iniciando e parando Pbinds independentemente}
 
-This is a very common question that comes up about \texttt{Pbind}s, especially the ones that run forever with \texttt{inf}: how can I stop and start individual \texttt{Pbind}s at will? The answer will involve using variables, and we'll see a complete example soon; but before going there, we need to understand a little more of what happens when you play a \texttt{Pbind}.
+Está é uma dúvida muito comum que surge com \texttt{Pbind}s, especialmente as que rodam para sempre com \texttt{inf}: como posso parar e iniciar \texttt{Pbind}s quando eu quiser? A resposta envolverá o uso de variáveis e veremos um exemplo completo em breve, mas antes de chegarmos lá, precisamos entender um pouco melhor o que acontece quando você toca um \texttt{Pbind}.
 
-\subsection{Pbind as a musical score}
+\subsection{Pbind como uma partitura musical}
 
-You can think of \texttt{Pbind} as a kind of musical score: it is a recipe for making sounds, a set of instructions to realize a musical passage. In order for the score to become music, you need to give it to a player: someone who will read the score and make sounds based on those instructions. Let's conceptually separate these two moments: the definition of the score, and the performance of it. 
-
+Você pode pensar no \texttt{Pbind} como uma espécie de partitura musical: é uma receita para fazer sons, um conjunto de instruções para realizar uma passagem musical. Para que a partitura se torne música, você precisa entregá-la a um intérprete: alguém que vai ler a partitura e fazer sons com base nessas instruções. Vamos separar conceitualmente estes dois momentos: a definição da partitura e a performance da mesma.
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Define the score
+// Defina a partitura
 (
 p = Pbind(
 	\midinote, Pseq([57, 62, 64, 65, 67, 69], inf),
 	\dur, 1/7
-); // no .play here!
+); // sem .play aqui!
 )
 
-// Ask for the score to be played
+// Peça que a partitura seja tocada
 p.play;
 \end{lstlisting}
  
 
-The variable \texttt{p} in the example above simply holds the score---notice that the \texttt{Pbind} does not have a \texttt{.play} message right after its closing parenthesis. No sound is made at that point. The second moment is when you ask SuperCollider to play from that score: \texttt{p.play}.
+A variável \texttt{p} no exemplo acima simplesmente guarda a partitura---perceba que o \texttt{Pbind} não tem uma mensagem \texttt{.play} logo após o fechamento dos parênteses. Nenhum som é feito neste ponto. O segundo momento é quando você pede ao SuperCollider que toque a partitura: \texttt{p.play}.
 
-A common mistake at this point is to try \texttt{p.stop}, hoping that it will stop the player. Try it and verify for yourself that it doesn't work this way. You will understand why in the next couple of paragraphs.
+Um erro comum neste ponto é tentar \texttt{p.stop}, na esperança de parar o tocador. Tente isso e verifique por si mesmo que não funciona deste jeito. Você entenderá o porquê nos próximos parágrafos.
 
 \subsection{EventStreamPlayer}
 
-Clean the Post window with [ctrl+shift+P] (not really needed, but why not?) and evaluate \texttt{p.play} again. Look at the Post window and you will see that the result is something called an \texttt{EventStreamPlayer}. Every time you call \texttt{.play} on a \texttt{Pbind}, SuperCollider creates a player to realize that action: that's what \texttt{EventStreamPlayer} is. It's like having a pianist materialize in front of you every time you say ``I want this score to be played right now.'' Nice, huh?
+Limpe a Post window com [ctrl+shift+P] (não é absolutamente necessário, mas por que não?) e rode \texttt{p.play} novamente. Olhe para a Post window e você verá que o resultado é algo chamado  \texttt{EventStreamPlayer} (“Tocador de fluxo de eventos”). Toda vez que você chama um \texttt{.play} em um \texttt{Pbind}, o SuperCollider cria um tocador que realiza aquela ação: o \texttt{EventStreamPlayer} é isso. É como ter um pianista se materializando na sua frente toda vez que você disser “Eu quero que esta partitura seja tocada agora”. Legal, né?
 
-Well, yes, except that after this anonymous virtual player shows up and starts the job, you have no way to talk to it---it has no name. In slightly more technical terms, you have created an object, but you have no way to refer to that object later. Maybe at this point you can see why doing \texttt{p.stop} won't work: it's like you are trying to talk to the score instead of talking to the player. The score (the \texttt{Pbind} stored in the variable \texttt{p}) knows nothing about starting or stopping: it is just a recipe. The \emph{player} is the one who knows about starting, stopping, ``would you please take from the beginning'', etc. In other words, you have to talk to the \texttt{EventStreamPlayer}. All you need to do is to give it a name, in other words, store it into a variable:
+
+Bem, sim, exceto pelo fato de que depois que este tocador virtual anônimo aparece e começa seu trabalho, você não tem mais como falar com ele---ele não tem nome. Em termos ligeiramente mais técnicos, você criou um objeto, mas você não tem como se referir a este objeto depois. Talvez neste ponto você pode ver porque \texttt{p.stop} não funciona: é como tentar falar com a partitura em vez de falar com o tocador. A partitura (o \texttt{Pbind} armazenado na variável \texttt{p}) não sabe nada sobre começar ou parar: ela é só uma receita. O \emph{tocador} é quem sabe sobre tocar, parar, “por favor volte do começo”, etc. Em outras palavras, você tem que falar com o \texttt{EventStreamPlayer}. Tudo que você precisa fazer é dar um nome a ele, ou seja, armanzená-lo em uma variável:
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Try these lines one by one:
-~myPlayer = p.play;
-~myPlayer.stop;
-~myPlayer.resume;
-~myPlayer.stop.reset;
-~myPlayer.start;
-~myPlayer.stop;
+// Experimente estas linhas, uma por uma:
+~meuTocador = p.play;
+~meuTocador.stop;
+~meuTocador.resume;
+~meuTocador.stop.reset;
+~meuTocador.start;
+~meuTocador.stop;
 \end{lstlisting}
  
 
-In summary: calling \texttt{.play} on a \texttt{Pbind} generates an \texttt{EventStreamPlayer}; and storing your \texttt{EventStreamPlayer}s into variables allows you to access them later to start and stop patterns individually (no need to use [ctrl+.], which kills everything at once).
+Em resumo: chamando \texttt{.play} em um \texttt{Pbind} gera um \texttt{EventStreamPlayer}; e armazenando seu \texttt{EventStreamPlayer}s em variáveis permite que você os acesse mais tarde para iniciar e parar Patterns individualmente (sem precisar usar [ctrl+.], que interrompe tudo de uma vez).
 
-\subsection{Example}
+\subsection{Exemplo}
 
-Here's a more complex example to wrap up this section. The top melody is borrowed from Tchaikovsky's Album for the Youth, and a lower melody is added in counterpoint. Figure \ref{fig:counterpoint} shows the passage in musical notation.
+Aqui temos um exemplo mais complexo para finalizar esta seção. A melodia superior é emprestada do “Álbum para a Juventude” de Tchaikovsky e uma melodia mais grave é adicionada em contraponto. A figura \ref{fig:counterpoint} mostra a passagem em notação musical.
  
 %\lstinputlisting[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]{code-pbind-start-stop.scd}
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Define the score
+// Defina a partitura
 (
-var myDurs = Pseq([Pn(1, 5), 3, Pn(1, 5), 3, Pn(1, 6), 1/2, 1/2, 1, 1, 3, 1, 3], inf) * 0.4;
-~upperMelody = Pbind(
+var minhasDurs = Pseq([Pn(1, 5), 3, Pn(1, 5), 3, Pn(1, 6), 1/2, 1/2, 1, 1, 3, 1, 3], inf) * 0.4;
+~melodiaSuperior = Pbind(
 	\midinote, Pseq([69, 74, 76, 77, 79, 81, Pseq([81, 79, 81, 82, 79, 81], 2), 82, 81, 79, 77, 76, 74, 74], inf),
-	\dur, myDurs
+	\dur, minhasDurs
 );
-~lowerMelody = Pbind(
+~melodiaInferior = Pbind(
 	\midinote, Pseq([57, 62, 61, 60, 59, 58, 57, 55, 53, 52, 50, 49, 50, 52, 50, 55, 53, 52, 53, 55, 57, 58, 61, 62, 62], inf),
-	\dur, myDurs
+	\dur, minhasDurs
 );
 )
-// Play the two together:
+// Toque as duas juntas:
 (
-~player1 = ~upperMelody.play;
-~player2 = ~lowerMelody.play;
+~tocador1 = ~melodiaSuperior.play;
+~tocador2 = ~melodiaInferior.play;
 )
-// Stop them separately:
-~player1.stop;
-~player2.stop;
-// Other available messages
-~player1.resume;
-~player1.reset;
-~player1.play;
-~player1.start; // same as .play
+// Pare-os separadamente:
+~tocador1.stop;
+~tocador2.stop;
+// Outras mensagens disponíveis
+~tocador1.resume; // retomar
+~tocador1.reset; //voltar do início
+~tocador1.play;
+~tocador1.start; // mesmo que .play
 \end{lstlisting}
 
 \begin{figure}[h]
 \centerline{\framebox{
 	\includegraphics[scale=0.7]{code-pbind-start-stop-notation.pdf}}}
-\caption{\texttt{Pbind} counterpoint with a Tchaikovsky melody}
+\caption{\texttt{Pbind} contraponto com uma melodia de Tchaikovsky}
 \label{fig:counterpoint}
 \end{figure}
 
-First, notice the use of variables. One of them, \texttt{myDurs}, is a local variable. You can tell it's a local variable because it doesn't start with a tilde ($\sim$) and it's declared at the top with the reserved keyword \texttt{\textbf{var}}. This variable holds an entire \texttt{Pseq} that will be used as \texttt{\textbackslash dur} in both of the \texttt{Pbind}s. \texttt{myDurs} is really only needed at the moment of defining the score, so it makes sense to use a local variable for that (though an environment variable would work just fine too). The other variables you see in the example are environment variables---once declared, they are valid anywhere in your SuperCollider patches.
+Primeiro, perceba o uso de variáveis. Uma delas, \texttt{minhasDurs}, é uma variável local. Você pode dizer que é uma variável local porque não começa com um til ($\sim$) e é declarada no início com a palavra-chave específica \texttt{\textbf{var}}. Esta variável guarda toda um \texttt{Pseq} que será usada como \texttt{\textbackslash dur} em ambos os \texttt{Pbind}s. \texttt{minhasDurs} é necessária somente no momento de definir a partitura, então faz sentido usar uma variável local para isso (embora uma variável global funcionasse igualmente bem). As outras variáveis que você vê no exemplo são variáveis globais---uma vez declaradas, são válidas em qualquer lugar nos seus patches de SuperCollider.
 
-Second, notice the separation between score and players, as discussed earlier. When the \texttt{Pbind}s are defined, they are not played right away---there is no \texttt{.play} immediately after their closing parenthesis. After you evaluate the first code block, all you have is two \texttt{Pbind} definitions stored into the variables \texttt{$\sim$upperMelody} and \texttt{$\sim$lowerMelody}. They are not making sound yet---they are just the scores. The line \texttt{$\sim$player1 = $\sim$upperMelody.play} creates an \texttt{EventStreamPlayer} to do the job of playing the upper melody, and that player is given the name $\sim$player1. Same idea for $\sim$player2. Thanks to this, we can talk to each player and request it to stop, start, resume, etc.
+Segundo, perceba a separação ente partitura e tocadores, como discutimos anteriormente. Quando os \texttt{Pbind}s são definidos, eles não são tocados no mesmo momento---não há \texttt{.play} imediatamente depois de fechar os parênteses. Depois que você roda o primeiro bloco de código, tudo o que você tem são duas definições de \texttt{Pbind} armazenadas nas variáveis \texttt{$\sim$melodiaSuperior} e \texttt{$\sim$melodiaInferior}. Elas ainda não fazem som---são apenas partituras. A linha \texttt{$\sim$tocador1 = $\sim$melodiaSuperior.play} cria um \texttt{EventStreamPlayer} para cumprir a tarefa de tocar a melodia superior e a este tocador é dado o nome $\sim$tocador1. A mesma ideia vale para o $\sim$tocador2. Graças a isso, podemos falar com cada tocador e pedi-lo para parar, iniciar, retomar, etc.
 
-At the risk of being tedious, let's reiterate this one last time:
+Com o risco de soar tedioso, vamos reiterar uma última vez:
 \begin{itemize}
-\item A \texttt{Pbind} is just a recipe for making sounds, like a musical score;
-\item When you call the message \texttt{play} on a \texttt{Pbind}, an \texttt{EventStreamPlayer} object is created;
-\item If you store this \texttt{EventStreamPlayer} into a variable, you can access it later to use commands like \texttt{stop} and \texttt{resume}.
+\item Um \texttt{Pbind} é só uma receita para fazer som, como uma partitura musical;
+\item Quando você chama a mensagem \texttt{play} em um \texttt{Pbind}, um objeto \texttt{EventStreamPlayer} é criado;
+\item Se você armazena este \texttt{EventStreamPlayer} em uma variável, você pode acessá-lo mais tarde para usar comandos como \texttt{stop} e \texttt{resume}.
 \end{itemize} 
