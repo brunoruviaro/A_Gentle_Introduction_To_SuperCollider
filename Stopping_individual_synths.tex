@@ -1,13 +1,13 @@
-\section{Stopping individual synths}
+\section{Parando sintetizadores individualmente}
 
-Here's a very common way of starting several synths and being able to stop them separately. The example is self-explanatory:
+Eis um jeito bastante comum de iniciar diversos sintetizadores e ser capaz de interrompê-los separadamente. O exemplo é autoexplicativo:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Run one line at a time (don't stop the sound in between):
+// Rode uma linha de cada vez (não pare o som entre elas):
 a = { Saw.ar(LFNoise2.kr(8).range(1000, 2000), mul: 0.2) }.play;
 b = { Saw.ar(LFNoise2.kr(7).range(100, 1000), mul: 0.2) }.play;
 c = { Saw.ar(LFNoise0.kr(15).range(2000, 3000), mul: 0.1) }.play;
-// Stop synths individually:
+// Pare os sintetizadores individualmente:
 a.free;
 b.free;
 c.free; 	
