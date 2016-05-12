@@ -1,99 +1,100 @@
-\section{Variables}
+\section{Variáveis}
 \label{sec:variables}
 
-You can store numbers, words, unit generators, functions, or entire blocks of code in variables. Variables can be single letters or whole words chosen by you. We use the equal sign (=) to ``assign'' variables. Run these lines one at a time and watch the Post window:
+Você pode guardar números, palavras, unidades geradoras, funções ou blocos inteiros de código em variáveis. Variáveis podem ser letras soltas ou palavras escolhidas por você. Usamos o sinal de igual (=) para “atribuir” variáveis. Rode estas linhas uma de cada vez e observe a Post window:
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 x = 10;
 y = 660;
-y; // check what's in there
+y; // confira o que está aqui dentro
 x;
 x + y;
 y - x;
 \end{lstlisting}
  
 
-The first line assigns the number 10 to the variable \texttt{x}. The second line puts 660 into the variable \texttt{y}. The next two lines prove that those letters now ``contain'' those numbers (the data). Finally, the last two lines show that we can use the variables to do any operations with the data.
+A primeira linha atribui o número 10 à variável \texttt{x}. A segunda linha coloca 660 na variável \texttt{y}. As próximas duas linhas provam que estas letras agora “contém” estes números (os dados). Finalmente, as duas últimas linhas mostram que podemos usar as variáveis para fazer qualquer operação com os dados.
 
-Lowercase letters \texttt{a} through \texttt{z} can be used anytime as variables in SuperCollider. The only single letter that by convention we don't use is \texttt{s}, which by default represents the Server. Anything can go into a variable:
+Letras minúsculas de \texttt{a} a \texttt{z} podem ser utilizadas a qualquer momento como variáveis no SuperCollider. A única letra simples que por convenção não usamos é \texttt{s}, que por padrão representa o Servidor. Qualquer coisa pode entrar em uma variável:
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-a = "Hello, World"; // a string of characters
-b = [0, 1, 2, 3, 5]; // a list
-c = Pbind(\note, Pwhite(0, 10), \dur, 0.1); // you'll learn all about Pbind later, don't worry
+a = "Olá Mundo"; // uma cadeia de caracteres
+b = [0, 1, 2, 3, 5]; // uma lista
+c = Pbind(\note, Pwhite(0, 10), \dur, 0.1); // você aprenderá tudo sobre Pbind mais adiante, não se preocupe
 
-// ...and now you can use them just like you would use the original data:
-a.postln; // post it
-b + 100; // do some math
-c.play; // play that Pbind
-d = b * 5; // take b, multiply by 5, and assign that to a new variable
+// ...e agora você pode utilizá-las como você utilizaria os dados originais:
+a.postln; // poste-a
+b + 100; // faça contas
+c.play; // toque aquela Pbind
+d = b * 5; // pegue b, multiplique por 5 e atribua isso a uma nova variável
 \end{lstlisting}
 
-Often it will make more sense to give better names to your variables, to help you remember what they stand for in your code. You can use a $\sim$ (tilde) to declare a variable with a longer name. Note that there is no space between the tilde and the name of the variable.
+Muitas vezes fará mais sentido dar nomes melhores para suas variáveis, para ajudar a lembrar o que elas representam no seu código. Você pode usar um $\sim$ (til) para declarar uma variável com um nom mais longo. Note que não há espaço entre o til e o nome da variável.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-~myFreqs = [415, 220, 440, 880, 220, 990];
-~myDurs = [0.1, 0.2, 0.2, 0.5, 0.2, 0.1];
+~minhasFreqs = [415, 220, 440, 880, 220, 990];
+~minhasDurs = [0.1, 0.2, 0.2, 0.5, 0.2, 0.1];
 
-Pbind(\freq, Pseq(~myFreqs), \dur, Pseq(~myDurs)).play;
+Pbind(\freq, Pseq(~minhasFreqs), \dur, Pseq(~minhasDurs)).play;
 \end{lstlisting}
  
 
-Variable names must begin with lowercase letters. You can use numbers, underscores, and uppercase letters within the name, just not as the first character. All characters must be contiguous (no spaces or punctuation). In short, stick to letters and numbers and the occasional underscore, and avoid all other characters when naming your variables. \texttt{$\sim$myFreqs}, \texttt{$\sim$theBestSineWave}, and \texttt{$\sim$banana\_3} are valid names. \texttt{$\sim$MyFreqs}, \texttt{$\sim$theBest\&*\#\@SineWave}, and \texttt{$\sim$banana!!!} are bad names.
+Nomes de variáveis têm de começar com letras minúsculas. Você pode usar números, underscores e letras maiúsculas no meio do nome, somente não como primeiro caracter. Todos os caracteres têm de ser contíguos (sem espaços ou pontuação). Resumindo, atenha-se a letras e números e underscores ocasionais, evitando todos os outros caracteres ao nomear suas variáveis. \texttt{$\sim$minhasFreqs}, \texttt{$\sim$aMelhorSenoide} e \texttt{$\sim$banana\_3} são nomes válidos. \texttt{$\sim$MinhasFreqs}, \texttt{$\sim$aMelhor\&*\#\@Senoide} e \texttt{$\sim$banana!!!} são nomes ruins.
 
-There are two types of variables that you can create: ``global'' variables and local variables.
+Há dois tipos de variáveis que você pode criar: variáveis “globais” e variáveis locais.
 
-\subsection{``Global'' vs. Local}
+\subsection{“Global” vs. Local}
 
-The variables you have seen up to now (the single lowercase letters \texttt{a} through \texttt{z}, and those starting with the tilde ($\sim$) character) may be loosely called ``global variables,'' because once declared, they will work ``globally'' anywhere in the patch, in other patches, even in other SC documents, until you quit SuperCollider.\footnote{Technically speaking, variables starting with a tilde are called Environment variables, and lowercase letter variables (a through z) are called Interpreter variables. SuperCollider beginners do not need to worry about these distinctions, but keep them in mind for the future. Chapter 5 of the SuperCollider book explains the differences in detail.}
+As variáveis que você viu até agora (letras minúsculas soltas de \texttt{a} a \texttt{z} e aquelas começando com o caracter til ($\sim$) character) são genericamente chamadas “variáveis globais”, porque uma vez declaradas, funcionarão “globalmente” em qualquer lugar no patch, em outros patches e mesmo em outros documentos do SC, até que você saia do SuperCollider.\footnote{Tecnicamente falando, variáveis começando com um til são chamadas variáveis de Ambiente (“Environment”) e variáveis de letras minúsculas (de a a z) são chamadas variáveis do Interpretador. Iniciantes no SuperCollider não precisam se preocupar com estas distinções, mas mantenha-as em mente para o futuro. O Capítulo 5 do The SuperCollider Book explica a diferença em detalhes.}
 
-Local variables, on the other hand, are declared with the reserved keyword \texttt{\textbf{var}} at the beginning of the line. You can assign an initial value to a variable at declaration time (\texttt{\textbf{var} apples = 4}). Local variables only exist within the scope of that code block.
+Variáveis locais, por outro lado, são declarados com a palavra-chave específica \texttt{\textbf{var}} no início de uma linha. Você pode atribuir um valo inicial para uma variável no momento de sua declaração (\texttt{\textbf{var} maçãs = 4}). Variáveis locais apenas existem dentro do escopo de seu bloco de código.
 
-Here's a simple example comparing the two types of variables. Evaluate line by line and watch the Post window.
+Aqui está um exemplo simples comparando os dois tipos de variáveis. Execute linha a linha e observe a Post window.
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Environment variables
-~galaApples = 4;
-~bloodOranges = 5;
-~limes = 2;
-~plantains = 1;
+// Variáveis de Ambiente
+~macasGala = 4;
+~laranjasSanguineas = 5;
+~limas = 2;
+~bananasDaTerra = 1;
 
-["Citrus", ~bloodOranges + ~limes];
-["Non-citrus", ~plantains + ~galaApples];
+["Citricos”, ~laranjasSanguineas + ~limas];
+["Nao-Citricos", ~bananasDaTerra + ~macasGala];
 
-// Local variables: valid only within the code block.
-// Evaluate the block once and watch the Post window:
+// Variáveis locais: válidas apenas dentro do bloco de código.
+// Execute o bloco uma vez e observe o Post window:
 (
-var apples = 4, oranges = 3, lemons = 8, bananas = 10;
-["Citrus fruits", oranges + lemons].postln;
-["Non-citrus fruits", bananas + apples].postln;
-"End".postln;
+var macas = 4, laranjas = 3, limoes = 8, bananas = 10;
+[“Frutas citricas", laranjas + limoes].postln;
+[“Frutas Nao-citricas", bananas + macas].postln;
+“Fim”.postln;
 )
 
-~galaApples; // still exists
-apples; // gone
+~macasGala; // ainda existe
+macas; // se foi
 \end{lstlisting}
 
-\subsection{Reassignment}
+\subsection{Reatribuição}
 
-One last useful thing to understand about variables is that they can be \emph{reassigned}: you can give them a new value at anytime.
+Uma última coisa útil a ser entendida sobre variáveis é que elas podem ser \emph{reatribuídas}: você pode dar-lhes um novo valor a qualquer momento.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Assign a variable
+// Atribua uma variável
 a = 10 + 3;
-a.postln; // check it
-a = 999; // reassign the variable (give it a new value)
-a.postln; // check it: the old value is gone.
+a.postln; // verifique
+a = 999; // reatribua a variávei (dê-lhe um novo valor)
+a.postln; // verifique: o valor antigo se foi.
 \end{lstlisting}
 
-A very common practice that is sometimes confusing for beginners is when \emph{the variable itself is used in its own reassignment}. Take a look at this example:
+Uma prática muito comum que é às vezes confusa para quem está começando é quando \emph{a própria variável é usada na sua própria reatribuição}. Dê uma olhada neste exemplo:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-x = 10; // assign 10 to the variable x
-x = x + 1; // assign x + 1 to the variable x
-x.postln; // check it
+x = 10; // atribua 10 à variável x
+x = x + 1; // atribua x + 1 à variável x
+x.postln; // verifique
 \end{lstlisting}
 
-The easiest way to understand that last line is to read it like this: ``take the current value of variable x, add 1 to it, and assign this new result to the variable x.'' It's really not complicated, and you will see later on how this can be useful.\footnote{This example clearly demonstrates that the equal sign, in programming, is not the same equal sign that you learned in mathematics. In math, $x = x + 1$ is impossible (a number cannot be equal to itself plus one). In a programming language like SuperCollider, the equal sign can be seen as a kind of action: \emph{take the result of the expression on the right side of the sign, and ``assign it'' to the variable on the left side}.}
+A maneira mais fácil de entender essa última linha é lê-la da seguinte forma: “pegue o valor atual da variável x, adicione 1 a ela e atribua este novo resultado à variável x”. No fundo, não é tão complicado e você verá mais tarde como isso pode ser útil.\footnote{Este exemplo claramente demonstra que o sinal de igual, em programação, não é o mesmo sinal de igual que você aprendeu em matemática. Em matemática, $x = x + 1$ é impossível (um número não pode ser igual a si mesmo mais um). Já em uma linguagem de programação como o SuperCollider, o sinal de igual pode ser entendido como um tipo de ação:: \emph{pegue o resultado da expressão à direita do símbolo e a “atribua” à variável ao lado esquerdo}.}
+
