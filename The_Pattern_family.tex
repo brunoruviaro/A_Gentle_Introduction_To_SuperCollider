@@ -8,7 +8,7 @@ Pbind(\degree, Pseries(0, 1, 30), \dur, 0.05).play;
 
 \subsection{Conheça o Pbind}
 
-\texttt{Pbind} é um membro da família Pattern (“padrão”) no SuperCollider. O P maiúsculo no \texttt{Pbind} e \texttt{Pseries} remete a \emph{Pattern}; conheceremos outros membros da família em breve. Por ora, veremos mais de perto somente o \texttt{Pbind}. Experimente este exemplo reduzido ao mínimo:
+\texttt{Pbind} é um membro da família Pattern ("padrão") no SuperCollider. O P maiúsculo no \texttt{Pbind} e \texttt{Pseries} remete a \emph{Pattern}; conheceremos outros membros da família em breve. Por ora, veremos mais de perto somente o \texttt{Pbind}. Experimente este exemplo reduzido ao mínimo:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 Pbind(\degree, 0).play;
@@ -37,7 +37,7 @@ Esta linha introduz um novo membro da família Pattern: \texttt{Pseq}. Como o no
 \item um número de repetições.
 \end{itemize} 
 
-No exemplo, a lista é \texttt{[0, 1, 2, 3, 4, 5, 6, 7]} e o número de repetições é \texttt{1}. Este \texttt{Pseq} simplesmente diz: “toque uma vez todos os itens da lista, na sequência.” Perceba que estes dois elementos, lista e número de repetições, estão dentro dos parênteses que pertencem ao \texttt{Pseq} e são separados por uma vírgula.
+No exemplo, a lista é \texttt{[0, 1, 2, 3, 4, 5, 6, 7]} e o número de repetições é \texttt{1}. Este \texttt{Pseq} simplesmente diz: "toque uma vez todos os itens da lista, na sequência." Perceba que estes dois elementos, lista e número de repetições, estão dentro dos parênteses que pertencem ao \texttt{Pseq} e são separados por uma vírgula.
 
 Também perceba onde o \texttt{Pseq} aparece no interior do \texttt{Pbind}: é o valor de entrada de \texttt{\textbackslash degree}. Isso é importante: em vez de fornecer um número único e fixo para o grau da escala (como no nosso primeiro \texttt{Pbind} simples), \emph{estamos fornecendo todo um Pseq: uma receita para uma sequência de números}. Com isto em mente, podemos facilmente expandir esta ideia e usar outra Pseq para controlar também as durações.
  
@@ -45,7 +45,7 @@ Também perceba onde o \texttt{Pseq} aparece no interior do \texttt{Pbind}: é o
 Pbind(\degree, Pseq([0, 1, 2, 3, 4, 5, 6, 7], 5), \dur, Pseq([0.2, 0.1, 0.1, 0.2, 0.2, 0.35], inf)).play;
 \end{lstlisting}
  
-O que está acontecendo neste exemplo? Primeiro, mudamos o número de repetições do primeiro \texttt{Pseq} para 5, de modo que toda a escala vai tocar cinco vezes. Segundo, substituímos o valor antes fixo de 0.2 de \texttt{\textbackslash dur} por um outro \texttt{Pseq}. Este novo \texttt{Pseq} tem uma lista de seis itens: \texttt{[0.2, 0.1, 0.1, 0.2, 0.2, 0.35]}. Estes números se tornam valores de duração das notas resultantes. O valor de \texttt{repeats} deste segundo \texttt{Pseq} é definido como \texttt{inf}, que quer dizer “infinito”. Isso sgnifica que o \texttt{Pseq} não tem limite no número de vezes que ele pode repetir esta sequência. Então o \texttt{Pbind} toca para sempre? Não: ele para depois que o \emph{outro} \texttt{Pseq} terminou seu trabalho, isto é, depois que a sequência de graus de escala foi tocada 5 vezes.
+O que está acontecendo neste exemplo? Primeiro, mudamos o número de repetições do primeiro \texttt{Pseq} para 5, de modo que toda a escala vai tocar cinco vezes. Segundo, substituímos o valor antes fixo de 0.2 de \texttt{\textbackslash dur} por um outro \texttt{Pseq}. Este novo \texttt{Pseq} tem uma lista de seis itens: \texttt{[0.2, 0.1, 0.1, 0.2, 0.2, 0.35]}. Estes números se tornam valores de duração das notas resultantes. O valor de \texttt{repeats} deste segundo \texttt{Pseq} é definido como \texttt{inf}, que quer dizer "infinito". Isso sgnifica que o \texttt{Pseq} não tem limite no número de vezes que ele pode repetir esta sequência. Então o \texttt{Pbind} toca para sempre? Não: ele para depois que o \emph{outro} \texttt{Pseq} terminou seu trabalho, isto é, depois que a sequência de graus de escala foi tocada 5 vezes.
 
 Finalmente, o exemplo tem um total de oito notas diferentes (a lista no primeiro \texttt{Pseq}), enquanto há apenas seis valores para duração (segundo \texttt{Pseq}). Quando você fornece sequências de tamanhos diferentes como estas, o \texttt{Pbind} simplesmente as faz circular o quanto for preciso.
 
@@ -168,7 +168,7 @@ Substitua \texttt{Prand} pelo \texttt{Pseq} e compare os resultados. Agora exper
 
 \subsection{Pwhite}
 
-Outro membro popular da família Pattern é o \texttt{Pwhite}. É um gerador de números aleatórios de distribuição uniforme (o nome vem de “white noise”, ruído branco). Por exemplo, \texttt{Pwhite(100, 500)} irá fornecer números aleatórios entre 100 e 500.
+Outro membro popular da família Pattern é o \texttt{Pwhite}. É um gerador de números aleatórios de distribuição uniforme (o nome vem de "white noise", ruído branco). Por exemplo, \texttt{Pwhite(100, 500)} irá fornecer números aleatórios entre 100 e 500.
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 (
@@ -259,7 +259,7 @@ A partir de agora, você deve ser capaz de escrever \texttt{Pbind}s simples por 
 Esta seção irá expandir um pouco seu vocabulário de Patterns. Os exemplos abaixo introduzem seis novos membros da família Pattern. Tente descobrir por você mesmo o que eles fazem. Use as seguintes estratégias:
 \begin{itemize}
 \item Escute a melodia resultante; descreva e analise o que você ouve;
-\item Olhe para o nome do Pattern: ele sugere algo? (por exemplo, \texttt{Pshuf} pode lembrá-lo da palavra “shuffle”, embaralhar);
+\item Olhe para o nome do Pattern: ele sugere algo? (por exemplo, \texttt{Pshuf} pode lembrá-lo da palavra "shuffle", embaralhar);
 \item Olhe para os argumentos (números) dentro do novo Pattern;
 \item Use \texttt{.trace.play} como vimos antes para observar os valores sendo impressos na Post window;
 \item Finalmente, confirme suas especulações consultando os arquivos de Ajuda (selecione o nome do Pattern e aperte [ctrl+D] para abrir o arquivo de Ajuda correspondente).
@@ -332,6 +332,6 @@ Pbind(
 \end{lstlisting}
  
 
-Pratique usando estes Patterns---você pode fazer muitas coisas com eles. \texttt{Pbind}s são como receitas para partituras musicais, com a vantagem que você não está limitado a escrever sequências fixas de notas e ritmos: você pode descrever processos de parâmetros musicais em constante mudança (às vezes isto é chamado “composição algorítmica”). E isso é apenas um aspecto das capacidades poderosas da família Pattern.
+Pratique usando estes Patterns---você pode fazer muitas coisas com eles. \texttt{Pbind}s são como receitas para partituras musicais, com a vantagem que você não está limitado a escrever sequências fixas de notas e ritmos: você pode descrever processos de parâmetros musicais em constante mudança (às vezes isto é chamado "composição algorítmica"). E isso é apenas um aspecto das capacidades poderosas da família Pattern.
 
-No futuro, quando você sentir a necessidade de mais objetos Pattern, o melhor lugar para ir é o “A Practical Guide to Patterns” de James Harkin, disponível nos arquivos de Ajuda do SC.\footnote{Também online em \url{http://doc.sccode.org/Tutorials/A-Practical-Guide/PG_01_Introduction.html}}
+No futuro, quando você sentir a necessidade de mais objetos Pattern, o melhor lugar para ir é o "A Practical Guide to Patterns" de James Harkin, disponível nos arquivos de Ajuda do SC.\footnote{Também online em \url{http://doc.sccode.org/Tutorials/A-Practical-Guide/PG_01_Introduction.html}}

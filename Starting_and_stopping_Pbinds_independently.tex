@@ -26,10 +26,10 @@ Um erro comum neste ponto é tentar \texttt{p.stop}, na esperança de parar o to
 
 \subsection{EventStreamPlayer}
 
-Limpe a Post window com [ctrl+shift+P] (não é absolutamente necessário, mas por que não?) e rode \texttt{p.play} novamente. Olhe para a Post window e você verá que o resultado é algo chamado  \texttt{EventStreamPlayer} (“Tocador de fluxo de eventos”). Toda vez que você chama um \texttt{.play} em um \texttt{Pbind}, o SuperCollider cria um tocador que realiza aquela ação: o \texttt{EventStreamPlayer} é isso. É como ter um pianista se materializando na sua frente toda vez que você disser “Eu quero que esta partitura seja tocada agora”. Legal, né?
+Limpe a Post window com [ctrl+shift+P] (não é absolutamente necessário, mas por que não?) e rode \texttt{p.play} novamente. Olhe para a Post window e você verá que o resultado é algo chamado  \texttt{EventStreamPlayer} ("Tocador de fluxo de eventos"). Toda vez que você chama um \texttt{.play} em um \texttt{Pbind}, o SuperCollider cria um tocador que realiza aquela ação: o \texttt{EventStreamPlayer} é isso. É como ter um pianista se materializando na sua frente toda vez que você disser "Eu quero que esta partitura seja tocada agora". Legal, né?
 
 
-Bem, sim, exceto pelo fato de que depois que este tocador virtual anônimo aparece e começa seu trabalho, você não tem mais como falar com ele---ele não tem nome. Em termos ligeiramente mais técnicos, você criou um objeto, mas você não tem como se referir a este objeto depois. Talvez neste ponto você pode ver porque \texttt{p.stop} não funciona: é como tentar falar com a partitura em vez de falar com o tocador. A partitura (o \texttt{Pbind} armazenado na variável \texttt{p}) não sabe nada sobre começar ou parar: ela é só uma receita. O \emph{tocador} é quem sabe sobre tocar, parar, “por favor volte do começo”, etc. Em outras palavras, você tem que falar com o \texttt{EventStreamPlayer}. Tudo que você precisa fazer é dar um nome a ele, ou seja, armanzená-lo em uma variável:
+Bem, sim, exceto pelo fato de que depois que este tocador virtual anônimo aparece e começa seu trabalho, você não tem mais como falar com ele---ele não tem nome. Em termos ligeiramente mais técnicos, você criou um objeto, mas você não tem como se referir a este objeto depois. Talvez neste ponto você pode ver porque \texttt{p.stop} não funciona: é como tentar falar com a partitura em vez de falar com o tocador. A partitura (o \texttt{Pbind} armazenado na variável \texttt{p}) não sabe nada sobre começar ou parar: ela é só uma receita. O \emph{tocador} é quem sabe sobre tocar, parar, "por favor volte do começo", etc. Em outras palavras, você tem que falar com o \texttt{EventStreamPlayer}. Tudo que você precisa fazer é dar um nome a ele, ou seja, armanzená-lo em uma variável:
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -47,7 +47,7 @@ Em resumo: chamando \texttt{.play} em um \texttt{Pbind} gera um \texttt{EventStr
 
 \subsection{Exemplo}
 
-Aqui temos um exemplo mais complexo para finalizar esta seção. A melodia superior é emprestada do “Álbum para a Juventude” de Tchaikovsky e uma melodia mais grave é adicionada em contraponto. A figura \ref{fig:counterpoint} mostra a passagem em notação musical.
+Aqui temos um exemplo mais complexo para finalizar esta seção. A melodia superior é emprestada do "Álbum para a Juventude" de Tchaikovsky e uma melodia mais grave é adicionada em contraponto. A figura \ref{fig:counterpoint} mostra a passagem em notação musical.
  
 %\lstinputlisting[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]{code-pbind-start-stop.scd}
 

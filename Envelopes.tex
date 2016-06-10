@@ -55,7 +55,7 @@ Env.linen.plot;
 
 \subsection{Env.pairs}
 
-Precisa de mais flexibilidade? Com \texttt{Env.pairs} você pode ter envelopes com qualquer forma e duração que quiser. \texttt{Env.pairs} recebe dois argumentos: um arranjo (“array”) de pares de [tempo, nível] e um tipo de curva (veja na Ajuda de Env todos os tipos de curva disponíveis).
+Precisa de mais flexibilidade? Com \texttt{Env.pairs} você pode ter envelopes com qualquer forma e duração que quiser. \texttt{Env.pairs} recebe dois argumentos: um arranjo ("array") de pares de [tempo, nível] e um tipo de curva (veja na Ajuda de Env todos os tipos de curva disponíveis).
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -101,10 +101,10 @@ Um envelope ASR (Ataque, Sustentação, Repouso) se encaixa perfeitamente. Uma v
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // ASR
-// Toque nota (‘aperte tecla’)
+// Toque nota ('aperte tecla')
 // attackTime: 0.5 seconds, sustainLevel: 0.8, releaseTime: 3 seconds
 x = {arg gate = 1, freq = 440; SinOsc.ar(freq: freq, mul: Env.asr(0.5, 0.8, 3).kr(doneAction: 2, gate: gate))}.play;
-// Pare nota (‘tirar dedo da tecla’ - ativar a porção de repouso)
+// Pare nota ('tirar dedo da tecla' - ativar a porção de repouso)
 x.set(\gate, 0); // uma alternativa é x.release
 
 // ADSR (ataque, decaimento, sutentação, repouso)
@@ -124,13 +124,13 @@ d.release; // isto é equivalente a d.set(\gate, 0);
 Conceitos-chave:
 
 \begin{description}
-\item[Ataque (“Attack”)] O tempo (em segundos) que leva para ir do silêncio (zero) até o pico de amplitude
-\item[Decaimento (“Decay”)] O tempo (em segundos) que leva para ir do pico de amplitude para a amplitude de sustentação
-\item[Sustentação (”Sustain”)] A amplitude (entre 0 e 1) na qual a nota é sustentada (importante: isto não tem nada a ver com tempo)
-\item[Repouso (“Release”)] O tempo (em segundos) que leva para ir do nível de sustentação para o zero (silêncio).
+\item[Ataque ("Attack")] O tempo (em segundos) que leva para ir do silêncio (zero) até o pico de amplitude
+\item[Decaimento ("Decay")] O tempo (em segundos) que leva para ir do pico de amplitude para a amplitude de sustentação
+\item[Sustentação ("Sustain")] A amplitude (entre 0 e 1) na qual a nota é sustentada (importante: isto não tem nada a ver com tempo)
+\item[Repouso ("Release")] O tempo (em segundos) que leva para ir do nível de sustentação para o zero (silêncio).
 \end{description}
 
-Como envelopes sustentados não tem uma duração total conhecida de antemão, eles precisam de uma notificação tanto de quando começar (disparar o ataque) e quando parar (disparar o repouso). Esta notificação é chamada um \emph{gate} (“portão”). O gate é o que diz para que o envelope se ‘abra’ (1) ou se ‘feche’ (0), portanto começando e terminando a nota.
+Como envelopes sustentados não tem uma duração total conhecida de antemão, eles precisam de uma notificação tanto de quando começar (disparar o ataque) e quando parar (disparar o repouso). Esta notificação é chamada um \emph{gate} ("portão"). O gate é o que diz para que o envelope se ‘abra’ (1) ou se ‘feche’ (0), portanto começando e terminando a nota.
 
 Para que um envelope ASR ou ADSR funcione no seu sintetizador, você precisa declarar um argumento \texttt{gate}. Normalmente, o padrão é \texttt{gate = 1} porque você quer que o sintetizador comece logo a tocar. Quando você quer que o sintetizador pare, simplesmente mande uma mensagem \texttt{.release} ou \texttt{.set(\textbackslash gate, 0)}: a porção de repouso do envelope será então disparada. Por exemplo, se seu tempo de repouso é 3, a nota vai levar três segundos para se extinguir completamente \emph{desde o momento em que você enviou a mensagem} \texttt{.set(\textbackslash gate, 0)}. 
 
@@ -145,4 +145,4 @@ Vale registrar que a construção que você aprendeu nesta seção para gerar en
 { SinOsc.ar * EnvGen.kr(Env.perc, doneAction: 2) }.play;
 \end{lstlisting}
 
-\texttt{EnvGen} é a UGen que de fato toca os envelopes segmentados (“breakpoint envelopes”) definidos por \texttt{Env}. Para todos os propósitos práticos, você pode continuar a usar o atalho. Mas é útil saber que estas notações são equivalentes, já que você muitas vezes verá  \texttt{EnvGen} sendo utilizado nos arquivos de Ajuda e outros exemplos online.
+\texttt{EnvGen} é a UGen que de fato toca os envelopes segmentados ("breakpoint envelopes") definidos por \texttt{Env}. Para todos os propósitos práticos, você pode continuar a usar o atalho. Mas é útil saber que estas notações são equivalentes, já que você muitas vezes verá  \texttt{EnvGen} sendo utilizado nos arquivos de Ajuda e outros exemplos online.

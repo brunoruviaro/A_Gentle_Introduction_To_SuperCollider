@@ -1,7 +1,7 @@
 \section{Divirta-se com Arrays}
 \label{sec:arrays}
 
-Arrays [N.T.: em computação, o termo “array” pode ser traduzido como “vetor”, mas é comum mantê-lo no original] são o tipo mais comum de coleção no SuperCollider. Toda vez que você escreve uma coleção de itens entre colchetes, como \texttt{[0, 1, 2]}, cria uma instância da classe \texttt{Array}. Frequentemente, você se verá manipulando arrays de diversas formas. Aqui está uma pequena seleção de métodos interessantes que arrays entendem:
+Arrays [N.T.: em computação, o termo "array" pode ser traduzido como "vetor", mas é comum mantê-lo no original] são o tipo mais comum de coleção no SuperCollider. Toda vez que você escreve uma coleção de itens entre colchetes, como \texttt{[0, 1, 2]}, cria uma instância da classe \texttt{Array}. Frequentemente, você se verá manipulando arrays de diversas formas. Aqui está uma pequena seleção de métodos interessantes que arrays entendem:
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -16,11 +16,11 @@ a.at(0);   // recupera um item na posição especificada
 a[0]	;  // o mesmo que acima
 a.wrapAt(9); // recupera item na posição especificada, relendo do início se > a.size
 ["wow", 99] ++ a; // concatena duas arrays em uma nova
-a ++ \oi;  // um Símbolo (“Symbol”) é entendido como um único caracter
-a ++ ‘oi’; // o mesmo que acima
-a ++ “oi”; // uma cadeia (“String”) é entendida como uma coleção de caracteres
+a ++ \oi;  // um Símbolo ("Symbol") é entendido como um único caracter
+a ++ 'oi'; // o mesmo que acima
+a ++ "oi"; // uma cadeia ("String") é entendida como uma coleção de caracteres
 a.add(44);    // cria uma array adicionando o novo elemento ao final
-a.insert(5, “uau”); // insere “uau” na posição 5, empurra itens seguintes para a frente (retorna uma nova array)
+a.insert(5, "uau"); // insere "uau" na posição 5, empurra itens seguintes para a frente (retorna uma nova array)
 a; // rode isso e veja que nenhuma das operações acima mudou a array original
 a.put(2, "oops"); // colocar "oops" no índice 2 (destrutivo; volte a rodar a linha acima para verificar)
 a.permute(3); // permutar: item na posição 3 vai para a posição zero, e vice-versa
@@ -56,7 +56,7 @@ Array.geom(size: 10, start: 1, grow: 2);
 Array.series(7, 100, -10); // 7 itens; começando em 100, razão de -10
 Array.geom(7, 100, 0.9); // 7 itens; começando em 100; multiplicar por 0.9 a cada vez
 // Conheça o método .fill
-Array.fill(10, “igual”);
+Array.fill(10, "igual");
 // Compare:
 Array.fill(10, rrand(1, 10)); 
 Array.fill(10, {rrand(1, 10)}); // a função é reexecutada 10 vezes
@@ -67,7 +67,7 @@ Array.fill(10, {arg counter; counter * 10});
 Array.fill(10, {arg uau; uau+1 * 440}); 
 // O método .newClear
 a = Array.newClear(7); // cria uma array vazia do tamanho pedido
-a[3] = “uau”; // mesmo que a.put(3, “uau”)
+a[3] = "uau"; // mesmo que a.put(3, "uau")
 \end{lstlisting}
 
 
@@ -79,13 +79,13 @@ a[3] = “uau”; // mesmo que a.put(3, “uau”)
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // Notação abreviada:
 30!4;
-“alô” ! 10;
+"alô" ! 10;
 // Dá o mesmo resultado que o seguinte:
 30.dup(4);
-“alô”.dup(10);
+"alô".dup(10);
 // ou
 Array.fill(4, 30);
-Array.fill(10, “alô”);
+Array.fill(10, "alô");
 \end{lstlisting}
  
 
@@ -109,12 +109,12 @@ series(50, 53, 79);
 Array.series(10, 50, 3);
 \end{lstlisting}
 
-Note que cada comando implica um jeito de pensar ligeiramente diferente. O \texttt{(50..79)} permite que você pense assim: “\emph{apenas me dê um array de 50 a 79}.” Você não precisa necessariamente pensar a quantidade de itens que o array terá. Por outro lado, \texttt{Array.series} permite pensar: “\emph{apenas me dê um array com 30 itens no total, começando a partir do 50}.” Você não precisa necessariamente pensar em qual será o último número da série.
+Note que cada comando implica um jeito de pensar ligeiramente diferente. O \texttt{(50..79)} permite que você pense assim: "\emph{apenas me dê um array de 50 a 79}." Você não precisa necessariamente pensar a quantidade de itens que o array terá. Por outro lado, \texttt{Array.series} permite pensar: "\emph{apenas me dê um array com 30 itens no total, começando a partir do 50}." Você não precisa necessariamente pensar em qual será o último número da série.
 
 Também note que o atalho usa parênteses, não colchetes. O array resultante, obviamente, virá entre colchetes.
-\subsection{Como “fazer” um Array}
+\subsection{Como "fazer" um Array}
 
-Muitas vezes você terá de fazer alguma ação com cada um dos itens de uma coleção. Você pode usar o método \texttt{do} (“faça”) para isso:
+Muitas vezes você terá de fazer alguma ação com cada um dos itens de uma coleção. Você pode usar o método \texttt{do} ("faça") para isso:
 
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -131,6 +131,6 @@ Muitas vezes você terá de fazer alguma ação com cada um dos itens de uma col
 \end{lstlisting}
  
 
-Em resumo: quando você “faz” um array, você fornece uma função. A mensagem \texttt{do} será iterada cada item do array e aquela função será executada todas as vezes. A função pode receber dois argumentos por definição: o item do array na iteração atual e um contador que acompanha o número de iterações. Os nomes destes argumentos podem ser o que você quiser, mas estarão sempre nesta ordem:: item, contador.
+Em resumo: quando você "faz" um array, você fornece uma função. A mensagem \texttt{do} será iterada cada item do array e aquela função será executada todas as vezes. A função pode receber dois argumentos por definição: o item do array na iteração atual e um contador que acompanha o número de iterações. Os nomes destes argumentos podem ser o que você quiser, mas estarão sempre nesta ordem:: item, contador.
 
 Veja também o método \texttt{collect}, que é muito similar ao \texttt{do}, mas retorna uma nova coleção com todos os resultados intermediários.

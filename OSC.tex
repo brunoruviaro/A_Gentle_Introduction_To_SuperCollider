@@ -1,6 +1,6 @@
 \section{OSC}
 
-OSC (Open Sound Control ou “Controle de Som Aberto”) é uma excelente maneira de comunicar qualquer tipo de mensagem entre diferentes programas ou diferentes computadores em uma rede. Em muitos caos, é uma alternativa muito mais flexível às mensagens MIDI. Não temos espaço para explicar isso em mais detalhes aqui, mas o exemplo abaixo deve servir como um bom ponto de partida.
+OSC (Open Sound Control ou "Controle de Som Aberto") é uma excelente maneira de comunicar qualquer tipo de mensagem entre diferentes programas ou diferentes computadores em uma rede. Em muitos caos, é uma alternativa muito mais flexível às mensagens MIDI. Não temos espaço para explicar isso em mais detalhes aqui, mas o exemplo abaixo deve servir como um bom ponto de partida.
 
 O objetivo desta demonstração é mandar mensagens OSC de um smartphone para seu computador ou de um computador para outro computador.
 
@@ -12,7 +12,7 @@ No computador receptor, rode este fragmento simples de código:
 OSCdef(
 	key: \seiLa,
 	func: {arg ...args; args.postln},
-	path: ‘/coisas’)
+	path: '/coisas')
 )
 \end{lstlisting}
 
@@ -26,7 +26,7 @@ Isso assume que ambos os computadores estejam rodando o SuperCollider e conectad
 // Use isso na máquina que está mandando mensagens
 ~destino = NetAddr("127.0.0.1", 57120); // use o endereço IP correto para o computador de destino
 
-~destino.sendMsg(“/coisas”, “aaloooo");
+~destino.sendMsg("/coisas", "aaloooo");
 \end{lstlisting}
 
 \subsection{Mandando OSC de um smartphone}
@@ -35,7 +35,7 @@ Isso assume que ambos os computadores estejam rodando o SuperCollider e conectad
 \item Instale qualquer aplicativo grátis de OSC no telefone (por exemplo, gyrosc);
 \item Entre o endereço IP do computador receptor no aplicativo OSC (como ‘target’);
 \item Entre a porta de entrada do SuperCollider no app OSC (geralmente 57120);
-\item Verifique o caminho de mensagem (“message path”) que o aplicativo usa para mandar OSC e mude o seu OSCdef de acordo;
+\item Verifique o caminho de mensagem ("message path") que o aplicativo usa para mandar OSC e mude o seu OSCdef de acordo;
 \item Tenha certeza que seu telefone está conectado à rede
 \end{itemize}
 

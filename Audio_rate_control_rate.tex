@@ -1,20 +1,20 @@
 \section{Audio rate, control rate}
 
-É bastante fácil identificar uma UGen em um código de SuperCollider: elas são quase sempre seguidas pelas mensagens \texttt{.ar} ou \texttt{.kr}. Estas letras querem dizer Audio Rate (“taxa de áudio”) e Control Rate (“taxa de controle”). Vamos ver o que isso significa.
+É bastante fácil identificar uma UGen em um código de SuperCollider: elas são quase sempre seguidas pelas mensagens \texttt{.ar} ou \texttt{.kr}. Estas letras querem dizer Audio Rate ("taxa de áudio") e Control Rate ("taxa de controle"). Vamos ver o que isso significa.
 
-Do arquivo de ajuda “Unit Generators and Synths” (“Unidades geradoras e Sintetizadores”): 
+Do arquivo de ajuda "Unit Generators and Synths" ("Unidades geradoras e Sintetizadores"): 
 
 \begin{quotation}
 Uma unidade geradora é criada ao se enviar uma mensagem \texttt{ar} ou \texttt{kr} para um objeto da classe da respectiva unidade geradora. A mensagem \texttt{ar} cria uma UGen que é executada na velocidade da taxa de áudio. A mensagem \texttt{kr} cria uma UGen executada na velocidade da taxa de controle. UGens de controle são usados para sinais de controle de baixa frequência ou que mudem lentamente. UGens de controle produzem uma única amostra por ciclo de controle e, por isso, utilizam menos poder de processamento que UGens de áudio. \footnote{\url{http://doc.sccode.org/Guides/UGens-and-Synths.html}}
 \end{quotation}
 
-Em outras palavras: quando você escreve \texttt{SinOsc.ar}, você está mandando a mensagem “taxa de áudio” para a UGen  \texttt{SinOsc} UGen. Assumindo que seu computador esteja rodando na taxa de amostragem comum de 44100 Hz, este oscilador senoidal vai gerar 44100 amostras por segundo para serem enviadas ao alto-falante. Então escutamos uma onda senoidal.
+Em outras palavras: quando você escreve \texttt{SinOsc.ar}, você está mandando a mensagem "taxa de áudio" para a UGen  \texttt{SinOsc} UGen. Assumindo que seu computador esteja rodando na taxa de amostragem comum de 44100 Hz, este oscilador senoidal vai gerar 44100 amostras por segundo para serem enviadas ao alto-falante. Então escutamos uma onda senoidal.
 
-Reflita por um momento sobre o que você acabou de ler: quando você manda a mensagem \texttt{ar} para uma UGen, você esta pedindo que que ela gere \emph{quarenta e quatro mil e cem} números por segundo. Isso é um monte de números. Você escreve \texttt{\{SinOsc.ar\}.play} na linguagem e a linguagem comunica seu pedido ao servidor. O verdadeiro trabalho de gerar todas estas amostras é feito pelo servidor, o “motor sonoro” do SuperCollider.
+Reflita por um momento sobre o que você acabou de ler: quando você manda a mensagem \texttt{ar} para uma UGen, você esta pedindo que que ela gere \emph{quarenta e quatro mil e cem} números por segundo. Isso é um monte de números. Você escreve \texttt{\{SinOsc.ar\}.play} na linguagem e a linguagem comunica seu pedido ao servidor. O verdadeiro trabalho de gerar todas estas amostras é feito pelo servidor, o "motor sonoro" do SuperCollider.
 
 Agora, quando você usa \texttt{kr} em vez de \texttt{ar}, o trabalho tambem é feito pelo servidor, mas há algumas diferenças:
 \begin{enumerate}
-\item A quantidade de números gerados por segundo com \texttt{.kr} é muito menor. \texttt{\{SinOsc.ar\}.play} gera 44100 números por segundo, enquanto \texttt{\{SinOsc.kr\}.play} fornece um pouco menos de 700 números por segundo (se você tiver curiosidade, a quantidade exata é 44100 / 64, sendo que 64 é o chamado “período de controle”.)
+\item A quantidade de números gerados por segundo com \texttt{.kr} é muito menor. \texttt{\{SinOsc.ar\}.play} gera 44100 números por segundo, enquanto \texttt{\{SinOsc.kr\}.play} fornece um pouco menos de 700 números por segundo (se você tiver curiosidade, a quantidade exata é 44100 / 64, sendo que 64 é o chamado "período de controle".)
 \item O sinal gerado com \texttt{kr} não vai para os alto-falantes. Em vez disso, é normalmente utilizado para controlar parâmetros de outros sinais---por exemplo, o \texttt{MouseX.kr} no seu theremim estava controlando a frequência de um \texttt{SinOsc}.
 
 \end{enumerate} 
@@ -46,6 +46,6 @@ Abaixe todo o volume antes de rodar a próxima linha, depois aumente-o devagar. 
 {LFNoise0.ar(1).poll}.play;
 \end{lstlisting}
 
-Como mandamos para ele uma mensagem \texttt{ar}, este gerador de ruído de baixa frequência (“Low Frequency Noise”) o gerador esta enviando 44100 amostras por segundo para a sua placa de som---é um sinal de áudio. Cada amostra é um número entre -1 e +1 (então é uma UGen bipolar). Com \texttt{poll} você está vendo somente dez deles por segundo. \texttt{LFNoise0.ar(1)} escolhe um novo número randômico a cada segundo. Tudo isto é feito pelo servidor.
+Como mandamos para ele uma mensagem \texttt{ar}, este gerador de ruído de baixa frequência ("Low Frequency Noise") o gerador esta enviando 44100 amostras por segundo para a sua placa de som---é um sinal de áudio. Cada amostra é um número entre -1 e +1 (então é uma UGen bipolar). Com \texttt{poll} você está vendo somente dez deles por segundo. \texttt{LFNoise0.ar(1)} escolhe um novo número randômico a cada segundo. Tudo isto é feito pelo servidor.
 
 Pare os clicks com [ctrl+.] e experimente mudar a frequência de \texttt{LFNoise0}. Tente números como 3, 5, 10 e depois mais altos. Observe os números produzidos e ouça os resultados.

@@ -1,9 +1,9 @@
 \section{Notação de objeto recebedor, notação funcional}
 
 
-Há mais de uma maneira de escrever expressões no SuperCollider. A que vimos acima é chamada \emph{notação de objeto recebedor} (“receiver notation”): \texttt{100.rand}, na qual um ponto conecta o Objeto (\texttt{100}) à mensagem (\textt(rand}. Alternativamente, exatamente a mesma coisa pode ser escrita assim: \texttt{rand(100)}. Isso é chamado \emph{notação funcional} ("funcional notation"). 
+Há mais de uma maneira de escrever expressões no SuperCollider. A que vimos acima é chamada \emph{notação de objeto recebedor} ("receiver notation"): \texttt{100.rand}, na qual um ponto conecta o Objeto \texttt{100} à mensagem \texttt{rand}. Alternativamente, exatamente a mesma coisa pode ser escrita assim: \texttt{rand(100)}. Isso é chamado \emph{notação funcional} ("functional notation").
 
-Você pode escrever das duas formas. Eis como isso funciona quando uma mensagem recebe dois ou mais argumentos.
+Você pode escrever das duas formas. Eis  como isso funciona quando uma mensagem recebe dois ou mais argumentos.
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -15,7 +15,7 @@ round(3.1415, 0.1); // notação funcional
 \end{lstlisting}
  
 
-Nos exemplos acima, você pode ler \texttt{dup(5, 20)} como “faça duplicatas do número 5 vinte vezes” e \texttt{round(3.1415, 0.1)} como “arredonde o número 3.1415 para uma casa decimal”. Por sua vez, as versões em notação de objeto recebedor podem ser lidas como “Número 5, faça duplicatas de si mesmo vinte vezes!” (para \texttt{5.dup(20)}) e “Número 3.1415, arredonde-se para uma casa decimal!'' (para \texttt{3.1415.round(0.1)}).
+Nos exemplos acima, você pode ler \texttt{dup(5, 20)} como "faça duplicatas do número 5 vinte vezes" e \texttt{round(3.1415, 0.1)} como "arredonde o número 3.1415 para uma casa decimal". Por sua vez, as versões em notação de objeto recebedor podem ser lidas como "Número 5, faça duplicatas de si mesmo vinte vezes!" (para \texttt{5.dup(20)}) e "Número 3.1415, arredonde-se para uma casa decimal!'' (para \texttt{3.1415.round(0.1)}).
 
 Resumindo: \texttt{Recebedor.mensagem(argumento)} é equivalente a \texttt{mensagem(Recebedor, argumento)}.
 

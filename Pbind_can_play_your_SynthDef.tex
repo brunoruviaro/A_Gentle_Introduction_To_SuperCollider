@@ -2,12 +2,12 @@
 
 Uma das belezas de se criar seus sintetizadores como \texttt{SynthDef}s é que você pode usar \texttt{Pbind} para tocá-los.
 
-Assumindo que o SynthDef \texttt{“uau”} ainda esteja armazenado na memória (deveria estar, a não ser que você tenha fechado e reaberto o SC depois do último exemplo), experimente os \texttt{Pbind}s abaixo:
+Assumindo que o SynthDef \texttt{"uau"} ainda esteja armazenado na memória (deveria estar, a não ser que você tenha fechado e reaberto o SC depois do último exemplo), experimente os \texttt{Pbind}s abaixo:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 (
 Pbind(
-	\instrument, “uau”,
+	\instrument, "uau",
 	\degree, Pwhite(-7, 7),
 	\dur, Prand([0.125, 0.25], inf),
 	\amp, Pwhite(0.5, 1),
@@ -17,7 +17,7 @@ Pbind(
 
 (
 Pbind(
-	\instrument, “uau”,
+	\instrument, "uau",
 	\scale, Pstutter(8, Pseq([
 		Scale.lydian,
 		Scale.major,

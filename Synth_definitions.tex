@@ -6,7 +6,7 @@ Até aqui, sem dificuldade alguma, pudemos \emph{definir} sintetizadores e fazê
 
 \subsection{SynthDef e Synth}
 
-\texttt{SynthDef} é o que usamos para “escrever a receita” de um sintetizador. Depois você pode tocá-lo com \texttt{Synth}. Aqui está um exemplo simples.
+\texttt{SynthDef} é o que usamos para "escrever a receita" de um sintetizador. Depois você pode tocá-lo com \texttt{Synth}. Aqui está um exemplo simples.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // Definição de sintetizador com o objeto SynthDef
@@ -17,7 +17,7 @@ x.free;
 
 // Um exemplo ligeiramente mais flexível usando argumentos
 // e um envelope com desligamento automático (doneAction: 2)
-SynthDef("minhaSenoide2”, {arg freq = 440, amp = 0.1; 
+SynthDef("minhaSenoide2", {arg freq = 440, amp = 0.1; 
 	var env = Env.perc(level: amp).kr(2);
 	var snd = SinOsc.ar(freq, 0, env);
 	Out.ar(0, snd);
@@ -41,7 +41,7 @@ Eis um exemplo mais longo. Depois que o SynthDef é adicionado, nós utilizamos 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // Criar SynthDef
 (
-SynthDef(“uau”, {arg freq = 60, amp = 0.1, gate = 1, uaurelease = 3;
+SynthDef("uau", {arg freq = 60, amp = 0.1, gate = 1, uaurelease = 3;
 	var chorus, fonte, filtromod, env, som;
 	chorus = Lag.kr(freq, 2) * LFNoise2.kr([0.4, 0.5, 0.7, 1, 2, 5, 10]).range(1, 1.02);
 	fonte = LFSaw.ar(chorus) * 0.5;
@@ -56,7 +56,7 @@ Out.ar(0, Splay.ar(som))
 s.plotTree;
 
 // Criar um acorde de 6 notas
-a = Array.fill(6, {Synth(“uau”, [\freq, rrand(40, 70).midicps, \amp, rrand(0.1, 0.5)])}); // tudo em uma única linha
+a = Array.fill(6, {Synth("uau", [\freq, rrand(40, 70).midicps, \amp, rrand(0.1, 0.5)])}); // tudo em uma única linha
 
 // Encerrar notas uma por uma
 a[0].set(\gate, 0);
@@ -74,7 +74,7 @@ SystemClock.sched(0, {a[5.rand].set(\freq, rrand(40, 70).midicps); rrand(3, 10)}
 Para ajudá-lo a entender o SynthDef acima:
 
 \begin{itemize}
-\item O som resultante é a soma de sete osciladores dentes-de-serra com afinações muito próximas passando por um filtro passa-baixa (“low pass”).
+\item O som resultante é a soma de sete osciladores dentes-de-serra com afinações muito próximas passando por um filtro passa-baixa ("low pass").
 \item Estes sete osciladores são criador por expansão multicanal.
 \item O que é a variável \texttt{chorus}? É a frequência \texttt{freq} multiplicada por um \texttt{LFNoise2.kr}. Aqui começa a expansão multicanal, porque um array de 7 itens é fornecido como argumento para o LFNoise2. O resultado é que sete cópias do LFNoise2 são criadas, cada uma rodando a uma velocidade diferente retirada da lista \texttt{[0.4, 0.5, 0.7, 1, 2, 5, 10]}. Suas saídas são restritas ao âmbito de 1.0 a 1.02.
 \item Como um atributo extra, note que \texttt{freq} está empacotado em um \texttt{Lag.kr}. Sempre que uma nova frequência alimenta o Synth, a UGen Lag simplesmente cria uma rampa entre o valor velho e o valor novo. O "lag time" (duração da rampa), neste caso, é 2 segundos. Isso é o que causa o efeito de glissando que você ouve após rodar a última linha do exemplo.  
@@ -101,9 +101,9 @@ Este processo em duas etapas de primeiro criar o SynthDef (com um nome próprio)
 //O que o SC está fazendo é isso:
 {Out.ar(0, SinOsc.ar(440))}.play;
 // O que por sua vez na verdade é isso:
-SynthDef(“nomeTemporario", {Out.ar(0, SinOsc.ar(440))}).play;
+SynthDef("nomeTemporario", {Out.ar(0, SinOsc.ar(440))}).play;
 
 // E todos eles são atalhos desta operação em duas etapas:
-SynthDef(“nomeTemporario", {Out.ar(0, SinOsc.ar(440))}).add; // criar a definição de um sintetizador
+SynthDef("nomeTemporario", {Out.ar(0, SinOsc.ar(440))}).add; // criar a definição de um sintetizador
 Synth("nomeTemporario"); // tocá-lo
 \end{lstlisting}

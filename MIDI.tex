@@ -18,7 +18,7 @@ MIDIdef.cc(\someCC, {arg a, b; [a, b].postln});
 MIDIdef.cc(\algumControleEspecifico, {arg a, b; [a, b].postln}, ccNum: 7, chan: 0);
 
 // Um SynthDef para testes rápidos
-SynthDef(“rápido”, {arg freq, amp; Out.ar(0, SinOsc.ar(freq) * Env.perc(level: amp).kr(2))}).add;
+SynthDef("rápido", {arg freq, amp; Out.ar(0, SinOsc.ar(freq) * Env.perc(level: amp).kr(2))}).add;
 
 // Toque de um teclado ou pad de percussão
 (
@@ -30,7 +30,7 @@ MIDIdef.noteOn(\algumTeclado, { arg vel, nota;
 // Criar um padrão e tocá-lo com um teclado
 (
 a = Pbind(
-	\instrument, “rápido”,
+	\instrument, "rápido",
 	\degree, Pwhite(0, 10, 5),
 	\amp, Pwhite(0.05, 0.2),
 	\dur, 0.1
@@ -44,13 +44,13 @@ a.play;
 MIDIdef.noteOn(\quneo, {arg vel, note; a.play});
 \end{lstlisting}
 
-Uma dúvida frequente é como administrar mensagens de “liga nota” e “desliga nota” (“note on” e “note off”) para notas sustentadas. Em outras palavras, quando você utiliza um envelope ADSR, você quer que cada nota seja sustentada enquanto a tecla estiver pressionada. O estágio de repouso (“release”) inicia apenas quando o dedo sai da tecla correspondente (revise a seção sobre envelopes ADSR se necessário).
+Uma dúvida frequente é como administrar mensagens de "liga nota" e "desliga nota" ("note on" e "note off") para notas sustentadas. Em outras palavras, quando você utiliza um envelope ADSR, você quer que cada nota seja sustentada enquanto a tecla estiver pressionada. O estágio de repouso ("release") inicia apenas quando o dedo sai da tecla correspondente (revise a seção sobre envelopes ADSR se necessário).
 
 Para fazer isso, o SuperCollider simplesmente precisa monitorar qual nó de sintetizador corresponde a cada tecla. Podemos usar um Array para este fim, como demonstrado no exemplo abaixo. 
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
  // Um SynthDef com envelope ADSR
-SynthDef(“rápido2", {arg freq = 440, amp = 0.1, gate = 1;
+SynthDef("rápido2", {arg freq = 440, amp = 0.1, gate = 1;
 	var snd, env;
 	env = Env.adsr(0.01, 0.1, 0.3, 2, amp).kr(2, gate);
 	snd = Saw.ar([freq, freq*1.5], env);	
@@ -63,13 +63,13 @@ SynthDef(“rápido2", {arg freq = 440, amp = 0.1, gate = 1;
 var arrayDeNotas = Array.newClear(128); // array com uma posição para cada nota MIDI possível
 
 MIDIdef.noteOn(\minhaTeclaApertada, {arg vel, nota;
-	arrayDeNotas[nota] = Synth(“rápido2", [\freq, nota.midicps, \amp, vel.linlin(0, 127, 0, 1)]);
+	arrayDeNotas[nota] = Synth("rápido2", [\freq, nota.midicps, \amp, vel.linlin(0, 127, 0, 1)]);
 	["NOTA LIGADA", nota].postln;
 });
 	
 MIDIdef.noteOff(\minhaTeclaLiberada, {arg vel, nota;
 	arrayDeNotas[nota].set(\gate, 0);
-	["NOTA DESLIGADA”, nota].postln;
+	["NOTA DESLIGADA", nota].postln;
 });
 )
 // PS. Garanta que as conexões MIDI do SC estejam ativas (MIDIIn.connectAll)
@@ -78,8 +78,8 @@ MIDIdef.noteOff(\minhaTeclaLiberada, {arg vel, nota;
 Para ajudar a entender o código acima:
 
 \begin{itemize}
-\item O SynthDef \texttt{“rápido2”} usa um envelope ADSR. O argumento \texttt{gate} é responsável por ligar e desligar as notas.
-\item Um Array chamado \texttt{“arrayDeNotas”} é criado para monitorar quais notas estão sendo tocadas. Os índices do array devem corresponder aos números das notas MIDI sendo tocadas.
+\item O SynthDef \texttt{"rápido2"} usa um envelope ADSR. O argumento \texttt{gate} é responsável por ligar e desligar as notas.
+\item Um Array chamado \texttt{"arrayDeNotas"} é criado para monitorar quais notas estão sendo tocadas. Os índices do array devem corresponder aos números das notas MIDI sendo tocadas.
 \item Toda vez que uma tecla é pressionada no teclado, um Synth começa a tocar (um nó de sintetizador é criado no servidor) e \emph{a referência a este nó de sintetizador é armazenada em uma posição exclusiva no array}; o índice do array é simplesmente o próprio número de nota MIDI.
 \item Sempre que a tecla é liberada, a mensagem \texttt{.set(\textbackslash gate, 0)} é enviada para o nó de sintetizador apropriado, recuperado do array através do número da nota.
 \end{itemize}

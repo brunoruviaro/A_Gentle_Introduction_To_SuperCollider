@@ -50,5 +50,5 @@ n.free;
 \end{lstlisting}
 
 Você fornece duas coisas para o \texttt{Mix.fill}: o tamanho do array e uma função (entre chaves) que será utilizada para preencher o array. No primeiro exemplo acima, \texttt{Mix.fill} executa a função 16 vezes. Note que a função inclui um componente variável: a frequência do oscilador senoidal que pode ser qualquer número entre 100 e 3000. Dezesseis senoides serão criadas, cada uma com uma frequência aleatória diferente. Todas elas serão mixadas em mono e você ouvirá o resultado no seu canal esquerdo.
-O segundo exemplo mostra que a função pode receber um argumento de “contador” que monitora o número de iterações (como em \texttt{Array.fill}). 
+O segundo exemplo mostra que a função pode receber um argumento de "contador" que monitora o número de iterações (como em \texttt{Array.fill}). 
 Doze osciladores senoidais são gerados seguindo a série harmônica e mixados como uma única nota em mono.

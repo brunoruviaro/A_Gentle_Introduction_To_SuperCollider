@@ -1,16 +1,16 @@
 \section{Condicionais: if/else e case}
 
-Se estiver chovendo, eu levarei um guarda-chuva quando sair. Se estiver sol, levarei meus óculos escuros. Nossos dias estão repletos desse tipo de tomada de decisão. Em programação, estes são os momentos em que o seu código tem de testar alguma condição e realizar ações diferentes, dependendo do resultado do teste (verdadeiro ou falso). Há muitos tipos de estruturas condicionais. Vamos dar uma olhada em dois casos simples: \emph{if/else} (“se/senão”) e \emph{case} (“no caso de”).
+Se estiver chovendo, eu levarei um guarda-chuva quando sair. Se estiver sol, levarei meus óculos escuros. Nossos dias estão repletos desse tipo de tomada de decisão. Em programação, estes são os momentos em que o seu código tem de testar alguma condição e realizar ações diferentes, dependendo do resultado do teste (verdadeiro ou falso). Há muitos tipos de estruturas condicionais. Vamos dar uma olhada em dois casos simples: \emph{if/else} ("se/senão") e \emph{case} ("no caso de").
 
-A sintaxe de um if/else no SC é: \texttt{if(condition, \{true action\}, \{false action\})}. A condição é um teste booleano, ou seja, precisa retornar um \texttt{true} (“verdadeiro”) ou \texttt{false}(“falso”). Se o teste retorna verdadeiro, a primeira função roda. Se não, roda-se a segunda. Experimente:
+A sintaxe de um if/else no SC é: \texttt{if(condition, \{true action\}, \{false action\})}. A condição é um teste booleano, ou seja, precisa retornar um \texttt{true} ("verdadeiro") ou \texttt{false}("falso"). Se o teste retorna verdadeiro, a primeira função roda. Se não, roda-se a segunda. Experimente:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // if / else 
-if(100 > 50, { “muito verdadeiro”.postln }, { “muito falso“.postln });
+if(100 > 50, { "muito verdadeiro".postln }, { "muito falso".postln });
 \end{lstlisting}
 
-A tabela abaixo, emprestada do The SuperCollider Book \footnote{Cottle, D. “Beginner's Tutorial.” The SuperCollider Book, MIT Press, 2011, p. 33}, apresenta alguns operadores booleanos comuns que podem ser usados.
-Note a distinção entre um sinal de igual simples (\texttt{x = 10}) e o sinal de igual duplo (\texttt{x == 10}). O simples significa “\textit{atribua 10 à variável x},” ao passo que o duplo significa “\textit{é x igual a 10?}” Digite e rode alguns exemplos da coluna de verdadeiro ou falso e você verá parecerem os resultados \texttt{true} ou  \texttt{false} aparecerem na Post window.
+A tabela abaixo, emprestada do The SuperCollider Book \footnote{Cottle, D. "Beginner's Tutorial." The SuperCollider Book, MIT Press, 2011, p. 33}, apresenta alguns operadores booleanos comuns que podem ser usados.
+Note a distinção entre um sinal de igual simples (\texttt{x = 10}) e o sinal de igual duplo (\texttt{x == 10}). O simples significa "\textit{atribua 10 à variável x}," ao passo que o duplo significa "\textit{é x igual a 10?}" Digite e rode alguns exemplos da coluna de verdadeiro ou falso e você verá parecerem os resultados \texttt{true} ou  \texttt{false} aparecerem na Post window.
  
 \begin{center}
 \begin{tabular}{llll}
@@ -70,13 +70,13 @@ A expressão dentro de cada teste tem de retornar ou \texttt{true} ou \texttt{fa
 ~num = -2;
 
 case
-{~num == 0} {“UAU”.postln}
-{~num == 1} {“UM!”.postln}
-{~num < 0} {“número negativo!”.postln}
-{true} {“em último caso“.postln};
+{~num == 0} {"UAU".postln}
+{~num == 1} {"UM!".postln}
+{~num < 0} {"número negativo!".postln}
+{true} {"em último caso".postln};
 )
 \end{lstlisting}
  
-Tente modificar o código acima para obter todos os resultados possíveis. Perceba o truque útil (e opcional) na última linha de \texttt{case} no exemplo acima: como \texttt{true} sempre retorna verdadeiro, pode-se definir uma ação para acontecer “em último caso” que vai sempre ocorrer, mesmo no caso de todas as condições anteriores serem falsas.
+Tente modificar o código acima para obter todos os resultados possíveis. Perceba o truque útil (e opcional) na última linha de \texttt{case} no exemplo acima: como \texttt{true} sempre retorna verdadeiro, pode-se definir uma ação para acontecer "em último caso" que vai sempre ocorrer, mesmo no caso de todas as condições anteriores serem falsas.
 
-Para saber mais, verifique o arquivo de ajuda de Control Structures (“Estruturas de Controle”).
+Para saber mais, verifique o arquivo de ajuda de Control Structures ("Estruturas de Controle").

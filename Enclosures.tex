@@ -8,7 +8,7 @@ A IDE do SuperCollider automaticamente indica o fechamento de parênteses (tamb�
 
 \subsection{Aspas duplas}
 
-Aspas duplas são usadas para englobar uma sequência de caracteres (incluindo espaços) como uma única unidade. Estas são chamadas Strings (“cadeias”). Aspas simples criam Símbolos ("Symbols"), que são ligeiramente diferentes de Strings. Símbolos também podem ser criados com uma barra invertida imediatamente antes do texto. Portanto, \texttt{'grandeSimbolo'} and \texttt{\textbackslash grandeSimbolo} são equivalentes.
+Aspas duplas são usadas para englobar uma sequência de caracteres (incluindo espaços) como uma única unidade. Estas são chamadas Strings ("cadeias"). Aspas simples criam Símbolos ("Symbols"), que são ligeiramente diferentes de Strings. Símbolos também podem ser criados com uma barra invertida imediatamente antes do texto. Portanto, \texttt{'grandeSimbolo'} and \texttt{\textbackslash grandeSimbolo} são equivalentes.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 "Aqui está um bom string";
@@ -27,11 +27,11 @@ Parênteses podem ser usados para:
 
 \subsection{Colchetes}
 
-Colchetes definem uma coleção de itens, como \texttt{[1, 2, 3, 4, "hello"]}. Estas são normalmente chamadas Arrays. Uma array pode conter qualquer coisa: números, strings, funções, padrões, etc. Arrays entendem mensagens como \texttt{reverse} (“inverter”), \texttt{scramble} (“embaralhar”), \texttt{mirror} (“espelhar”), \texttt{choose} (“escolher”), para mencionar algumas. Você também pode fazer operações matemáticas em arrays.
+Colchetes definem uma coleção de itens, como \texttt{[1, 2, 3, 4, "hello"]}. Estas são normalmente chamadas Arrays. Uma array pode conter qualquer coisa: números, strings, funções, padrões, etc. Arrays entendem mensagens como \texttt{reverse} ("inverter"), \texttt{scramble} ("embaralhar"), \texttt{mirror} ("espelhar"), \texttt{choose} ("escolher"), para mencionar algumas. Você também pode fazer operações matemáticas em arrays.
 
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-[1, 2, 3, 4, “alô”].scramble;
+[1, 2, 3, 4, "alô"].scramble;
 [1, 2, 3, 4, "alô"].mirror;
 [1, 2, 3, 4].reverse + 10;
 // converter notas MIDI para frequências em Hz 
@@ -49,7 +49,7 @@ exprand(1, 1000.0);
 {exprand(1, 1000.0)};
 \end{lstlisting}
 
-David Cottle nos explica passo a passo seu exemplo: \textit{“a primeira linha seleciona um número randômico, que é mostrado na Post Window. O segundo imprime um resultado bastante diferente: uma função. O que a função faz? Ela seleciona um número randômico. Como pode esta diferença afetar o código? Considere as linhas abaixo. A primeira escolhe um número randômico e o duplica. A segunda executa  cinco vezes a função-seletora-de-números-randômicos e coleta os resultados em uma array.”}\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, p. 13.}
+David Cottle nos explica passo a passo seu exemplo: \textit{"a primeira linha seleciona um número randômico, que é mostrado na Post Window. O segundo imprime um resultado bastante diferente: uma função. O que a função faz? Ela seleciona um número randômico. Como pode esta diferença afetar o código? Considere as linhas abaixo. A primeira escolhe um número randômico e o duplica. A segunda executa  cinco vezes a função-seletora-de-números-randômicos e coleta os resultados em uma array."}\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, p. 13.}
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 rand(1000.0).dup(5);  // seleciona um número e o duplica
@@ -63,6 +63,6 @@ Mais sobre funções em breve. Por ora, aqui está um resumo de todos os fechame
 \begin{description}
 \item[Coleções] \texttt{[lista, de, itens]}
 \item[Funções] \texttt{\{ quase sempre, múltiplas linhas de código \}}
-\item[Strings] \texttt{“palavras entre aspas”}
+\item[Strings] \texttt{"palavras entre aspas"}
 \item[Símbolos] \texttt{‘aspasSimples’} ou precedidas de uma \texttt{\textbackslash barra invertida}
 \end{description}

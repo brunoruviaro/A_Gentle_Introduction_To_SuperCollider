@@ -7,22 +7,61 @@
 %\usepackage{hyperref}
 \usepackage[pdftex,
             pdfauthor={Bruno Ruviaro},
-            pdftitle={A Gentle Introduction to SuperCollider},
-            pdfsubject={a SuperCollider tutorial},
-            pdfkeywords={computer music, SuperCollider, programming, music},
+            pdftitle={Uma Introdução Suave ao SuperCollider},
+            pdfsubject={tutorial de SuperCollider},
+            pdfkeywords={computação musical, SuperCollider, programação, música},
             pdfproducer={LaTeX},
             pdfcreator={pdflatex}]{hyperref}
             
 \usepackage{enumerate}
 \usepackage{graphicx}
 \usepackage{endnotes}
+\usepackage{listings}
+
+\usepackage{listings}
+\lstset{%
+        inputencoding=utf8,
+        extendedchars=true,
+        literate=%
+        {é}{{\'{e}}}1
+        {è}{{\`{e}}}1
+        {ê}{{\^{e}}}1
+        {ë}{{\¨{e}}}1
+        {É}{{\'{E}}}1
+        {Ê}{{\^{E}}}1
+        {û}{{\^{u}}}1
+        {ú}{{\'{u}}}1
+        {â}{{\^{a}}}1
+        {à}{{\`{a}}}1
+        {á}{{\'{a}}}1
+        {ã}{{\~{a}}}1
+        {Á}{{\'{A}}}1
+        {Â}{{\^{A}}}1
+        {Ã}{{\~{A}}}1
+        {ç}{{\c{c}}}1
+        {Ç}{{\c{C}}}1
+        {õ}{{\~{o}}}1
+        {ó}{{\'{o}}}1
+        {ô}{{\^{o}}}1
+        {Õ}{{\~{O}}}1
+        {Ó}{{\'{O}}}1
+        {Ô}{{\^{O}}}1
+        {î}{{\^{i}}}1
+        {Î}{{\^{I}}}1
+        {í}{{\'{i}}}1
+        {Í}{{\~{Í}}}1
+}
+
 \usepackage[symbol*, perpage]{footmisc}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage[framed, numbered]{sclang-prettifier}
 \renewcommand{\lstlistingname}{Example}
 \title{\textbf{A Gentle Introduction to SuperCollider}}
 \author{Bruno Ruviaro}
+\usepackage[yyyymmdd]{datetime}
+\renewcommand{\dateseparator}{-}
 \date{\today}
+%\DeclareUnicodeCharacter{0177}{\^y}
 
 \begin{document}
 
@@ -30,10 +69,15 @@
 \topskip0pt
 \vspace*{\fill}
 \begin{center}
-{\LARGE \textbf{A Gentle Introduction to SuperCollider}}
+{\LARGE \textbf{Uma Introdução Suave ao SuperCollider}}
 
 \bigskip
-by Bruno Ruviaro
+por Bruno Ruviaro
+
+\medskip
+revisão \today
+
+tradução: Rodolfo Valente
 
 
 \bigskip
@@ -46,13 +90,16 @@ by Bruno Ruviaro
 \end{figure}
 
 \bigskip
-This work is licensed under the Creative Commons
+Esta obra é disponibilizada sob a licensa Creative Commons
 
 Attribution-ShareAlike 4.0 International License.
 
-To view a copy of this license, visit:
+Para ler uma cópia desta licensa, visite:
 
 \url{http://creativecommons.org/licenses/by-sa/4.0/}.
+
+
+
 \end{center}
 \vspace*{\fill}
 \thispagestyle{empty}
@@ -68,7 +115,7 @@ To view a copy of this license, visit:
 % Page numbers are reset to arabic
 
 % PART I
-\part{BASICS}
+\part{O BÁSICO}
 \input{Hello_World.tex}
 \input{Server_and_language.tex}
 \input{Your_first_sine_wave.tex}
@@ -89,7 +136,7 @@ To view a copy of this license, visit:
 \input{Starting_and_stopping_Pbinds_independently.tex}
 % PART III
 \newpage
-\part{MORE ABOUT THE LANGUAGE}
+\part{MAIS DETALHES SOBRE A LINGUAGEM}
 \input{Objects_classes_messages_arguments.tex}
 \input{Receiver_notation_functional_notation.tex}
 \input{Nesting.tex}
@@ -100,7 +147,7 @@ To view a copy of this license, visit:
 \input{Getting_help.tex}
 % PART IV
 \newpage
-\part{SOUND SYNTHESIS AND PROCESSING}
+\part{SÍNTESE E PROCESSAMENTO SONORO}
 \input{UGens.tex}
 \input{Audio_rate_control_rate.tex}
 \input{UGen_arguments.tex}
@@ -122,8 +169,8 @@ To view a copy of this license, visit:
 \input{Order_of_execution.tex}
 % PART V
 \newpage
-\part{WHAT'S NEXT?}
-If you have read and more or less understood everything in this tutorial up to now, you are no longer a beginner SuperCollider user! We covered a lot of ground, and from here on you have all the basic tools needed to start developing your personal projects, and continue learning on your own. The following sections provide a brief introduction to a few popular intermediate level topics. The very last section presents a concise list of other tutorials and learning resources.
+\part{E AGORA?}
+Se você leu e mais ou menos entendeu tudo neste tutorial até agora, você já não é mais um iniciante em SuperCollider! Cobrimos um monte de material, e daqui pra frente você tem todas as ferramentas básicas necessárias para começar a desenvolver seus projetos pessoais, e continuar a aprender mais por conta própria. As seções a seguir fornecem uma breve introdução a alguns tópicos comuns de dificuldade intermediária. A última seção oferece uma lista concisa de outros tutoriais e fontes de aprendizado.
 
 \input{MIDI.tex}
 \input{OSC.tex}
@@ -131,7 +178,7 @@ If you have read and more or less understood everything in this tutorial up to n
 \input{Extra_resources.tex}
 
 \newpage
-% this add the endnotes here
+% this adds the endnotes here
 \theendnotes
 
 % this ends the document

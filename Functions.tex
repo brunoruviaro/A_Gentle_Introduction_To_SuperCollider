@@ -1,7 +1,7 @@
 \section{Funções}
 \label{sec:functions}
 
-Quando você se vê fazendo a mesma tarefa diversas vezes, talvez seja um bom momento para criar uma função reutilizável. Uma função, como você aprendeu na seção de Fechamentos, é algo escrito entre chaves. David Touretzky introduz a ideia de função da seguinte forma: “pense na função como uma caixa através da qual os dados passam. Essa função opera sobre os dados de alguma forma e o resultado é o que passa para fora.” \footnote{Touretzky, David. COMMON LISP: A Gentle Introduction to Symbolic Computation. The Benjamin/Cummings Publishing Company, Inc, 1990, p. 1. Este é o livro que inspirou o título original em inglês deste tutorial.}
+Quando você se vê fazendo a mesma tarefa diversas vezes, talvez seja um bom momento para criar uma função reutilizável. Uma função, como você aprendeu na seção de Fechamentos, é algo escrito entre chaves. David Touretzky introduz a ideia de função da seguinte forma: "pense na função como uma caixa através da qual os dados passam. Essa função opera sobre os dados de alguma forma e o resultado é o que passa para fora." \footnote{Touretzky, David. COMMON LISP: A Gentle Introduction to Symbolic Computation. The Benjamin/Cummings Publishing Company, Inc, 1990, p. 1. Este é o livro que inspirou o título original em inglês deste tutorial.}
 
 \begin{figure}[h]
 \centerline{\framebox{
@@ -43,15 +43,15 @@ var hoje, nomeDoDia, acoes;
 	hoje = Date.getDate.dayOfWeek;
 	nomeDoDia = 
 	case
-	{hoje==0} {“Domingo”}
-	{hoje==1} {“Segunda”}
-	{hoje==2} {"Terça”}
-	{hoje==3} {“Quarta”}
-	{hoje==4} {“Quinta”}
-	{hoje==5} {“Sexta”}
-	{hoje==6} {"Sábado”};
-	acoes = [“jogar bumerangue”, “queda de braço“, “subir escadas”, “jogar xadrez“, “hóquei subaquático“, “atirar ervilhas“, “longa soneca"];
-	"Ah, " ++ nomeDoDia ++ "...! " ++ “Que ótimo dia para " ++ acoes.choose;
+	{hoje==0} {"Domingo"}
+	{hoje==1} {"Segunda"}
+	{hoje==2} {"Terça"}
+	{hoje==3} {"Quarta"}
+	{hoje==4} {"Quinta"}
+	{hoje==5} {"Sexta"}
+	{hoje==6} {"Sábado"};
+	acoes = ["jogar bumerangue", "queda de braço", "subir escadas", "jogar xadrez", "hóquei subaquático", "atirar ervilhas", "longa soneca"];
+	"Ah, " ++ nomeDoDia ++ "...! " ++ "Que ótimo dia para " ++ acoes.choose;
 };
 )
 

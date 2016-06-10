@@ -4,10 +4,10 @@
 Aqui está um exemplo que utiliza tudo o que você aprendeu nas duas seções anteriores: canais de áudio e expansão multicanal.
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Rode isso primeiro (‘ligar reverb' -- inicialmente você não vai ouvir nada)
+// Rode isso primeiro ('ligar reverb' -- inicialmente você não vai ouvir nada)
 r = {Out.ar(0, FreeVerb.ar(In.ar(55, 2), mix: 0.5, room: 0.9, mul: 0.4))}.play;
 
-// Agora rode isto em seguida (‘envie o sinal de ocupado para o canal de reverb')
+// Agora rode isto em seguida ('envie o som para o canal de reverb')
 a = {Out.ar(55, SinOsc.ar([800, 880], mul: LFPulse.ar(2)))}.play;
 a.free;
 \end{lstlisting}
@@ -15,7 +15,7 @@ a.free;
 
 Graças à expansão multicanal, o sinal de ocupado usa dois canais. Quando (no sintetizador \texttt{a}) enviamos o sinal de ocupado para o canal 55, na verdade, dois canais estão sendo utilizados---o número 55 e o canal imediatamente adjacente, 56. No reverb (sintetizador \texttt{r}), indicamos com \texttt{In.ar(55, 2)} que queremos ler 2 canais, começando pelo canal 55: então tanto 55 quanto 56 vão entrar no reverb. A saída do reverb também é expandida para dois canais, de maneira que o sintetizador \texttt{r} manda som para os canais 0 e 1 (canais esquerdo e direito da sua placa de som).
 
-Bem, esta escolha de canal (55) para conectar uma fonte sonora a um efeito foi arbitrária: poderia ter sido qualquer outro número entre 16 e 127 (lembre-se, canis 0-15 são reservados para a as saídas e entradas da placa de som). Como seria inconveniente termos que ficar monitorando estes números. Logo que nossos patches ficarem mais complexos, imagine que pesadelo: “Qual foi mesmo o canal que escolhi para o reverb? Era 59 ou 95? E o canal do meu delay? Será que era 27? Não lembro...” e assim por diante.
+Bem, esta escolha de canal (55) para conectar uma fonte sonora a um efeito foi arbitrária: poderia ter sido qualquer outro número entre 16 e 127 (lembre-se, canis 0-15 são reservados para a as saídas e entradas da placa de som). Como seria inconveniente termos que ficar monitorando estes números. Logo que nossos patches ficarem mais complexos, imagine que pesadelo: "Qual foi mesmo o canal que escolhi para o reverb? Era 59 ou 95? E o canal do meu delay? Será que era 27? Não lembro..." e assim por diante.
 
 O SuperCollider toma conta disso para você com objetos Bus. Apenas definimos manualmente o infame canal 55 nos exemplos acima como forma de demonstração. No nosso dia-a-dia com o SuperCollider, você deveria simplesmente usar o objeto Bus. O objeto Bus faz o trabalho de escolher um canal disponível para você e monitorá-lo. Eis como o utilizamos:
 

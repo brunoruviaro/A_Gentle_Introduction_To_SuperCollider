@@ -1,7 +1,7 @@
 \section{Variáveis}
 \label{sec:variables}
 
-Você pode guardar números, palavras, unidades geradoras, funções ou blocos inteiros de código em variáveis. Variáveis podem ser letras soltas ou palavras escolhidas por você. Usamos o sinal de igual (=) para “atribuir” variáveis. Rode estas linhas uma de cada vez e observe a Post window:
+Você pode guardar números, palavras, unidades geradoras, funções ou blocos inteiros de código em variáveis. Variáveis podem ser letras soltas ou palavras escolhidas por você. Usamos o sinal de igual (=) para "atribuir" variáveis. Rode estas linhas uma de cada vez e observe a Post window:
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -14,7 +14,7 @@ y - x;
 \end{lstlisting}
  
 
-A primeira linha atribui o número 10 à variável \texttt{x}. A segunda linha coloca 660 na variável \texttt{y}. As próximas duas linhas provam que estas letras agora “contém” estes números (os dados). Finalmente, as duas últimas linhas mostram que podemos usar as variáveis para fazer qualquer operação com os dados.
+A primeira linha atribui o número 10 à variável \texttt{x}. A segunda linha coloca 660 na variável \texttt{y}. As próximas duas linhas provam que estas letras agora "contém" estes números (os dados). Finalmente, as duas últimas linhas mostram que podemos usar as variáveis para fazer qualquer operação com os dados.
 
 Letras minúsculas de \texttt{a} a \texttt{z} podem ser utilizadas a qualquer momento como variáveis no SuperCollider. A única letra simples que por convenção não usamos é \texttt{s}, que por padrão representa o Servidor. Qualquer coisa pode entrar em uma variável:
  
@@ -42,11 +42,11 @@ Pbind(\freq, Pseq(~minhasFreqs), \dur, Pseq(~minhasDurs)).play;
 
 Nomes de variáveis têm de começar com letras minúsculas. Você pode usar números, underscores e letras maiúsculas no meio do nome, somente não como primeiro caracter. Todos os caracteres têm de ser contíguos (sem espaços ou pontuação). Resumindo, atenha-se a letras e números e underscores ocasionais, evitando todos os outros caracteres ao nomear suas variáveis. \texttt{$\sim$minhasFreqs}, \texttt{$\sim$aMelhorSenoide} e \texttt{$\sim$banana\_3} são nomes válidos. \texttt{$\sim$MinhasFreqs}, \texttt{$\sim$aMelhor\&*\#\@Senoide} e \texttt{$\sim$banana!!!} são nomes ruins.
 
-Há dois tipos de variáveis que você pode criar: variáveis “globais” e variáveis locais.
+Há dois tipos de variáveis que você pode criar: variáveis "globais" e variáveis locais.
 
-\subsection{“Global” vs. Local}
+\subsection{"Global" vs. Local}
 
-As variáveis que você viu até agora (letras minúsculas soltas de \texttt{a} a \texttt{z} e aquelas começando com o caracter til ($\sim$) character) são genericamente chamadas “variáveis globais”, porque uma vez declaradas, funcionarão “globalmente” em qualquer lugar no patch, em outros patches e mesmo em outros documentos do SC, até que você saia do SuperCollider.\footnote{Tecnicamente falando, variáveis começando com um til são chamadas variáveis de Ambiente (“Environment”) e variáveis de letras minúsculas (de a a z) são chamadas variáveis do Interpretador. Iniciantes no SuperCollider não precisam se preocupar com estas distinções, mas mantenha-as em mente para o futuro. O Capítulo 5 do The SuperCollider Book explica a diferença em detalhes.}
+As variáveis que você viu até agora (letras minúsculas soltas de \texttt{a} a \texttt{z} e aquelas começando com o caracter til ($\sim$) character) são genericamente chamadas "variáveis globais", porque uma vez declaradas, funcionarão "globalmente" em qualquer lugar no patch, em outros patches e mesmo em outros documentos do SC, até que você saia do SuperCollider.\footnote{Tecnicamente falando, variáveis começando com um til são chamadas variáveis de Ambiente ("Environment") e variáveis de letras minúsculas (de a a z) são chamadas variáveis do Interpretador. Iniciantes no SuperCollider não precisam se preocupar com estas distinções, mas mantenha-as em mente para o futuro. O Capítulo 5 do The SuperCollider Book explica a diferença em detalhes.}
 
 Variáveis locais, por outro lado, são declarados com a palavra-chave específica \texttt{\textbf{var}} no início de uma linha. Você pode atribuir um valo inicial para uma variável no momento de sua declaração (\texttt{\textbf{var} maçãs = 4}). Variáveis locais apenas existem dentro do escopo de seu bloco de código.
 
@@ -60,16 +60,16 @@ Aqui está um exemplo simples comparando os dois tipos de variáveis. Execute li
 ~limas = 2;
 ~bananasDaTerra = 1;
 
-["Citricos”, ~laranjasSanguineas + ~limas];
+["Citricos", ~laranjasSanguineas + ~limas];
 ["Nao-Citricos", ~bananasDaTerra + ~macasGala];
 
 // Variáveis locais: válidas apenas dentro do bloco de código.
 // Execute o bloco uma vez e observe o Post window:
 (
 var macas = 4, laranjas = 3, limoes = 8, bananas = 10;
-[“Frutas citricas", laranjas + limoes].postln;
-[“Frutas Nao-citricas", bananas + macas].postln;
-“Fim”.postln;
+["Frutas citricas", laranjas + limoes].postln;
+["Frutas Nao-citricas", bananas + macas].postln;
+"Fim".postln;
 )
 
 ~macasGala; // ainda existe
@@ -96,5 +96,5 @@ x = x + 1; // atribua x + 1 à variável x
 x.postln; // verifique
 \end{lstlisting}
 
-A maneira mais fácil de entender essa última linha é lê-la da seguinte forma: “pegue o valor atual da variável x, adicione 1 a ela e atribua este novo resultado à variável x”. No fundo, não é tão complicado e você verá mais tarde como isso pode ser útil.\footnote{Este exemplo claramente demonstra que o sinal de igual, em programação, não é o mesmo sinal de igual que você aprendeu em matemática. Em matemática, $x = x + 1$ é impossível (um número não pode ser igual a si mesmo mais um). Já em uma linguagem de programação como o SuperCollider, o sinal de igual pode ser entendido como um tipo de ação:: \emph{pegue o resultado da expressão à direita do símbolo e a “atribua” à variável ao lado esquerdo}.}
+A maneira mais fácil de entender essa última linha é lê-la da seguinte forma: "pegue o valor atual da variável x, adicione 1 a ela e atribua este novo resultado à variável x". No fundo, não é tão complicado e você verá mais tarde como isso pode ser útil.\footnote{Este exemplo claramente demonstra que o sinal de igual, em programação, não é o mesmo sinal de igual que você aprendeu em matemática. Em matemática, $x = x + 1$ é impossível (um número não pode ser igual a si mesmo mais um). Já em uma linguagem de programação como o SuperCollider, o sinal de igual pode ser entendido como um tipo de ação:: \emph{pegue o resultado da expressão à direita do símbolo e a "atribua" à variável ao lado esquerdo}.}
 
