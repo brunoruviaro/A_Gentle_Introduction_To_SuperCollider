@@ -7,7 +7,7 @@ p.free;
 \end{lstlisting}
 From the \texttt{Pan2} Help file, you can see that the argument \texttt{pos} (position) expects a number between -1 (left) and +1 (right), 0 being center. That's why you can use a \texttt{SinOsc} directly into that argument: the sine oscillator is a bipolar UGen, so it outputs numbers between -1 and +1 by default.
 
-Here's a more elaborated example. A sawtooth wave goes through a very sharp band pass filter (\texttt{rq: 0.01}). Notice the use of local variables to modularize different parts of the code. Analyze and try to understand as much as you can in the example above. Then answer the questions below.
+Here's a more elaborated example. A sawtooth wave goes through a very sharp band pass filter (\texttt{rq: 0.01}). Notice the use of local variables to modularize different parts of the code. Analyze and try to understand as much as you can in the example. Then answer the questions that follow.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 (
