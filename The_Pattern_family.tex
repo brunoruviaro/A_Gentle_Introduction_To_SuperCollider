@@ -105,14 +105,14 @@ Pbind(\freq, 440).play;
 
 \bigskip
 \todo[inline, color=green!40]{
-DICA: Lembre-se que cada maneira de especificar alturas espera números em âmbitos sensivelmente diferentes. Uma lista de números como \texttt{[-1, 0, 1, 3]} faz sentido para \texttt{\textbackslash degree} e \texttt{\textbackslash note}, mas não faz sentido para \texttt{\textbackslash midinote} ou \texttt{\textbackslash freq}. A tabela abaixo compara alguns valores usando o teclado do piano como referência.
+DICA: Lembre-se que cada maneira de especificar alturas requer números em âmbitos diferentes. Uma lista de números como \texttt{[-1, 0, 1, 3]} faz sentido para \texttt{\textbackslash degree} e \texttt{\textbackslash note}, mas não faz sentido para \texttt{\textbackslash midinote} ou \texttt{\textbackslash freq}. A tabela abaixo compara alguns valores usando o teclado do piano como referência.
 }
 \bigskip
 
 
 \begin{tabular}{|l|c|c|c|c|c|}
 \hline 
-  & \textbf{lá 0 (nota mais grave do piano)} & \textbf{dó 4} & \textbf{lá 4} & \textbf{dó 5} & \textbf{dó 8 (nota mais aguda do piano)} \\ 
+  & \textbf{lá 0 (nota mais grave do piano)} & \textbf{dó 4} & \textbf{lá 4} & \textbf{dó 5} & \textbf{dó 8} \\ 
 \hline 
 \texttt{\textbackslash degree} & -23 & 0 & 5 & 7 & 21 \\
 \hline
@@ -126,9 +126,9 @@ DICA: Lembre-se que cada maneira de especificar alturas espera números em âmbi
 \bigskip
 
 
-\subsection{Mais palavras-chaves: amplitude e legato}
+\subsection{Mais palavras-chave: amplitude e legato}
 
-O novo exemplo introduz duas novas palavras-chaves: \texttt{\textbackslash amp} e \texttt{\textbackslash legato}, que definem a amplitude dos eventos e a quantidade de legato entre as notas. Perceba como o código fica bem mais fácil de ler, graças a uma boa indentação e distribuição em diversas linhas. Parênteses externos (no topo e embaixo) são usados para delimitar um bloco de código a ser rapidamente excutado.
+O novo exemplo introduz duas novas palavras-chave: \texttt{\textbackslash amp} e \texttt{\textbackslash legato}, que definem a amplitude dos eventos e a quantidade de legato entre as notas. Perceba como o código fica bem mais fácil de ler, graças a uma boa indentação e distribuição em diversas linhas. Parênteses externos (no topo e embaixo) são usados para delimitar um bloco de código a ser executado de uma vez.
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -143,13 +143,13 @@ Pbind(
 \end{lstlisting}
  
 
-\texttt{Pbind} tem muitas destas palavras-chaves pré-definidas e com o tempo você aprenderá mais delas. Por agora, vamos nos centrar em apenas algumas---uma para altura (escolha entre \texttt{\textbackslash degree}, \texttt{\textbackslash note}, \texttt{\textbackslash midinote} ou \texttt{\textbackslash freq}), uma para durações (\texttt{\textbackslash dur}), uma para amplitude (\texttt{\textbackslash amp}) e uma para legato (\texttt{\textbackslash legato}). Durações estão em tempos (neste caso, 1 batida por segundo, que é o padrão); a amplitude deve estar entre 0 e 1 (0 = silêncio, 1 = muito alto); e o legato funciona melhor com valores entre 0.1 e 1 (se você não tem certeza o que o legato faz, simplesmente experimente o exemplo acima com 0.1, depois 0.2, depois 0.3, até chegar no 1 e ouça os resultados).
+\texttt{Pbind} tem muitas destas palavras-chave pré-definidas, e com o tempo você aprenderá mais delas. Por agora, vamos nos centrar em apenas algumas---uma para altura (com as opções de \texttt{\textbackslash degree}, \texttt{\textbackslash note}, \texttt{\textbackslash midinote} ou \texttt{\textbackslash freq}), uma para durações (\texttt{\textbackslash dur}), uma para amplitude (\texttt{\textbackslash amp}) e uma para legato (\texttt{\textbackslash legato}). Durações estão em tempos (neste caso, 1 batida por segundo, que é o padrão); a amplitude deve estar entre 0 e 1 (0 = silêncio, 1 = muito alto); e o legato funciona melhor com valores entre 0.1 e 1 (se você não tem certeza o que o legato faz, simplesmente experimente o exemplo acima com 0.1, depois 0.2, depois 0.3, até chegar no 1 e ouça os resultados).
 
-Tome o último exemplo como um  ponto de partida e crie novos \texttt{Pbind}s. Mude a melodia. Introduza novas listas de durações e amplitudes. Experimente usar \texttt{\textbackslash freq} para alturas. Lembre, você sempre pode usar um número fixo para qualquer um destes parâmetros, se é o que você precisa. Por exemplo, se você quer que todas as notas da sua melodia tenham 0.2 segundos de duração, não há porque escrever \texttt{Pseq[0.2, 0.2, 0.2, 0.2\dots}, nem mesmo \texttt{Pseq([0.2], inf)}---simplesmente remova toda a estrutura do \texttt{Pseq} e escreva 0.2 no lugar.
+Tome o último exemplo como um  ponto de partida e crie novos \texttt{Pbind}s. Mude a melodia. Introduza novas listas de durações e amplitudes. Experimente usar \texttt{\textbackslash freq} para alturas. Lembre, você sempre pode usar um número fixo para qualquer um destes parâmetros, se quiser. Por exemplo, se você quer que todas as notas da sua melodia tenham 0.2 segundos de duração, não há porque escrever \texttt{Pseq[0.2, 0.2, 0.2, 0.2\dots}, nem mesmo \texttt{Pseq([0.2], inf)}---simplesmente remova toda a estrutura do \texttt{Pseq} e escreva 0.2 no lugar.
 
 \subsection{Prand}
 
-\texttt{Prand} é um primo próximo do \texttt{Pseq}. Ele também aceita uma lista e um número de repetições. Mas em vez de ir tocando a lista na sequência, \texttt{Prand} \emph{escolhe um item aleatório da lista a cada vez}. Experimemnte:
+\texttt{Prand} é um parente próximo do \texttt{Pseq}. Ele também aceita uma lista e um número de repetições. Mas em vez de ir tocando a lista na sequência, \texttt{Prand} \emph{escolhe um item aleatório da lista a cada vez}. Experimente:
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -182,16 +182,16 @@ Pbind(
 \end{lstlisting}
  
 
-O exemplo acima também mostra outro truque útil: a mensagem \texttt{trace} logo antes de \texttt{play}. Isso imprime na Post window os valores selecionados para cada evento. Muito útil para corrigir problemas ou simplesmente para entender o que está acontecendo!
+O exemplo acima também mostra outro truque útil: a mensagem \texttt{trace} logo antes de \texttt{play}. Isso imprime na Post window os valores selecionados em cada evento. Muito útil para corrigir problemas ou simplesmente para entender o que está acontecendo!
 
 Preste atenção nas diferenças entre \texttt{Pwhite} e \texttt{Prand}: mesmo que ambos tenham a ver com aleatoriedade, eles aceitam argumentos distintos e fazem coisas diferentes. Dentro dos parênteses do \texttt{Pwhite} você só precisa fornecer um limite mínimo e máximo: \texttt{Pwhite(mínimo, máximo)}. Números aleatórios serão escolhidos no interior deste âmbito. \texttt{Prand}, por outro lado, aceita uma lista de itens (necessariamente entre colchetes) e um número de repetições: \texttt{Prand([lista, de, itens], repetições)}. Itens aleatórios serão escolhidos \emph{desta lista}.
 
-Explore ambos e garanta que você entendeu completamente a diferença.
+Explore ambos e confirme que você entendeu completamente a diferença.
 
 
 \bigskip
 \todo[inline, color=green!40]{ 
-DICA: Um \texttt{Pwhite} com dois números inteiros vai apenas gerar inteiros. Por exemplo, \texttt{Pwhite(100, 500)} vai gerar números como 145, 568, 700, mas não 145.6, 450.32, etc. Se você quer números decimais na sua saída, escreva \texttt{Pwhite(100, 500.0)}. Isso é muito útil para, digamos, amplitudes: se você escreve \texttt{Pwhite(0, 1)} vai obter apenas 0 ou 1, mas escreva \texttt{Pwhite(0, 1.0)} e você terá todos os resultados intermediários.
+DICA: Um \texttt{Pwhite} com dois números inteiros vai gerar somente números inteiros. Por exemplo, \texttt{Pwhite(100, 500)} vai gerar números como 145, 568, 700, mas não 145.6, 450.32, etc. Se você quer incluir números decimais no resultado, escreva \texttt{Pwhite(100, 500.0)}. Isso é muito útil para, digamos, amplitudes: se você escreve \texttt{Pwhite(0, 1)} vai obter apenas 0 ou 1, mas escreva \texttt{Pwhite(0, 1.0)} e você terá todos os resultados intermediários.
 }
 \bigskip
  
@@ -239,9 +239,9 @@ Pbind(
 
 
 Respostas ao final deste tutorial.\endnote{\\
-a) \texttt{Pwhite(0, 10)} vai gerar qualquer número entre 0 e 10. \texttt{Prand([0, 4, 1, 5, 9, 10, 2, 3], inf)} vai escolher apenas da lista, se tem \emph{alguns} números entre 0 e 10, mas não todos (6, 7, 8 não estão lá, então nunca vão aparecer neste \texttt{Prand}).  \\
+a) \texttt{Pwhite(0, 10)} vai gerar qualquer número entre 0 e 10. \texttt{Prand([0, 4, 1, 5, 9, 10, 2, 3], inf)} vai escolher apenas números que estão contidos na lista; note que essa lista tem \emph{alguns} números entre 0 e 10, mas não todos (6, 7, 8 não estão lá, então nunca vão aparecer neste \texttt{Prand}).  \\
 b) Tecnicamente você poderia usar um \texttt{Prand} se você fornecer uma lista com todos os números entre 0 e 100, mas faz mais sentido usar um \texttt{Pwhite} para esta tarefa: \texttt{Pwhite(0, 100)}. \\
-c) \texttt{Prand([0, 1, 2, 3], inf)} escolhe itens da lista aleatoriamente. \texttt{Pwhite(0, 3)} chega ao mesmo tipo de resultado por outros meios: ele gera aleatoriamente números inteiros entre 0 e 3, o que acaba dando o mesmo leque de opções que o \texttt{Prand} acima. No entanto, se você escrever \texttt{Pwhite(0, 3.0)}, o resultado será diferente: como um dos argumentos de entrada do \texttt{Pwhite} está escrito como um decimal (3.0), produzirá qualquer número de ponto flutuante entre 0 e 3, como 0.154, 1.0, 1.45, 2.999.
+c) \texttt{Prand([0, 1, 2, 3], inf)} escolhe itens da lista aleatoriamente. \texttt{Pwhite(0, 3)} chega ao mesmo resultado por outros meios: ele gera aleatoriamente números inteiros entre 0 e 3, o que acaba dando o mesmo leque de opções que o \texttt{Prand} acima. No entanto, se você escrever \texttt{Pwhite(0, 3.0)}, o resultado será diferente: como um dos argumentos de entrada do \texttt{Pwhite} está escrito como um decimal (3.0), esse Pwhite produzirá qualquer número decimal entre 0 e 3, como 0.154, 1.0, 1.45, 2.999.
 \\
 d) O primeiro \texttt{Pbind} toca 32 notes (4 vezes a sequência de 8 notas). O segundo \texttt{Pbind} toca apenas 4 notas: quatro escolhas aleatórias retiradas da lista (lembre-se que o \texttt{Prand}, diferentemente do \texttt{Pseq}, não tem a obrigação de tocar todas as notas da lista: ele vai simplesmente escolher tantos números aleatórios quanto você pedir). O terceiro e último \texttt{Pbind} toca 32 notas, como o primeiro.
 }
@@ -254,7 +254,7 @@ DICA: Um Pbind para de tocar quando o Pattern interno mais curto tiver terminado
 
 \subsection{Expandindo seu vocabulário de Patterns}
 
-A partir de agora, você deve ser capaz de escrever \texttt{Pbind}s simples por conta própria. Você sabe especificar alturas, durações, amplitudes, valores de legato e você sabe como embutir outros Patterns (\texttt{Pseq}, \texttt{Prand}, \texttt{Pwhite}) para gerar mudanças de parâmetros interessantes.
+A partir de agora, você já deve ser capaz de escrever \texttt{Pbind}s simples por conta própria. Você sabe especificar alturas, durações, amplitudes, valores de legato e você sabe como embutir outros Patterns (\texttt{Pseq}, \texttt{Prand}, \texttt{Pwhite}) para gerar mudanças interessantes de parâmetros.
 
 Esta seção irá expandir um pouco seu vocabulário de Patterns. Os exemplos abaixo introduzem seis novos membros da família Pattern. Tente descobrir por você mesmo o que eles fazem. Use as seguintes estratégias:
 \begin{itemize}
@@ -305,7 +305,7 @@ Pbind(
 )
 
 // Pseries
-// Aceita três argumentos: início, razão, comprimento
+// Aceita três argumentos: início, passo, comprimento
 (
 Pbind(
     \note, Pseries(0, 2, 15),
@@ -332,6 +332,6 @@ Pbind(
 \end{lstlisting}
  
 
-Pratique usando estes Patterns---você pode fazer muitas coisas com eles. \texttt{Pbind}s são como receitas para partituras musicais, com a vantagem que você não está limitado a escrever sequências fixas de notas e ritmos: você pode descrever processos de parâmetros musicais em constante mudança (às vezes isto é chamado "composição algorítmica"). E isso é apenas um aspecto das capacidades poderosas da família Pattern.
+Pratique usar estes Patterns---você pode fazer muitas coisas com eles. \texttt{Pbind}s são como receitas para partituras musicais, com a vantagem que você não está limitado a escrever sequências fixas de notas e ritmos: você pode descrever processos de parâmetros musicais em constante mudança (às vezes isto é chamado "composição algorítmica"). E isso é apenas um aspecto das capacidades poderosas da família Pattern.
 
-No futuro, quando você sentir a necessidade de mais objetos Pattern, o melhor lugar para ir é o "A Practical Guide to Patterns" de James Harkin, disponível nos arquivos de Ajuda do SC.\footnote{Também online em \url{http://doc.sccode.org/Tutorials/A-Practical-Guide/PG_01_Introduction.html}}
+No futuro, quando você sentir a necessidade de mais objetos Pattern, consulte o "Practical Guide to Patterns" de James Harkins, disponível nos arquivos de Ajuda do SC.\footnote{Também online em \url{http://doc.sccode.org/Tutorials/A-Practical-Guide/PG_01_Introduction.html}}
