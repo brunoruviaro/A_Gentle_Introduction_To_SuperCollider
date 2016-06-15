@@ -15,7 +15,10 @@
    id="svg4583"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="fig-piano-keyboard-degree-note-midinote-freq.svg">
+   sodipodi:docname="fig-piano-keyboard-degree-note-midinote-freq.svg"
+   inkscape:export-filename="/home/ruviaro/Documents/LaTex/A_Gentle_Introduction_To_SuperCollider/fig-piano-keyboard-degree-note-midinote-freq.png"
+   inkscape:export-xdpi="600"
+   inkscape:export-ydpi="600">
   <defs
      id="defs4585">
     <marker
@@ -75,7 +78,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
