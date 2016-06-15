@@ -4,11 +4,11 @@ Até agora, a maioria dos nossos exemplos foi de sons contínuos. Já está na h
 
 Pense em um envelope de amplitude simplesmente como um número que muda ao longo do tempo e pode ser utilizado como o multiplicador (\texttt{mul}) de qualquer UGen que produz som. Estes números devem estar entre 0 (silêncio) e 1 (amplitude máxima), porque é assim que o SuperCollider entende a amplitude. Talvez agora você se dê conta de que o último exemplo já continha um envelope de amplitude: em \texttt{\{WhiteNoise.ar(Line.kr(0.2, 0, 2, doneAction: 2))\}.play}, fazemos a amplitude do ruído branco ir de 0.2 a 0 em 2 segundos. Um \texttt{Line.kr}, no entanto, não é um tipo de envelope muito flexível.
 
-\texttt{Env} é o objeto que você usará o tempo todo para definir todo tipo de envelopes. O \texttt{Env} tem muitos métodos úteis; só conseguiremos ver alguns deles aqui. Sinta-se à vontade para explorar a Ajuda de \texttt{Env} para aprender mais. 
+\texttt{Env} é o objeto que você usará o tempo todo para definir vários tipos de envelopes. O \texttt{Env} tem muitos métodos úteis; só conseguiremos ver alguns deles aqui. Dê uma olhada na Ajuda do \texttt{Env} para aprender mais. 
 
 \subsection{Env.perc}
 
-\texttt{Env.perc} é uma maneira prática de conseguir um envelope percussivo. Ele aceita quatro argumentos:  attackTime, releaseTime, level e curve (que podemos traduzir como: "tempo de ataque, tempo de repouso, nível e curva"). Vejamos algumas formas típicas, ainda fora de qualquer sintetizador.
+\texttt{Env.perc} é uma maneira prática de se obter um envelope percussivo. Ele aceita quatro argumentos:  attackTime, releaseTime, level e curve (que podemos traduzir como: "tempo de ataque, tempo de repouso, nível e curva". No caso de envelopes de amplitude, "nível" é como se fosse o "volume máximo" que o seu envelope pode alcançar). Vejamos algumas formas típicas, ainda fora de qualquer sintetizador.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 Env.perc.plot; // usando todos os argumentos padrão
@@ -30,7 +30,7 @@ Tudo o que você tem de fazer é adicionar \texttt{.kr(doneAction: 2)} logo depo
 
 \subsection{Env.triangle}
 
-\texttt{Env.triangle} recebe apenas dois argumentos: duração e nível. Exemplos:
+\texttt{Env.triangle} recebe apenas dois argumentos: duração e nível de amplitude. Exemplos:
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -44,7 +44,7 @@ Env.triangle.plot;
 
 \subsection{Env.linen}
 
-\texttt{Env.linen} descreve um envelope linear com ataque, porção de sustentação e repouso. Você também pode especificar o nível e tipo de curva. Exemplo:
+\texttt{Env.linen} descreve um envelope linear com ataque, porção de sustentação e repouso. Você também pode especificar o nível de amplitude e tipo de curva. Exemplo:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // Veja-o:
@@ -55,7 +55,7 @@ Env.linen.plot;
 
 \subsection{Env.pairs}
 
-Precisa de mais flexibilidade? Com \texttt{Env.pairs} você pode ter envelopes com qualquer forma e duração que quiser. \texttt{Env.pairs} recebe dois argumentos: um arranjo ("array") de pares de [tempo, nível] e um tipo de curva (veja na Ajuda de Env todos os tipos de curva disponíveis).
+Quer algo ainda mais flexível? Com \texttt{Env.pairs} você pode ter envelopes com qualquer forma e duração que quiser. \texttt{Env.pairs} recebe dois argumentos: uma lista (array) de pares de [tempo, nível] e um tipo de curva (veja na Ajuda de Env todos os tipos de curva disponíveis).
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -68,7 +68,7 @@ Precisa de mais flexibilidade? Com \texttt{Env.pairs} você pode ter envelopes c
 )
 \end{lstlisting}
  
-Leia o arranjo de pares assim:
+Leia a array de pares assim:
 \begin{center}
 No tempo 0, esteja no nível 0;\\
 No tempo 0.4, esteja no nível 1;\\
@@ -77,9 +77,9 @@ No tempo 1.1, esteja no nível 0.5;\\
 No tempo 2, esteja no nível 0;
 \end{center}
 
-\subsubsection{Envelopes---não apenas para amplitude}
+\subsubsection{Envelopes---não só para amplitude}
 
-Nada impede você de usar as estas mesmas formas para controlar algo além da amplitude. Você só precisa escaloná-las para o âmbito de números desejado. Por exemplo, Você pode criar um envelope para controlar a mudança de frequências ao longo do tempo:
+Nada impede você de usar as estas mesmas formas para controlar algo que não seja amplitude do som. Você só precisa redimensioná-las para o âmbito de números desejado. Por exemplo, Você pode criar um envelope para controlar a mudança de frequências ao longo do tempo:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 (
@@ -94,9 +94,9 @@ Envelopes são uma maneira poderosa de controlar qualquer parâmetro de um sinte
 
 \subsection{Envelope ADSR}
 
-Todos os envelopes vistos até agora têm uma coisa em comum: eles têm uma duração fixa, pré-definida. Há situações, no entanto, em que este tipo de envelope não é adequado. Por exemplo, imagine que você está tocando em um teclado MIDI. o \textit{ataque} da nota é disparado quando você pressiona a tecla. O \textit{repouso}, quando você tira seu dedo da tecla. Mas a quantidade de tempo que você permanece com o dedo sobre a tecla não é conhecido de antemão. O que precisamos neste caso é de um "envelope sustentado". Em outras palavras, depois da porção de ataque, o envelope precisa segurar a nota por uma quantidade de tempo indefinida e apenas disparar a porção de repouso depois de algum sinal, ou mensagem--- isto é, o momento em que você "solta a tecla".
+Todos os envelopes vistos até agora têm uma coisa em comum: eles têm uma duração fixa, pré-definida. Há situações, no entanto, em que este tipo de envelope não é adequado. Por exemplo, imagine que você está tocando em um teclado MIDI. O \textit{ataque} da nota é disparado quando você pressiona a tecla. O \textit{repouso}, quando você tira seu dedo da tecla. Mas a quantidade de tempo que você permanece com o dedo pressionando a tecla não é conhecido de antemão. O que precisamos neste caso é de um "envelope sustentado". Em outras palavras, depois da porção de ataque, o envelope precisa segurar a nota por uma quantidade de tempo indefinida e apenas disparar a porção de repouso depois de algum sinal, ou mensagem--- isto é, o momento em que você "solta a tecla".
 
-Um envelope ASR (Ataque, Sustentação, Repouso) se encaixa perfeitamente. Uma variação mais popular é o envelope ADSR (Ataque, Decaimento, Sustentação, Repouso). Vamos dar uma olhada nos dois.
+Um envelope ASR (Ataque, Sustentação, Repouso) se encaixa perfeitamente nesse caso. Uma variação mais popular é o envelope ADSR (Ataque, Decaimento, Sustentação, Repouso). Vamos dar uma olhada nos dois.
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -132,7 +132,7 @@ Conceitos-chave:
 
 Como envelopes sustentados não tem uma duração total conhecida de antemão, eles precisam de uma notificação tanto de quando começar (disparar o ataque) e quando parar (disparar o repouso). Esta notificação é chamada um \emph{gate} ("portão"). O gate é o que diz para que o envelope se ‘abra’ (1) ou se ‘feche’ (0), portanto começando e terminando a nota.
 
-Para que um envelope ASR ou ADSR funcione no seu sintetizador, você precisa declarar um argumento \texttt{gate}. Normalmente, o padrão é \texttt{gate = 1} porque você quer que o sintetizador comece logo a tocar. Quando você quer que o sintetizador pare, simplesmente mande uma mensagem \texttt{.release} ou \texttt{.set(\textbackslash gate, 0)}: a porção de repouso do envelope será então disparada. Por exemplo, se seu tempo de repouso é 3, a nota vai levar três segundos para se extinguir completamente \emph{desde o momento em que você enviou a mensagem} \texttt{.set(\textbackslash gate, 0)}. 
+Para que um envelope ASR ou ADSR funcione no seu sintetizador, você precisa declarar um argumento \texttt{gate}. Normalmente, o padrão é \texttt{gate = 1} porque você quer que o sintetizador comece a tocar assim que for instanciado (ativado). Quando você quer que o sintetizador pare, simplesmente mande uma mensagem \texttt{.release} ou \texttt{.set(\textbackslash gate, 0)}: a porção de repouso do envelope será então disparada. Por exemplo, se seu tempo de repouso é 3, a nota vai levar três segundos para se extinguir completamente \emph{a partir do momento em que você enviou a mensagem} \texttt{.set(\textbackslash gate, 0)}. 
 
 \subsection{EnvGen}
 

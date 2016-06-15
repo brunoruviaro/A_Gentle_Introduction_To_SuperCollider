@@ -1,7 +1,7 @@
 \section{Canais de Controle}
 \label{sec:control-buses}
 
-Em uma seção anterior deste tutorial, falamos sobre canais de áudio ("Audio Buses") (seção \ref{sec:audiobus}) e o objeto Bus (section \ref{sec:busobject}). Naquele momento, escolhemos deixar de lado o tópico dos Canais de Controle ("Control Buses") para nos focarmos no conceito de de roteamento de áudio.
+Em uma seção anterior deste tutorial, falamos sobre canais de áudio ("Audio Buses") (seção \ref{sec:audiobus}) e o objeto Bus (section \ref{sec:busobject}). Naquele momento, escolhemos deixar de lado o tópico dos Canais de Controle ("Control Buses") para nos focarmos no conceito de roteamento de áudio.
 
 Canais de controle no SuperCollider são para o roteamento de sinais de controle, não de áudio. Exceto por esta diferença, não há nenhuma outra distinção prática ou conceitual entre canais de áudio de de controle. Você cria e gerencia um canal de controle da mesma maneira que você faz com os canais de áudio, simplesmente usando \texttt{.kr} em vez de \texttt{.ar}. O SuperCollider tem  4096 canais de controle como padrão.
 
@@ -20,7 +20,7 @@ A primeira parte do exemplo abaixo usa um número de canal arbitrário apenas co
 {SinOsc.ar(freq: In.kr(~meuCanalDeControle))}.play;
 \end{lstlisting}
 
-O próximo exemplo mostra um único sinal de controle sendo utilizado para modular dois diferentes sintetizadores ao mesmo tempo. No sintetizador \texttt{Blip}, o sinal de controle e reescalonado para controlar o número de harmónicos entre 1 e 10. No segundo sintetizador, o mesmo sinal de controle é reescalonado para modular a frequência do oscilador \texttt{Pulse}.
+O próximo exemplo mostra um único sinal de controle sendo utilizado para modular dois sintetizadores diferentes ao mesmo tempo. No sintetizador \texttt{Blip}, o sinal de controle é redimensionado para controlar o número de harmônicos entre 1 e 10. No segundo sintetizador, o mesmo sinal de controle é redimensionado para modular a frequência do oscilador \texttt{Pulse}.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // Crie o canal de controle

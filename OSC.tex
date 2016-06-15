@@ -20,7 +20,7 @@ Nota: pressionando [ctrl+.] interromperá o \texttt{OSCdef} e você não receber
 
 \subsection{Mandando OSC para um outro computador}
 
-Isso assume que ambos os computadores estejam rodando o SuperCollider e conectados a uma rede. Descubra o endereço IP do computador receptor e rode as seguintes linhas no computador emissor:
+Para esta demonstração, partimos do princípio que ambos os computadores estejam rodando o SuperCollider e conectados à mesma rede. Descubra o endereço IP do computador receptor e rode as seguintes linhas no computador emissor:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // Use isso na máquina que está mandando mensagens
@@ -32,11 +32,11 @@ Isso assume que ambos os computadores estejam rodando o SuperCollider e conectad
 \subsection{Mandando OSC de um smartphone}
 
 \begin{itemize}
-\item Instale qualquer aplicativo grátis de OSC no telefone (por exemplo, gyrosc);
-\item Entre o endereço IP do computador receptor no aplicativo OSC (como ‘target’);
+\item Instale qualquer aplicativo de OSC no telefone (por exemplo, gyrosc);
+\item Entre o endereço IP do computador receptor no aplicativo OSC (como "target");
 \item Entre a porta de entrada do SuperCollider no app OSC (geralmente 57120);
 \item Verifique o caminho de mensagem ("message path") que o aplicativo usa para mandar OSC e mude o seu OSCdef de acordo;
-\item Tenha certeza que seu telefone está conectado à rede
+\item Tenha certeza que seu telefone está conectado à mesma rede sem fio que o computador
 \end{itemize}
 
 Desde que seu telefone esteja enviando mensagens para o caminho correto, você deve vê-las chegando no computador.

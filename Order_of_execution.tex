@@ -42,9 +42,9 @@ Observe a janela Node Tree conforme você roda os synths em ordem.
 \label{fig:node-tree}
 \end{figure}
 
-Os nódulos de Synth na janela Node Tree rodam de \emph{cima pra baixo}. Os synths mais recentes são adicionados no topo da pilha. Na figura \ref{fig:node-tree}, você pode ver que \texttt{"noise"} está no topo, \texttt{"filter"} vem em segundo, e \texttt{"masterOut"} aparece por último. Esta é a ordem correta que nós queremos para este exemplo: lendo de cima para baixo, o ruído branco passa para o filtro, e o resultado do filtro passa para o canal master. Tente agora rodar o exemplo de novo, mas de trás pra frente (ou seja, rode as linhas na ordem \texttt{n}, \texttt{f}, and \texttt{m}. Você não vai ouvir nada, porque os sinais estão sendo calculados na ordem errada.
+Os nós de Synth na janela Node Tree são calculados \emph{de cima pra baixo}. Os synths mais recentes são adicionados no topo da pilha. Na figura \ref{fig:node-tree}, você pode ver que \texttt{"noise"} está no topo, \texttt{"filter"} vem em segundo, e \texttt{"masterOut"} aparece por último. Esta é a ordem correta que nós queremos para este exemplo: lendo de cima para baixo, o ruído branco passa para o filtro, e o resultado do filtro passa para o canal master. Tente agora rodar o exemplo de novo, mas de trás pra frente (ou seja, rode as linhas na ordem \texttt{n}, \texttt{f}, and \texttt{m}. Você não vai ouvir nada, porque os sinais estão sendo calculados na ordem errada.
 
-Rodar as linhas certas na ordem certa é um método adequado em muitos casos, mas pode ser que isso fique um pouco complicado de controlar conforme o seu código vá ficando mais complexo. Para simplificar a tarefa, o SuperCollider permite que você defina explicitamente onde colocar os synths na janela Node Tree. Para tanto, usamos os argumentos \texttt{target} e \texttt{addAction}.
+Rodar as linhas certas na ordem certa é um método adequado em muitos casos, mas pode ser que isso fique um pouco complicado conforme o seu código vá ficando mais complexo. Para simplificar a tarefa, o SuperCollider permite que você defina explicitamente onde colocar os synths na janela Node Tree. Para tanto, usamos os argumentos \texttt{target} e \texttt{addAction}.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 n = Synth("noise", addAction: 'addToHead');
@@ -52,11 +52,11 @@ m = Synth("masterOut", addAction: 'addToTail');
 f = Synth("filter", target: n, addAction: 'addAfter');
 \end{lstlisting}
 
-Agora, não importa em que ordem você rodar as linhas acima, você pode ter certeza que os nódulos de cada synth vão ser colocados no lugar certo. O synth \texttt{"noise"} está sendo explicitamente adicionado na cabeça (topo) da janela Node Tree; o \texttt{"masterOut"} é adicionado na cauda (embaixo de todos os outros); e o \texttt{filter} é explicitamente adicionado logo depois do \texttt{n} (o synth de ruído).
+Agora, não importa em que ordem você rodar as linhas acima, você pode ter certeza que os nós de cada synth vão ser colocados no lugar certo. O synth \texttt{"noise"} está sendo explicitamente adicionado na cabeça (topo) da janela Node Tree; o \texttt{"masterOut"} é adicionado na cauda (embaixo de todos os outros); e o \texttt{filter} é explicitamente adicionado logo depois do \texttt{n} (o synth de ruído).
 
 \subsection{Grupos}
 
-Conforme você começar a usar um monte de synths---alguns como fontes sonoras, outros para processamento, efeitos, seja lá o que você precisar---,pode ser uma boa ideia organizá-los em grupos. Aqui está um exemplo simples:
+Conforme você começar a usar um monte de synths---alguns como fontes sonoras, outros para processamento, efeitos, seja lá o que você precisar---, pode ser uma boa ideia organizá-los em grupos. Aqui está um exemplo simples:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // Vá olhando tudo o que acontece na janela NodeTree

@@ -33,18 +33,18 @@ Pbind(
 )
 \end{lstlisting}
  
-Ao usar \texttt{Pbind} para tocar um dos seus \texttt{SynthDef}s personalizados, apenas esteja atento aos seguintes pontos:
+Ao usar \texttt{Pbind} para tocar um dos seus \texttt{SynthDef}s personalizados, esteja atento aos seguintes pontos:
 
 \begin{itemize}
 \item Use a chave ("key") \texttt{\textbackslash instrument} do \texttt{Pbind} para declarar o nome do seu \texttt{SynthDef}.
-\item Todos os argumentos do seu SynthDef são controláveis a partir do \texttt{Pbind}: simplesmente use-os como chaves do \texttt{Pbind}. Por exemplo, note o argumento cuamado \texttt{\textbackslash uaurelease} utilizado acima. Esta não é uma das chaves padrão entendidas pelo \texttt{Pbind}---mas sim, é exclusiva da definição de sintetizador  \texttt{uau} (o nome bobo foi escolhido de propósito).
+\item Todos os argumentos do seu SynthDef são controláveis a partir do \texttt{Pbind}: simplesmente use-os como chaves do \texttt{Pbind}. Por exemplo, repare no argumento chamado \texttt{\textbackslash uaurelease} utilizado acima. Esta não é uma das chaves padrão entendidas pelo \texttt{Pbind}---ela só existe na definição do sintetizador  \texttt{uau} (o nome bobo foi escolhido de propósito).
 
-\item Para utilizar todas as facildades de conversão de alturas do \texttt{Pbind} (as chaves \texttt{\textbackslash degree}, \texttt{\textbackslash note} e \texttt{\textbackslash midinote}), tenha certeza de que seu \texttt{SynthDef} tem um argumento de entrada \texttt{freq} (tem que ser escrito exatamente assim). Pbind fará a matemática para você.
-\item Se for usar um envelope sustentado como \texttt{Env.adsr}, garanta que seu sintetizador tem o argumento padrão \texttt{gate = 1} (\texttt{gate} tem que ser excrito exatamente assim, porque o \texttt{Pbind} o utiliza nos bastidores para parar as notas nos momentos certos).
+\item Para utilizar todas as facildades de conversão de alturas do \texttt{Pbind} (as chaves \texttt{\textbackslash degree}, \texttt{\textbackslash note} e \texttt{\textbackslash midinote}), tenha certeza de que sua \texttt{SynthDef} tem um argumento de entrada \texttt{freq} (tem que ser escrito exatamente assim). Pbind fará os cálculos para você.
+\item Se for usar um envelope sustentado como \texttt{Env.adsr}, garanta que seu sintetizador tenha o argumento padrão \texttt{gate = 1} (\texttt{gate} tem que ser excrito exatamente assim, porque o \texttt{Pbind} o utiliza nos bastidores para parar as notas nos momentos certos).
 \item Se você não estiver usando um envelope sustentado, tenha certeza que seu SynthDef inclui um doneAction: 2 em uma UGen apropriada, para liberar automaticamente os nós de sintetizador no servidor.
 \end{itemize}
 
-Exercício: escreva uma ou mais \texttt{Pbind}s para tocar o SyntDef \texttt{"pluck"} fornecido abaixo. Para o argumento \texttt{cordaAbafada}, tente valores entre  0.1 e 0.9. Faça com que seu \texttt{Pbind}s toque uma sequência lenta de acordes. Tente arpejar os acordes com \texttt{\textbackslash strum}.
+Exercício: escreva um ou mais \texttt{Pbind}s para tocar a SynthDef \texttt{"pluck"} fornecida abaixo. Para o argumento \texttt{cordaAbafada}, tente valores entre  0.1 e 0.9. Faça com que seu \texttt{Pbind} toque uma sequência lenta de acordes. Tente arpejar os acordes com \texttt{\textbackslash strum}.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 (

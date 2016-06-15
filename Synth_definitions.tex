@@ -1,7 +1,7 @@
 \section{Definições de sintetizador}
 \label{sec:synthdef}
 
-Até aqui, sem dificuldade alguma, pudemos \emph{definir} sintetizadores e fazê-los \emph{tocar} imediatamente. Para além disso, a mensagem \texttt{.set} nos deu alguma flexibilidade para alterar os controles do sintetizador em tempo real. No entanto, há situações em que você pode querer definir seus sintetizadores antes (sem tocá-los imediatamente) e tocá-los somente depois. Em essência, isso significa que temos de separar o momento de escrever a receita (a definição de sintetizador) do momento de assar o bolo (criar o som).
+Até aqui, sem dificuldade alguma, pudemos \emph{definir} sintetizadores e fazê-los \emph{tocar} imediatamente. Além disso, a mensagem \texttt{.set} nos deu alguma flexibilidade para alterar os controles do sintetizador em tempo real. No entanto, há situações em que você pode querer definir seus sintetizadores antes (sem tocá-los imediatamente) e tocá-los somente depois. Em essência, isso significa que temos de separar o momento de escrever a receita (a definição de sintetizador) do momento de assar o bolo (criar o som).
 
 
 \subsection{SynthDef e Synth}
@@ -30,13 +30,13 @@ Synth("minhaSenoide2", [\freq, 346, \amp, 0.3]);
 Synth("minhaSenoide2", [\freq, rrand(440, 880)]);
 \end{lstlisting}
 
-O primeiro argumento para o \texttt{SynthDef} é um nome para o sintetizador definido pelo usuário. O segundo argumento é uma função na qual você especifica um gráfico de UGens (assim é chamada uma combinação de UGens). Note que você tem de usar \texttt{Out.ar} explicitamente para indicar para qual canal você quer enviar o sinal. Finalmente, o \texttt{SynthDef} recebe a mensagem  \texttt{.add} ao final, que diz que você está a adicionando a uma coleção de sintetizadores que o SC conhece. Isso é somente válido até você fechar o SuperCollider.
+O primeiro argumento para a \texttt{SynthDef} é um nome para o sintetizador definido pelo usuário. O segundo argumento é uma função na qual você especifica um gráfico de UGens (assim é chamada uma combinação de UGens). Note que você tem de usar \texttt{Out.ar} explicitamente para indicar para qual canal você quer enviar o sinal. Finalmente, a \texttt{SynthDef} recebe a mensagem  \texttt{.add} ao final, que diz que você está a adicionando a uma coleção de sintetizadores que o SC conhece. Isso fica valendo até a hora que você fechar o SuperCollider.
 
-Depois que você criar uma ou mais definições de sintetizador com \texttt{SynthDef}, você pode tocá-las com \texttt{Synth}: o primeiro argumento é o nome do sintetizador que você quer usar e o segundo argumento (opcional) é um array com quaisquer parâmetros que você queira especificar (freq, amp, etc.)
+Depois que você criar uma ou mais definições de sintetizador com \texttt{SynthDef}, você pode tocá-las com \texttt{Synth}: o primeiro argumento é o nome do sintetizador que você quer usar e o segundo argumento (opcional) é uma array com quaisquer parâmetros que você queira especificar (freq, amp, etc.)
 
 \subsection{Exemplo}
 
-Eis um exemplo mais longo. Depois que o SynthDef é adicionado, nós utilizamos um truque com um array para criar um acode de 6 notas com alturas e amplitudes aleatórias. Cada sintetizador é armazenado em uma das posições do array, para que possamos desligá-los individualmente. 
+Eis um exemplo mais longo. Depois que a SynthDef é adicionada, nós utilizamos um truque com uma array para criar um acode de 6 notas com alturas e amplitudes aleatórias. Cada sintetizador é armazenado em uma das posições da array, para que possamos desligá-los individualmente. 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // Criar SynthDef
@@ -83,17 +83,17 @@ Para ajudá-lo a entender o SynthDef acima:
 $$60 * [1.01, 1.009, 1.0, 1.02, 1.015, 1.004, 1.019]$$
 
 na qual os números da lista estariam constantemente subindo e descendo de acordo com as velocidades de cada LFNoise2. O resultado final é uma lista de sete frequências sempre deslizando entre 60 e 61.2 (60 * 1.02). Isso é chamado \textit{efeito chorus}, por isso o nome da variável. 
-\item Quando a variável \texttt{chorus} é usada como freq de \texttt{LFSaw.ar}, acontece expansão multicanal: tempos agora sete ondas dentes-de-serra com frequências ligeiramente diferentes.
+\item Quando a variável \texttt{chorus} é usada como freq de \texttt{LFSaw.ar}, acontece expansão multicanal: temos agora sete ondas dentes-de-serra com frequências ligeiramente diferentes.
 \item A variável \texttt{filtromod} é só um oscilador senoidal movendo-se muito lentamente (1 ciclo a cada 16 segundos), com seu âmbito de saída escalonado para 1-10. Isso será usado para modular a frequência de corte do filtro passa-baixa.
-\item A variável \texttt{som} guarda o filtro passa-baixa (LPF), que recebe \texttt{fonte} como entrada e atenua todas as frequências acima de sua frequência de corte. Este corte não é um valor fixo: ele é a expressão \texttt{freq * filtromod}. Então no exemplo, ao assumir freq = 60, isso torna-se um número entre 60 e 600. Lembre-se que filtromod é um número oscilando entre 1 e 10, de maneira que a multiplicação seria 60 * (1 a 10).
+\item A variável \texttt{som} contém o filtro passa-baixa (LPF), que recebe \texttt{fonte} como entrada e atenua todas as frequências acima de sua frequência de corte. Este corte não é um valor fixo: ele é a expressão \texttt{freq * filtromod}. Então no exemplo, ao assumir freq = 60, isso torna-se um número entre 60 e 600. Lembre-se que filtromod é um número oscilando entre 1 e 10, de maneira que a multiplicação seria 60 * (1 a 10).
 \item \texttt{LPF} também expande multicanal para sete cópias. O envelope de amplitude \texttt{env} também é aplicado neste ponto.
-\item Finalmente, \texttt{Splay} pega esse array de sete canais e mixa em estéreo.
+\item Finalmente, \texttt{Splay} pega essa array de sete canais e mixa em estéreo.
 
 \end{itemize}
  
 \subsection{Nos bastidores}
 
-Este processo em duas etapas de primeiro criar o SynthDef (com um nome próprio) e depois chamar um Synth é o que o SC faz o tempo quando você escreve comandos simples como \texttt{\{SinOsc.ar\}.play}. SuperCollider desdobra isso em (a) criar um SynthDef temporário e (b) tocá-lo imediatamente (essa é a razão dos nomes temp\_01, temp\_02 que você vê na Post window). Tudo isso nos bastidores, para sua conveniência.
+Este processo em duas etapas de primeiro criar o SynthDef (com um nome próprio) e depois chamar um Synth é o que o SC faz o tempo todo quando você escreve comandos simples como \texttt{\{SinOsc.ar\}.play}. SuperCollider desdobra isso em (a) criar um SynthDef temporário e (b) tocá-lo imediatamente (essa é a razão dos nomes temp\_01, temp\_02 que você vê na Post window). Tudo isso nos bastidores, para sua conveniência.
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // Quando você faz isso:

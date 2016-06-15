@@ -1,8 +1,8 @@
-\section{Nós de sintetizador}
+\section{Nós ("nodes") de sintetizador}
 
 Nos exemplos anteriores com \texttt{PlayBuf}, você teve que apertar [ctrl+.] depois de cada linha para parar o som. Em outros exemplos, você atribuiu o sintetizador a uma variável (como \texttt{x = \{WhiteNoise.ar\}.play}) para que você pudesse pará-lo diretamente com \texttt{x.free}.
 
-Toda vez que você cria um sintetizador no SuperCollider, você sabe que ele roda no servidor, nosso "motor sonoro". Cada sintetizador que está rodando no servidor é representado por um \emph{node} ("nó"). Podemos dar uma espiada nesta árvore de nós com o comando \texttt{s.plotTree}. Experimente. Uma janela chamada \texttt{NodeTree} ("Árvore de nós") vai abrir.
+Toda vez que você cria um sintetizador no SuperCollider, você sabe que ele roda no servidor, nosso "motor sonoro". Cada sintetizador que está rodando no servidor é representado por um \emph{node} ("nó" ou "nódulo"). Podemos dar uma espiada nesta árvore de nós com o comando \texttt{s.plotTree}. Experimente. Uma janela chamada \texttt{NodeTree} ("Árvore de nós") vai abrir.
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -34,8 +34,7 @@ x.free;
 
 \subsection{O glorioso doneAction: 2}
 
-Felizmente, há uma maneira de fazer sintetizadores mais espertos neste sentido: por exemplo, não seria ótimo se pudéssemos pedir ao \texttt{Line.kr} para notificar o sintetizador quando ele tiver terminado seu trabalho (a rampa de 0.2 a 0), diante do que o sintetizador se liberasse automaticamente?
-
+Felizmente, há uma maneira de criar sintetizadores mais espertos neste sentido: por exemplo, não seria ótimo se pudéssemos pedir ao \texttt{Line.kr} para notificar o sintetizador quando ele tiver terminado seu trabalho (a rampa de 0.2 a 0), e então o sintetizador se liberasse automaticamente?
 
 Insira o argumento \texttt{doneAction: 2} para resolver todos os nossos problemas.
 
@@ -51,4 +50,4 @@ Toque os exemplos abaixo e compare como eles se comportam com e sem doneAction: 
 {PlayBuf.ar(1, ~buf1, doneAction: 2)}.play;
 \end{lstlisting}
  
-Os sintetizadores com doneAction: 2 vão se liberar automaticamente logo que seu trabalho estiver feito (isto é, assim que a rampa do \texttt{Line.kr} tiver terminado no primeiro exemplo e logo que o \texttt{PlayBuf.ar} tiver terminado de tocar o arquivo de som no segundo exemplo). Saber tudo isso será bastante útil para a próxima seção: Envelopes.
+Os sintetizadores com doneAction: 2 vão se liberar automaticamente logo que seu trabalho estiver feito (isto é, assim que a rampa do \texttt{Line.kr} tiver terminado no primeiro exemplo e logo que o \texttt{PlayBuf.ar} tiver terminado de tocar o arquivo de som no segundo exemplo). Confirme que você entendeu este conceito, pois ele será bastante útil na próxima seção: Envelopes.

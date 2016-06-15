@@ -1,6 +1,6 @@
 \section{Tocando um arquivo de áudio}
 
-Primeiro, você tem que carregar o arquivo de som em um buffer ("retentor"). O segundo argumento para \texttt{Buffer.read} é o caminho ("path") para o seu arquivo de som entre aspas duplas. Você precisará fazer com que ele aponte para um arquivo WAV ou AIFF no seu computador. Depois que os buffers são carregados, simplesmente use a UGen \texttt{PlayBuf} para tocá-lo de diversas maneiras.
+Primeiro, você tem que carregar o arquivo de som em um buffer (uma espécie de "contêiner"). O segundo argumento para \texttt{Buffer.read} é o caminho ("path"), entre aspas duplas, indicando onde o seu arquivo de som está salvo. Esse caminho deve apontar para um arquivo WAV ou AIFF no seu computador. Depois que o buffer é carregado, simplesmente use a UGen \texttt{PlayBuf} para tocá-lo de diversas maneiras.
 
 \bigskip
 \todo[inline, color=green!40]{ DICA: Um jeito rápido de obter o caminho correto para um arquivo de som no seu computador é arrastar o arquivo para um documento em branco do SuperCollider. O SC fornecerá automaticamente o camninho completo, já entre aspas duplas! }
@@ -15,7 +15,7 @@ Primeiro, você tem que carregar o arquivo de som em um buffer ("retentor"). O s
 {PlayBuf.ar(1, ~buf1)}.play; // número de canais e buffer
 {PlayBuf.ar(1, ~buf2)}.play;
 
-// Obter alguma informação sobre os arquivos:
+// Obter informações sobre os arquivos:
 [~buf1.bufnum, ~buf1.numChannels, ~buf1.path, ~buf1.numFrames];
 [~buf2.bufnum, ~buf2.numChannels, ~buf2.path, ~buf2.numFrames];
 
