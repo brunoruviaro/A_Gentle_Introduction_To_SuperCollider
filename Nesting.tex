@@ -1,16 +1,16 @@
-\section{Aninhamento}
+\section{Aninhamento ("Nesting"}
 \label{sec:nesting}
 
-A solução do último exercício levou você a aninhar coisas uma dentro da outra. David Cottle tem uma explicação excelente para aninhamento no The SuperCollider Book, então simplesmente o citaremos aqui.\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, pp. 8-9.}
+A solução do último exercício levou você a aninhar coisas uma dentro da outra, isso é, você colocou o rand dentro do round que por sua vez foi pra dentro do dup. David Cottle tem uma explicação excelente para aninhamento no The SuperCollider Book, então simplesmente o citaremos aqui.\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, pp. 8-9.}
 
 \begin{quotation}
-\textit{Para explicar melhor a ideia de aninhamento considere um exemplo hipotético no qual o SC vai preparar sua refeição. Para fazer isso você pode usar uma mensagem} \texttt{servir}. \textit{Os argumentos podem ser salada, prato principal e sobremesa. Mas apenas dizer} \texttt{servir(alface, peixe, banana)} \textit{talvez não produza o resultado que você quer. Então para ficar seguro você pode explicar estes argumentos, substituindo-os por uma mensagem aninhada e um argumento.}
+\textit{Para explicar melhor a ideia de aninhamento, considere um exemplo hipotético no qual o SC vai preparar sua refeição. Para fazer isso você pode usar uma mensagem} \texttt{servir}. \textit{Os argumentos podem ser salada, prato principal e sobremesa. Mas apenas dizer} \texttt{servir(alface, peixe, banana)} \textit{talvez não produza o resultado que você quer. Pra ter certeza que a comida seja bem feita, você pode explicar melhor os argumentos, substituindo-os por uma mensagem aninhada e alguns argumentos mais específicos.}
 \end{quotation}
 
 \texttt{servir(misturar(alface, tomate, queijo), assar(peixe, 400, 20), bater(banana, sorvete))
 }
 \begin{quotation}
-\textit{o SC então não apenas servirá alface peixe e banana, mas uma salada mista com alface, tomate e queijo; um peixe assado e um sundae de banana. Estes comandos internos podem ser ainda mais explicados, aninhando uma mensagem(arg) para cada ingrediente: alface, tomate, queijo e assim por diante. Cada mensagem interna produz um resultado que por sua vez é usado como argumento pela mensagem exterior.}
+\textit{o SC então não apenas servirá alface, peixe e banana, mas uma salada mista com alface, tomate e queijo; um peixe assado; e um sundae de banana. Estes comandos internos podem ser ainda mais explicados, aninhando uma mensagem(arg) para cada ingrediente: alface, tomate, queijo e assim por diante. Cada mensagem interna produz um resultado que por sua vez é usado como argumento pela mensagem exterior.}
 \end{quotation}
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize, label=code-dinner]
@@ -18,10 +18,10 @@ A solução do último exercício levou você a aninhar coisas uma dentro da out
 servir(
 	misturar(
 		lavar(alface, água, 10),
-		picar(tomate, pequendo),
+		picar(tomate, pequeno),
 		salpicar(escolher([gorgonzola, feta, gouda]))
 	),
-	assar(pegar(lagoa, anzol, vara), 400, 20),
+	assar(pescar(lagoa, anzol, vara), 200, 20),
 	misturar(
 		fatiar(descascar(banana), 20),
 		cozinhar(misturar(leite, açúcar, amido), 200, 10)
@@ -30,9 +30,9 @@ servir(
 \end{lstlisting}
 
 \begin{quotation}
-\textit{Quando o aninhamento tem diversos níveis, podemos usar novas linhas e indentações para uma maior clareza. Algumas mensagens e argumentos estão à esquerda em uma linha, alguns estão distribuídos com um argumento por linha---o que quer seja mais claro. Cada nível de indentação deve indicar um nível de aninhamento. (Note que você pode ter qualquer quantidade de espaço em branco---novas linhas, tabulações e espaços---entre trechos de código.)}
+\textit{Quando o aninhamento tem diversos níveis, podemos usar novas linhas e indentações para uma maior clareza. Algumas mensagens e argumentos podem permanecer na mesma linha, enquanto outras mensagens e argumentos podem distribuídos um em cada linha---o que quer seja mais claro. Cada nível de indentação deve indicar um nível de aninhamento. (Note que você pode ter qualquer quantidade de espaço em branco---novas linhas, tabulações e espaços---entre trechos de código.)}
 
-[No exemplo do jantar,]\textit{ ao programa de refeições agora se pede para lavar a alface em água por 10 minutos e para picar o tomate em pequenos pedaços antes de misturá-los na travessa da salada e salpicá-los com queijo. Você também especificou onde pegar o peixe e disse para assá-lo a 400 graus por 20 minutos antes de servir e assim por diante.} 
+[No exemplo do jantar,]\textit{ agora pede-se ao programa de refeições que ele lave a alface em água por 10 minutos e pique o tomate em pequenos pedaços antes de misturá-los na travessa da salada e salpicá-los com queijo. Você também especificou onde pegar o peixe e pediu para assá-lo a 200 graus por 20 minutos antes de servir, e assim por diante.} 
 \textit{Para "ler" este estilo de código, você começa da mensagem aninhada mais interna e vai seguindo para fora camada por camada. Aqui está um exemplo alinhado de maneira a mostrar como a mensagem mais interna é aninhada dentro das outras mensagens.}
 \end{quotation}
 
@@ -45,7 +45,7 @@ servir(
 round(sort(dup({exprand(1.0, 1000.0)}, 100)), 0.01);
 \end{lstlisting}
 
-O código abaixo é um outro exemplo de aninhamento. Responda às perguntas que se seguem. Você não precisa explicar o que os números estão fazendo---a tarefa é simplesmente idenftificar os argumetnos em cada camada de aninhamento. (Este exemplo e as questões do exercício também são emprestadas e ligeiramente modificadas do tutorial do Cottle.)
+O código abaixo é um outro exemplo de aninhamento. Responda às perguntas que se seguem. Você não precisa explicar o que os números estão fazendo---a tarefa é simplesmente idenftificar os argumentos em cada camada de aninhamento. (Este exemplo e as questões do exercício também são emprestadas e ligeiramente modificadas do tutorial do Cottle.)
 
  
 %\lstinputlisting[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize, label=code-nested-music]{code-nested-music.scd}
@@ -69,15 +69,15 @@ O código abaixo é um outro exemplo de aninhamento. Responda às perguntas que 
 \end{lstlisting}
 
 \begin{enumerate}[a)]
-\item Qual número é o segundo argumento para \texttt{LFNoise1.ar}?
-\item Qual o primeiro argumento para \texttt{LFSaw.ar}?
-\item Qual o terceiro argumento para \texttt{LFNoise1.ar}?
-\item Quantos argumentos estão em \texttt{midicps}?
-\item Qual o terceiro argumento para \texttt{SinOsc.ar}?
-\item Qual o segundo e terceiro argumentos para \texttt{CombN.ar}?
+\item Qual número é o segundo argumento do \texttt{LFNoise1.ar}?
+\item Qual o primeiro argumento do \texttt{LFSaw.ar}?
+\item Qual o terceiro argumento do \texttt{LFNoise1.ar}?
+\item O método \texttt{midicps} tem quantos argumentos?
+\item Qual o terceiro argumento do \texttt{SinOsc.ar}?
+\item Qual o segundo e terceiro argumentos do \texttt{CombN.ar}?
 \end{enumerate}
 
-Confira as respostas ao final deste documento.\endnote{ Respostas: 
+Confira as respostas ao final do livro.\endnote{ Respostas: 
 \begin{enumerate}[a)]
 \item 24
 \item $\left[5, 5.123\right]$ (tanto números quanto colchetes)

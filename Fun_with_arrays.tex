@@ -16,10 +16,10 @@ a.at(0);   // recupera um item na posição especificada
 a[0]	;  // o mesmo que acima
 a.wrapAt(9); // recupera item na posição especificada, relendo do início se > a.size
 ["wow", 99] ++ a; // concatena duas arrays em uma nova
-a ++ \oi;  // um Símbolo ("Symbol") é entendido como um único caracter
+a ++ \oi;  // um Símbolo é entendido como um único caracter
 a ++ 'oi'; // o mesmo que acima
 a ++ "oi"; // uma cadeia ("String") é entendida como uma coleção de caracteres
-a.add(44);    // cria uma array adicionando o novo elemento ao final
+a.add(44);    // cria uma nova array adicionando o novo elemento ao final
 a.insert(5, "uau"); // insere "uau" na posição 5, empurra itens seguintes para a frente (retorna uma nova array)
 a; // rode isso e veja que nenhuma das operações acima mudou a array original
 a.put(2, "oops"); // colocar "oops" no índice 2 (destrutivo; volte a rodar a linha acima para verificar)
@@ -38,7 +38,7 @@ Você pode fazer contas com arrays:
 ([1, 2, 3, 4, 5] / 7).round(0.01); // note o uso de parênteses para precedência
 x = 11; y = 12; // experimente algumas variáveis
 [x, y, 9] * 100;
-// mas garanta que você só está fazendo contas com números de verdade
+// mas garanta que você só faça contas com números de verdade
 [1, 2, 3, 4, "oops", 11] + 10; // resultado estranho
 \end{lstlisting}
  
@@ -48,32 +48,32 @@ x = 11; y = 12; // experimente algumas variáveis
 Aqui há algumas maneiras de usar a classe \texttt{Array} para criar novas coleções:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Progressão aritmética (definindo tamanho, início e razão da progressão)
+// Progressão aritmética (definindo tamanho, início e passo da progressão)
 Array.series(size: 6, start: 10, step: 3);
 // Progressão geométrica (definindo tamanho, início e razão da progressão)
 Array.geom(size: 10, start: 1, grow: 2);
 // Compare as duas:
-Array.series(7, 100, -10); // 7 itens; começando em 100, razão de -10
+Array.series(7, 100, -10); // 7 itens; começando em 100, passo de -10
 Array.geom(7, 100, 0.9); // 7 itens; começando em 100; multiplicar por 0.9 a cada vez
 // Conheça o método .fill
 Array.fill(10, "igual");
 // Compare:
 Array.fill(10, rrand(1, 10)); 
 Array.fill(10, {rrand(1, 10)}); // a função é reexecutada 10 vezes
-// A função definida para o método .fill pode receber um argumento padrão que é um contador.
+// A função definida como segundo arg do método .fill pode receber um contador como argumento padrão.
 // O nome do argumento pode ser o que você quiser.
-Array.fill(10, {arg counter; counter * 10});
+Array.fill(10, {arg contador; contador * 10});
 // Por exemplo, gerando uma lista de frequências harmônicas:
 Array.fill(10, {arg uau; uau+1 * 440}); 
 // O método .newClear
-a = Array.newClear(7); // cria uma array vazia do tamanho pedido
+a = Array.newClear(7); // cria uma array vazia do tamanho desejado
 a[3] = "uau"; // mesmo que a.put(3, "uau")
 \end{lstlisting}
 
 
 \subsection{Aquele ponto de exclamação esquisito}
 
-É só uma questão de tempo até que você veja algo como \texttt{30!4} no código de alguém. Essa notação abreviada simplesmente cria um array contendo o mesmo item um determinado número de vezes:
+É só uma questão de tempo até que você veja algo como \texttt{30!4} no código de alguém. Essa notação abreviada simplesmente cria uma array contendo o mesmo item um determinado número de vezes:
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -95,26 +95,26 @@ Aqui está mais uma sintaxe abreviada muito usada para criar arrays.
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// O que é isso?
+// Que diabo é isso?
 (50..79);
-// É um atalho para gerar um array com uma progressão aritmética de número.
+// É um atalho para gerar uma array com uma progressão numérica aritmética.
 // O atalho acima tem o mesmo resultado que:
 series(50, 51, 79);
 // ou
 Array.series(30, 50, 1);
-// Para uma razão diferente de 1, você pode fazer o seguinte:
-(50, 53 .. 79); // razão de 3
+// Para um passo (razão) diferente de 1, você pode fazer o seguinte:
+(50, 53 .. 79); // de 3 em 3
 // Mesmo resultado que:
 series(50, 53, 79);
 Array.series(10, 50, 3);
 \end{lstlisting}
 
-Note que cada comando implica um jeito de pensar ligeiramente diferente. O \texttt{(50..79)} permite que você pense assim: "\emph{apenas me dê um array de 50 a 79}." Você não precisa necessariamente pensar a quantidade de itens que o array terá. Por outro lado, \texttt{Array.series} permite pensar: "\emph{apenas me dê um array com 30 itens no total, começando a partir do 50}." Você não precisa necessariamente pensar em qual será o último número da série.
+Note que cada comando implica um jeito de pensar ligeiramente diferente. O \texttt{(50..79)} permite que você pense assim: "\emph{me dê uma array de 50 a 79}." Você não precisa necessariamente pensar a quantidade de itens que a lista vai conter. Por outro lado, \texttt{Array.series} permite pensar: "\emph{me dê uma array com 30 itens no total, começando a partir do 50}." Você não precisa necessariamente pensar qual será o último número da série.
 
-Também note que o atalho usa parênteses, não colchetes. O array resultante, obviamente, virá entre colchetes.
+Também note que o atalho usa parênteses, não colchetes. A array resultante, naturalmente, virá entre colchetes.
 \subsection{Como "fazer" um Array}
 
-Muitas vezes você terá de fazer alguma ação com cada um dos itens de uma coleção. Você pode usar o método \texttt{do} ("faça") para isso:
+Muitas vezes você vai precisar realizar alguma operação com cada um dos itens de uma coleção. Você pode usar o método \texttt{do} ("faça") para isso:
 
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -126,11 +126,11 @@ Muitas vezes você terá de fazer alguma ação com cada um dos itens de uma col
 // Se você não precisa do contador, use apenas um argumento:
 ~minhasFreqs.do({arg item; item.squared.postln});
 
-//Claro que algo simples como o exemplo anterior poderia ser feito assim:
+// Claro que algo simples como o exemplo anterior poderia ser feito assim:
 ~minhasFreqs.squared;
 \end{lstlisting}
  
 
-Em resumo: quando você "faz" um array, você fornece uma função. A mensagem \texttt{do} será iterada cada item do array e aquela função será executada todas as vezes. A função pode receber dois argumentos por definição: o item do array na iteração atual e um contador que acompanha o número de iterações. Os nomes destes argumentos podem ser o que você quiser, mas estarão sempre nesta ordem:: item, contador.
+Em resumo: quando você processa uma array com "do", você fornece uma função. A mensagem \texttt{"do"} vai cuidar de executar a função uma vez para cada item constante da array. A função pode receber dois argumentos por definição: o item da vez propriamente dito, e um contador que vai registrando o número de iterações já realizadas. Os nomes destes argumentos podem ser o que você quiser, mas estarão sempre nesta ordem: item, contador.
 
 Veja também o método \texttt{collect}, que é muito similar ao \texttt{do}, mas retorna uma nova coleção com todos os resultados intermediários.

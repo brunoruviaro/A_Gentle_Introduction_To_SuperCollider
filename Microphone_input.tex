@@ -1,6 +1,6 @@
 \section{Entrada de Microfone}
 
-O exemplo abaixo mostra como você pode facilmente acessar a entrada da sua placa de som com a UGen \texttt{SoundIn}.\footnote{Visto que \texttt{In.ar} irá ler de qualquer canal e você sabe que as entradas da sua placa de som são por padrão assinaladas para os canais 8-15, você poderia escrever \texttt{In.ar(8)} para obter som do seu microfone. Isso funciona bem, mas \texttt{SoundIn.ar} é uma opção mais conveniente.}
+O exemplo abaixo mostra como você pode facilmente acessar a entrada da sua placa de som com a UGen \texttt{SoundIn}.\footnote{Sabendo que \texttt{In.ar} lê o sinal de qualquer canal indicado, e sabendo que as entradas da sua placa de som são por padrão assinaladas para os canais 8-15 do SC, você poderia escrever \texttt{In.ar(8)} para obter som do seu microfone. Isso funciona perfeitamente bem, mas \texttt{SoundIn.ar} é uma opção mais conveniente.}
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // Aviso: use fones de ouvido para evitar microfonia

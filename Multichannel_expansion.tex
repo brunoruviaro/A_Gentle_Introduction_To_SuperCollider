@@ -1,26 +1,26 @@
 \section{Expansão Multicanal}
 
-Com sua janela Meter aberta---[ctrl+M]---, observe isso.
+Com sua janela Meter aberta---[ctrl+M]---, observe o seguinte.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 {Out.ar(0, Saw.ar(freq: [440, 570], mul: Line.kr(0, 1, 10)))}.play;
 \end{lstlisting}
 
-Estamos utilizando uma simpática UGen \texttt{Line.kr} para aumentar a amplitude de 0 a 1 em 10 segundos. Isso é bacana. Mas há outras mágicas interessantes acontecendo aqui. Você percebeu que há dois canais de saída (esquerdo e direito)? Você ouviu que há uma nota diferente em cada canal? Que que estas duas notas vêm de um \emph{list}---[440, 570]---que passa para o \texttt{Saw.ar} como argumento \texttt{freq}?
+Estamos utilizando uma simpática UGen \texttt{Line.kr} para aumentar a amplitude de 0 a 1 em 10 segundos. Legal. Mas há outras mágicas interessantes acontecendo aqui. Você percebeu que há dois canais de saída (esquerdo e direito)? Você ouviu que há uma nota diferente em cada canal? Que que estas duas notas vêm de uma \emph{lista}---[440, 570]---que foi fornecida para o \texttt{Saw.ar} como argumento \texttt{freq}?
 
 Isto se chama Expansão Multicanal.
 
-David Cottle brinca que "expansão multicanal é uma [aplicação de arrays] que beira o vodu"\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, p. 14} Esta é uma das características do SuperCollider mais poderosas e únicas. E também uma que mais intriga as pessoas no início.
+Expansão multicanal em SuperCollider é uma maneira de usar arrays dentro de sintetizadores que às vezes parece magia negra. É uma das características mais poderosas e únicas do programa. E também uma das coisas que mais intriga as pessoas no início.
 
-Em poucas palavras: se você utilizar um array como qualquer argumento de uma UGen, \emph{todo o patch é duplicado}. O número de cópias criado é \textit{o número de itens no array}. Estas UGens são enviadas para tantos \textit{canais adjacentes} quanto for necessário, começando pelo primeiro canal especificado como primeiro argumento de \texttt{Out.ar}.
+Em poucas palavras: se você utilizar uma array como qualquer argumento de uma UGen, \emph{todo o patch é duplicado}. O número de cópias criado é igual ao \textit{número de itens na array}. Estas duplicatas são enviadas para tantos \textit{canais adjacentes} quantos forem necessários, começando pelo primeiro canal especificado como primeiro argumento de \texttt{Out.ar}.
 
-No exemplo acima, temos \texttt{Out.ar(0, ... )}. O \texttt{freq} da onda dente-de-serra ("Saw") é um array de dois itens: \texttt{[440, 570]}. O que o SC faz? Ele "expande multicanal", criando duas cópias de todo o patch. A primeira cópia é uma onda dente-de-serra com uma frequência de 440 Hz, enviada para o canal 0 (seu canal esquerdo); a segunda cópia é uma dente-de-serra com uma frequência de 570 Hz, enviada para o canal 1 (seu canal direito)!
+No exemplo acima, temos \texttt{Out.ar(0, ... )}. O \texttt{freq} da onda dente-de-serra ("Saw") é uma array de dois itens: \texttt{[440, 570]}. O que o SC faz? Ele "expande multicanal", criando duas cópias de todo o patch. A primeira cópia é uma onda dente-de-serra com uma frequência de 440 Hz, enviada para o canal 0 (canal esquerdo); a segunda cópia é uma dente-de-serra com uma frequência de 570 Hz, enviada para o canal 1 (canal direito)!
 
-Vamos lá e verifique você mesmo. Mude estas duas frequências para qualquer outros valores que você quiser. Escute os resultados. Um vai para o canal esquerdo e o outro vai para o direito. Vá além e adicione uma terceira frequência para a lista (digamos, \texttt{[440, 570, 980]}). Observe a janela Meter. Você verá que as três primeiras saídas estão acendendo (mas você só conseguirá ouvir a terceira se tiver uma placa de som multicanal).
+Vamos lá, verifique você mesmo. Mude estas duas frequências para qualquer outros valores que você quiser. Escute os resultados. Um vai para o canal esquerdo e o outro vai para o direito. Vá além e adicione uma terceira frequência para a lista (digamos, \texttt{[440, 570, 980]}). Observe a janela Meter. Você verá que as três primeiras saídas estão iluminadas (mas você só conseguirá ouvir a terceira se tiver uma placa de som multicanal).
 
-Além disso: você pode usar arrays adicionais em outros argumentos da mesma UGen ou em argumentos de outras UGens no mesmo sintetizador. O SuperCollider vai manter a casa em ordem e gerar sintetizadores que seguem estes valores corretamente. Por exemplo: agora ambas as frequências [440, 570] estão entrando suavemente ("fade in") de 0 a 1 em 10 segundos. Mas mude o código para \texttt{Line.kr(0, 1, [1, 15])} e você fará com que o som de 440 Hz demore 1 segundo para crescer e o de 570 Hz leve 15. Experimente.
+Além disso: você pode usar arrays adicionais em outros argumentos da mesma UGen ou em argumentos de outras UGens no mesmo sintetizador. O SuperCollider vai tomar conta de tudo direitinho e gerar sintetizadores que usem todos os valores corretamente. Por exemplo: agora ambas as frequências [440, 570] estão crescendo suavemente ("fade in") de 0 a 1 em 10 segundos. Mas mude o código para \texttt{Line.kr(0, 1, [1, 15])} e você fará com que o som de 440 Hz demore 1 segundo para crescer e o de 570 Hz leve 15 segundos. Experimente.
 
-Exercício: escute esta simulação de um "sinal de ocupado" de um telefone antigo. Ela usa a expansão multicanal para criar dois osciladores senoidais, cada um tocando uma frequência em um canal diferente. Faça o canal esquerdo pulsar 2 vezes por segundo e o canal direito pulsar 3 vezes por segundo. \endnote{Solução: \texttt{a = \{Out.ar(0, SinOsc.ar(freq: [800, 880], mul: LFPulse.ar([2, 3])))\}.play;}}
+Exercício: escute esta simulação de um "sinal de ocupado" de um telefone antigo. Ela usa a expansão multicanal para criar dois osciladores senoidais, cada um tocando uma frequência em um canal diferente. Faça o canal esquerdo pulsar 2 vezes por segundo e o canal direito pulsar 3 vezes por segundo.\endnote{Solução: \texttt{a = \{Out.ar(0, SinOsc.ar(freq: [800, 880], mul: LFPulse.ar([2, 3])))\}.play;}}
 
 \medskip
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]

@@ -1,6 +1,6 @@
 \section{Redimensionando âmbitos ("ranges")}
 
-A verdadeira diversão começa quando você usa algumas UGens para controlar os parâmetros de outras UGens. O exemplo do theremin fez exatamente isto. Agora você tem todas as ferramentas para entender exatamente o que está acontecendo em um dos exemplos da seção \ref{sec:first-sine}. As três últimas linhas do exemplo demonstram passo a passo como o \texttt{LFNoise0} é usado para controlar a frequência:
+A verdadeira festa começa quando você usa UGens para controlar os parâmetros de outras UGens. O exemplo do theremin fez exatamente isto. Agora você tem todas as ferramentas para entender exatamente o que está acontecendo em um dos exemplos da seção \ref{sec:first-sine}. As três últimas linhas do exemplo demonstram passo a passo como o \texttt{LFNoise0} é usado para controlar a frequência:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 {SinOsc.ar(freq: LFNoise0.kr(10).range(500, 1500), mul: 0.1)}.play;
@@ -12,31 +12,31 @@ A verdadeira diversão começa quando você usa algumas UGens para controlar os 
 \end{lstlisting}
 
 \subsection{Redimensione com o método \texttt{range}}
-O método  \texttt{range} simplesmente redimensiona a saída de uma UGen. Lembre-se, \texttt{LFNoise0} produz números entre -1 e +1 (é uma UGen bipolar). Estes números brutos não seriam muito úteis para controlar frequência (precisamos de números perceptíveis na escala de audição humana). O \texttt{.range} pega esta saída entre -1 e +1 e a redimensiona entre qualquer valor mínimo e máximo que você fornecer como argumentos (neste caso, 500 e 1500). O número 10, que é o argumento para \texttt{LFNoise0.kr}, especifica a frequência da UGen: quantas vezes por segundos ele escolhe um novo número aleatório.
+O método  \texttt{range} simplesmente redimensiona ("rescale") a saída de uma UGen. Lembre-se, \texttt{LFNoise0} produz números entre -1 e +1 (é uma UGen bipolar). Estes números brutos não seriam muito úteis para controlar frequência de uma senoide (precisamos de números em Hz que sejam perceptíveis na escala de audição humana). O \texttt{.range} pega esta saída entre -1 e +1 e a redimensiona entre qualquer valor mínimo e máximo que você fornecer como argumentos (neste caso, 500 e 1500). O número 10, que é o primeiro argumento do \texttt{LFNoise0.kr}, especifica a frequência da UGen: quantas vezes por segundos ela escolhe um novo número aleatório.
 
-Resumindo: para usar a UGen para controlar algum parâmetro de outra UGen, primeiro você tem que saber qual o âmbito numérico que você quer. Os números serão frequências? Você os quer entre, digamos, 10 e 1000? Ou são amplitudes? Talvez você queira que as amplitudes estejam entre 0.1 (suave) e 0.5 (metade do máximo)? Ou você está tentando controlar o número de harmônicos? Você quer que ele esteja entre 5 e 19?
+Resumindo: para usar uma UGen para controlar algum parâmetro de outra UGen, primeiro você tem que saber qual o âmbito numérico que você precisa. Os números serão usados como frequências? Você os quer entre, digamos, 10 e 1000? Ou são amplitudes? Talvez você queira que as amplitudes estejam entre 0.1 (suave) e 0.5 (metade do máximo)? Ou você está tentando controlar o número de harmônicos? Você quer que ele seja entre 5 e 19?
 
-Uma vez que você sabe o âmbito que você precisa, use o método \texttt{.range} para fazer com que a UGen controladora faça a coisa certa.
+Uma vez que você definir o âmbito que você precisa, use o método \texttt{.range} para fazer com que a UGen controladora faça a coisa certa.
 
-Exercício: escreva uma linha de código simples que toca uma onda senoidal, cuja frequência é controlada por um \texttt{LFPulse.kr} (forneça agumentos apropriados para ele). Então, use o método \texttt{.range} para redimensionar a saída do \texttt{LFPulse} em algo que você queira escutar. 
+Exercício: escreva uma linha de código simples que toca uma onda senoidal, cuja frequência é controlada por um \texttt{LFPulse.kr} (forneça agumentos apropriados para ele). Então, use o método \texttt{.range} para redimensionar a saída do \texttt{LFPulse} para frequências que você queira escutar. 
 
 \subsection{Redimensionando com \texttt{mul} e \texttt{add}}
 
-Agora você sabe redimensionar a saída de UGens no servidor usando o método \texttt{.range}. A mesma coisa pode ser obtida em um nível mais fundamental usando os argumentos \texttt{mul} e \texttt{add}, que quase todos os UGens têm. O código abaixo mostra a equivalência entre as abordagens com \texttt{range} e de \texttt{mul/add}, ambos com uma UGen bipolar e uma UGen unipolar.
+Agora você já sabe redimensionar a saída de UGens no servidor usando o método \texttt{.range}. A mesma coisa pode ser obtida em um nível mais fundamental usando os argumentos \texttt{mul} e \texttt{add}, que quase todas as UGens têm. O código abaixo mostra a equivalência entre as abordagens com \texttt{range} e de \texttt{mul/add}, ambos com uma UGen bipolar e uma UGen unipolar.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
-// Isso:
+// Isto aqui:
 {SinOsc.kr(1).range(100, 200).poll}.play;
-// ...é o mesmo que isso:
+// ...é o mesmo que:
 {SinOsc.kr(1, mul: 50, add: 150).poll}.play;
 
-// Isso:
+// Isto aqui:
 {LFPulse.kr(1).range(100, 200).poll}.play;
-// ...é o mesmo que isso:
+// ...dá na mesma que:
 {LFPulse.kr(1, mul: 50, add: 100).poll}.play;
 \end{lstlisting}
 
-A figura \ref{fig:mul-add-scale} ajuda a visualizar como \texttt{mul} e \texttt{add} trabalham redimensionando as saídas de UGens (um \texttt{SinOsc} é usado como demonstração).
+A figura \ref{fig:mul-add-scale} ajuda a visualizar como \texttt{mul} e \texttt{add} trabalham juntos redimensionando as saídas de UGens (um \texttt{SinOsc} é usado como demonstração).
 
 \begin{figure}[h!]
 \centerline{\framebox{
@@ -45,7 +45,7 @@ A figura \ref{fig:mul-add-scale} ajuda a visualizar como \texttt{mul} e \texttt{
 \label{fig:mul-add-scale}
 \end{figure}
 
-\subsection{\texttt{linlin} e seus amigos}
+\subsection{\texttt{linlin} e sua turma}
 
 Para qualquer outro redimensionamento arbitrário de âmbitos, você pode usar os práticos métodos \texttt{linlin}, \texttt{linexp}, \texttt{explin} e \texttt{expexp}. Os nomes nos métodos dão uma dica do que eles fazem: converter um âmbito linear em outro âmbito linear (\texttt{linlin}), linear para exponencial (\texttt{linexp}), etc.
 
