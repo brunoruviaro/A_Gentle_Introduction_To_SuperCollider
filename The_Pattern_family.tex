@@ -1,6 +1,6 @@
 \section{A família Pattern}
 
-Vamos tentar algo diferente agora. Digite e rode esta linha de código:
+Vamos experimentar algo diferente agora. Digite e rode esta linha de código:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 Pbind(\degree, Pseries(0, 1, 30), \dur, 0.05).play;
@@ -8,13 +8,13 @@ Pbind(\degree, Pseries(0, 1, 30), \dur, 0.05).play;
 
 \subsection{Conheça o Pbind}
 
-\texttt{Pbind} é um membro da família Pattern ("padrão") no SuperCollider. O P maiúsculo no \texttt{Pbind} e \texttt{Pseries} remete a \emph{Pattern}; conheceremos outros membros da família em breve. Por ora, veremos mais de perto somente o \texttt{Pbind}. Experimente este exemplo reduzido ao mínimo:
+\texttt{Pbind} é um membro da família Pattern ("padrão", ou "modelo") no SuperCollider. O P maiúsculo no \texttt{Pbind} e \texttt{Pseries} remete a \emph{Pattern}; em breve teremos o prazer de conhecer outros membros da família. Por ora, vamos focar somente somente no \texttt{Pbind}. Experimente este exemplo reduzido ao mínimo:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 Pbind(\degree, 0).play;
 \end{lstlisting}
 
-A única coisa que esta linha de código faz na vida é tocar a nota \emph{dó central}, uma vez por segundo. A palavra-chave \texttt{\textbackslash degree} se refere a graus de uma escala e o número 0 representa o primeiro grau da escala (uma escala de Dó Maior é subentendida, então esta é a própria nota dó). Note que o SuperCollider começa a contar as coisas do 0 e não do 1. Em uma linha simples como esta acima, as notas dó, ré, mi, fá, sol\dots seriam representadas pelos números 0, 1, 2, 3, 4\dots Tente mudar o número e perceba como a nota muda quando você reexecuta. Você também pode escolher notas abaixo do dó central (por exemplo, -2 nos dá a nota lá abaixo do dó central). Resumindo, apenas imagine que o dó central do piano é 0 e conte teclas brancas para cima ou para baixo (números positivos ou negativos) para conseguir qualquer outra nota.
+A única coisa que esta linha de código faz na vida é tocar a nota \emph{dó central}, uma vez por segundo. A palavra-chave \texttt{\textbackslash degree} se refere a graus de uma escala e o número 0 representa o primeiro grau da escala (uma escala de Dó Maior é subentendida, então esta é a própria nota dó). Note que o SuperCollider começa a contar as coisas do 0 e não do 1. Em uma linha simples como esta acima, as notas dó, ré, mi, fá, sol\dots seriam representadas pelos números 0, 1, 2, 3, 4\dots Tente mudar o número e perceba como a nota muda quando você reexecuta. Você também pode escolher notas abaixo do dó central (por exemplo, -2 é a nota lá abaixo do dó central). Resumindo, apenas imagine que o dó central do piano é 0 e conte teclas brancas para cima ou para baixo (números positivos ou negativos) para obter qualquer outra nota.
 
 Agora brinque um pouco com a duração das notas. \texttt{Pbind} usa a palavra-chave \texttt{\textbackslash dur} para especificar durações em segundos:
 
@@ -22,37 +22,37 @@ Agora brinque um pouco com a duração das notas. \texttt{Pbind} usa a palavra-c
 Pbind(\degree, 0, \dur, 0.5).play;
 \end{lstlisting}
 
-Claro que isso ainda é muito rígido e inflexível---sempre a mesma nota, sempre a mesma duração. Não se preocupe: as coisas vão melhorar muito em breve.
+Claro que isso ainda é muito rígido e inflexível---sempre a mesma nota, sempre a mesma duração. Não se preocupe: as coisas vão esquentar logo, logo.
 \subsection{Pseq}
 
-Vamos lá e toquemos várias notas na sequência, como uma escala. Vamos também deixar nossas notas mais curtas, digamos, com duração de 0.2 segundos.
+Vamos agora tocar várias notas em sequência, como uma escala. Vamos também diminuir a duração das notas para 0.2 segundos.
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 Pbind(\degree, Pseq([0, 1, 2, 3, 4, 5, 6, 7], 1), \dur, 0.2).play;
 \end{lstlisting}
 
-Esta linha introduz um novo membro da família Pattern: \texttt{Pseq}. Como o nome poderia sugerir, este Pattern lida com sequências. Tudo que um \texttt{Pseq} precisa para tocar uma sequência é:
+Esta linha introduz um novo membro da família Pattern: \texttt{Pseq}. Como o nome sugere, este Pattern lida com sequências. Tudo que um \texttt{Pseq} precisa para tocar uma sequência é:
 \begin{itemize}
-\item uma lista de itens entre colchetes
+\item uma lista de itens entre colchetes []
 \item um número de repetições.
 \end{itemize} 
 
-No exemplo, a lista é \texttt{[0, 1, 2, 3, 4, 5, 6, 7]} e o número de repetições é \texttt{1}. Este \texttt{Pseq} simplesmente diz: "toque uma vez todos os itens da lista, na sequência." Perceba que estes dois elementos, lista e número de repetições, estão dentro dos parênteses que pertencem ao \texttt{Pseq} e são separados por uma vírgula.
+No exemplo, a lista é \texttt{[0, 1, 2, 3, 4, 5, 6, 7]} e o número de repetições é \texttt{1}. Este \texttt{Pseq} simplesmente diz: "toque todos os itens da lista, na sequência, uma vez." Repare que estes dois elementos, lista e número de repetições, estão dentro dos parênteses que pertencem ao \texttt{Pseq} e são separados por uma vírgula.
 
-Também perceba onde o \texttt{Pseq} aparece no interior do \texttt{Pbind}: é o valor de entrada de \texttt{\textbackslash degree}. Isso é importante: em vez de fornecer um número único e fixo para o grau da escala (como no nosso primeiro \texttt{Pbind} simples), \emph{estamos fornecendo todo um Pseq: uma receita para uma sequência de números}. Com isto em mente, podemos facilmente expandir esta ideia e usar outra Pseq para controlar também as durações.
+Veja também onde o \texttt{Pseq} aparece no interior do \texttt{Pbind}: é colocado como valor de \texttt{\textbackslash degree}. Isso é importante: em vez de fornecer um número único e fixo para o grau da escala (como no nosso primeiro \texttt{Pbind} simples), \emph{estamos fornecendo todo um Pseq: uma receita para uma sequência de números}. Com isto em mente, podemos facilmente expandir esta ideia e usar outro Pseq para controlar também as durações.
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 Pbind(\degree, Pseq([0, 1, 2, 3, 4, 5, 6, 7], 5), \dur, Pseq([0.2, 0.1, 0.1, 0.2, 0.2, 0.35], inf)).play;
 \end{lstlisting}
  
-O que está acontecendo neste exemplo? Primeiro, mudamos o número de repetições do primeiro \texttt{Pseq} para 5, de modo que toda a escala vai tocar cinco vezes. Segundo, substituímos o valor antes fixo de 0.2 de \texttt{\textbackslash dur} por um outro \texttt{Pseq}. Este novo \texttt{Pseq} tem uma lista de seis itens: \texttt{[0.2, 0.1, 0.1, 0.2, 0.2, 0.35]}. Estes números se tornam valores de duração das notas resultantes. O valor de \texttt{repeats} deste segundo \texttt{Pseq} é definido como \texttt{inf}, que quer dizer "infinito". Isso sgnifica que o \texttt{Pseq} não tem limite no número de vezes que ele pode repetir esta sequência. Então o \texttt{Pbind} toca para sempre? Não: ele para depois que o \emph{outro} \texttt{Pseq} terminou seu trabalho, isto é, depois que a sequência de graus de escala foi tocada 5 vezes.
+O que está acontecendo neste exemplo? Primeiro, mudamos o número de repetições do primeiro \texttt{Pseq} para 5, de modo que toda a escala vai tocar cinco vezes. Segundo, substituímos o valor de \texttt{\textbackslash dur}, antes fixo em 0.2, por um outro \texttt{Pseq}. Este novo \texttt{Pseq} tem uma lista de seis itens: \texttt{[0.2, 0.1, 0.1, 0.2, 0.2, 0.35]}. Estes números se tornam valores de duração das notas resultantes. O valor de \texttt{repeats} deste segundo \texttt{Pseq} é definido como \texttt{inf}, que quer dizer "infinito". Isso sgnifica que o \texttt{Pseq} não tem limite no número de vezes que ele pode repetir esta sequência. Então o \texttt{Pbind} toca para sempre? Não: ele para depois que o \emph{outro} \texttt{Pseq} terminou seu trabalho, isto é, depois que a sequência de graus de escala foi tocada 5 vezes.
 
 Finalmente, o exemplo tem um total de oito notas diferentes (a lista no primeiro \texttt{Pseq}), enquanto há apenas seis valores para duração (segundo \texttt{Pseq}). Quando você fornece sequências de tamanhos diferentes como estas, o \texttt{Pbind} simplesmente as faz circular o quanto for preciso.
 
 Responda estas perguntas para praticar o que você aprendeu:
 \begin{itemize}
 \item Experimente o número 1 em vez de inf como o argumento \texttt{repeats} do segundo \texttt{Pseq}. O que acontece?
-\item Como você pode fazer este Pabind tocar para sempre?
+\item Como você pode fazer este Pbind tocar para sempre?
 \end{itemize}
 
 Soluções estão no final do livro.\endnote{Primeira pergunta: quando você usa o número 1 em vez de \texttt{inf} como o argumento \texttt{repeats} do segundo \texttt{Pseq}, o Pbind para depois que 6 notas foram tocadas (isto é, depois que uma sequência completa de valores de duração foi tocada). Segunda questão: para fazer o Pbind tocar para sempre, simplesmente use \texttt{inf} como valor para \texttt{repeats} em todos os Patterns internos.}
@@ -72,7 +72,7 @@ Pbind(
 
 De agora em diante, adquira o hábito de escrever seus \texttt{Pbind}s deste jeito. Escrever código com uma aparência arrumada e bem organizada vai ajudá-lo bastante no aprendizado do SuperCollider.
 
-Além disso, perceba que envolvemos este \texttt{Pbind} dentro de parênteses para criar um bloco de código (lembra-se da seção \ref{sec:code-block}?): como ele não está mais em uma única linha, precisamos fazer isso para conseguir rodá-lo todo de uma vez. Apenas tenha certeza que o cursor esteja em algum lugar no interior do bloco antes de executá-lo.
+Além disso, perceba que envolvemos este \texttt{Pbind} dentro de parênteses para criar um bloco de código (lembra-se da seção \ref{sec:code-block}?): como ele não está mais em uma única linha, precisamos fazer isso para conseguir rodá-lo todo de uma vez. Lembre-se que o cursor precisa estar em algum lugar no interior do bloco antes de executá-lo.
 
 
 \subsection{Quatro maneiras de especificar alturas}
