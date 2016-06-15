@@ -1,13 +1,13 @@
 \section{A última coisa é sempre postada}
 
-Um detalhe pequeno mas útil para se entender: o SuperCollider, tem como padrão sempre postar na Post window o resultado de qualquer que tenha sido a \emph{última coisa a ser executada}. Isso explica porque o seu código Olá mundo imprime duas vezes quando você o executa. Digite as próximas linhas em um novo documento, depois selecione tudo com [ctrl+A] e rode todas as linhas de uma vez:
+Um detalhe pequeno mas útil para se entender: o SuperCollider tem como padrão sempre postar na Post window o resultado de qualquer operação que tenha sido a \emph{última coisa a ser executada}. Isso explica porque o seu código "Olá, mundo" imprime duas vezes quando você o executa. Digite as próximas linhas em um novo documento, depois selecione tudo com [ctrl+A] e rode todas as linhas de uma vez:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 "Primeira linha".postln;
 "Segunda linha".postln;
 (2 + 2).postln;
 3 + 3;
-"Terminado".postln;
+"Fim".postln;
 \end{lstlisting}
 
-Todas as cinco linhas são executadas pelo SuperCollider. Você vê o resultado de \texttt{2 + 2} na Post window porque existia um pedido de \texttt{postln} explícito. O resultado de \texttt{3 + 3} foi calculado, mas não houve um pedido para postá-lo, então você não o vê. Então o comando na última linha é executado (a palavra "Terminado" é postada por conta da solicitação \texttt{postln}). Finalmente, como padrão, o resultado da última coisa a ser rodada é postado: neste caso, acabou sendo a palavra "Terminado".
+Todas as cinco linhas são executadas pelo SuperCollider. Você vê o resultado de \texttt{2 + 2} na Post window porque existia um pedido de \texttt{postln} explícito. O resultado de \texttt{3 + 3} foi calculado, mas não foi dada nenhuma instrução para postá-lo, então você não o vê na Post window. Depois do 3 + 3, é executado o comando da última linha (a palavra "Fim" é postada por conta da solicitação \texttt{postln}). Finalmente, como padrão, o resultado da última coisa a ser rodada é postado: neste caso, acabou sendo a palavra "Fim".
