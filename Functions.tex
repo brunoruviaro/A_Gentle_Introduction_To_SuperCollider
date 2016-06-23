@@ -18,7 +18,7 @@ f = { 2 + 2 }; // define a função
 f.value; // põe a função para trabalhar
 \end{lstlisting}
  
-A função acima não é lá muito útil, pois apenas sabe fazer uma coisa só (somar 2 e 2). Normalmente a gente quer definir funções que possam dar diferentes resultados dependendo dos argumentos de entrada fornecidos. Nós usamos a palavra-chave \texttt{arg} para especificar as entradas que uma função vai aceitar. O exemplo abaixo é mais parecido com o desenho da figura \ref{fig:function-box}.
+A função acima não é lá muito útil, pois sabe fazer uma coisa só (somar 2 e 2). Normalmente a gente quer definir funções que possam dar diferentes resultados dependendo dos argumentos de entrada fornecidos. Nós usamos a palavra-chave \texttt{arg} para especificar as entradas que uma função vai aceitar. O exemplo abaixo é mais parecido com o desenho da figura \ref{fig:function-box}.
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 f = {arg a, b; ["a mais b", a+b, "a vezes b", a*b].postln}; // define função
@@ -26,10 +26,10 @@ f.value(3, 7); // forneça dois números quaisquer como argumentos para a funç�
 f.value(10, 14);
 
 // Compare:
-~sillyRand = rrand(0, 10); // não é uma função
-~sillyRand.value; // execute diversas vezes
-~sillyRand2 = {rrand(0, 10)}; // é uma função
-~sillyRand2.value; // execute diversas vezes
+~aleaTonto = rrand(0, 10); // não é uma função
+~aleaTonto.value; // execute diversas vezes
+~aleaTonto2 = {rrand(0, 10)}; // é uma função
+~aleaTonto2.value; // execute diversas vezes
 \end{lstlisting}
  
 Como um último exemplo, aqui está uma função muito útil.
