@@ -74,7 +74,7 @@ var minhasDurs = Pseq([Pn(1, 5), 3, Pn(1, 5), 3, Pn(1, 6), 1/2, 1/2, 1, 1, 3, 1,
 ~tocador2.stop;
 // Outras mensagens disponíveis
 ~tocador1.resume; // retomar
-~tocador1.reset; //voltar do início
+~tocador1.reset; // voltar do início
 ~tocador1.play;
 ~tocador1.start; // mesmo que .play
 \end{lstlisting}
@@ -90,7 +90,7 @@ Primeiro, repare no uso de variáveis. Uma delas, \texttt{minhasDurs}, é uma va
 
 Segundo, repare na separação ente partitura e tocadores, como discutimos anteriormente. Quando os \texttt{Pbind}s são definidos, eles não são tocados no mesmo momento---não há \texttt{.play} imediatamente depois de fechar os parênteses. Depois que você roda o primeiro bloco de código, tudo o que você tem são duas definições de \texttt{Pbind} armazenadas nas variáveis \texttt{$\sim$melodiaSuperior} e \texttt{$\sim$melodiaInferior}. Elas ainda não fazem som---são apenas partituras. A linha \texttt{$\sim$tocador1 = $\sim$melodiaSuperior.play} cria um \texttt{EventStreamPlayer} para cumprir a tarefa de tocar a melodia superior e a este tocador é dado o nome $\sim$tocador1. A mesma ideia vale para o $\sim$tocador2. Graças a isso, podemos falar com cada tocador e pedi-lo para parar, iniciar, retomar, etc.
 
-Mesmo com o risco de ser chato, vamos reiterar uma última vez:
+Mesmo correndo o risco de sermos chatos, vamos reiterar uma última vez:
 \begin{itemize}
 \item Um \texttt{Pbind} é só uma receita para fazer som, como uma partitura musical;
 \item Quando você chama a mensagem \texttt{play} em um \texttt{Pbind}, um objeto \texttt{EventStreamPlayer} é criado;
