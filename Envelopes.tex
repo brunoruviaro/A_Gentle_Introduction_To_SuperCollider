@@ -8,7 +8,7 @@ Pense em um envelope de amplitude simplesmente como um número que muda ao longo
 
 \subsection{Env.perc}
 
-\texttt{Env.perc} é uma maneira prática de se obter um envelope percussivo. Ele aceita quatro argumentos:  attackTime, releaseTime, level e curve (que podemos traduzir como: "tempo de ataque, tempo de repouso, nível e curva". No caso de envelopes de amplitude, "nível" é como se fosse o "volume máximo" que o seu envelope pode alcançar). Vejamos algumas formas típicas, ainda fora de qualquer sintetizador.
+\texttt{Env.perc} é uma maneira prática de se obter um envelope percussivo. Ele aceita quatro argumentos:  attackTime, releaseTime, level e curve (que podemos traduzir como: "tempoDeAtaque, tempoDeRepouso, nível e curva". No caso de envelopes de amplitude, "nível" é como se fosse o "volume máximo" que o seu envelope pode alcançar). Vejamos algumas formas típicas, ainda fora de qualquer sintetizador.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 Env.perc.plot; // usando todos os argumentos padrão
@@ -68,7 +68,7 @@ Quer algo ainda mais flexível? Com \texttt{Env.pairs} você pode ter envelopes 
 )
 \end{lstlisting}
  
-Leia a array de pares assim:
+Leia o array de pares assim:
 \begin{center}
 No tempo 0, esteja no nível 0;\\
 No tempo 0.4, esteja no nível 1;\\
@@ -79,7 +79,7 @@ No tempo 2, esteja no nível 0;
 
 \subsubsection{Envelopes---não só para amplitude}
 
-Nada impede você de usar as estas mesmas formas para controlar algo que não seja amplitude do som. Você só precisa redimensioná-las para o âmbito de números desejado. Por exemplo, Você pode criar um envelope para controlar a mudança de frequências ao longo do tempo:
+Nada impede você de usar as estas mesmas formas para controlar algo que não seja amplitude do som. Você só precisa redimensioná-las para o âmbito numérico desejado. Por exemplo, você pode criar um envelope para controlar a mudança de frequências ao longo do tempo:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 (
