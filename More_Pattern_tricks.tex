@@ -17,7 +17,7 @@ Pbind(
 	\note, Pseq([[-7, 3, 7, 10], [0, 3, 5, 8]], 2),
 	\dur, 1,
 	\legato, 0.4,
-	\strum, 0.1 // try 0, 0.1, 0.2, etc
+	\strum, 0.1 // experimente 0, 0.1, 0.2, etc
 ).play;
 )
 \end{lstlisting}
@@ -47,7 +47,8 @@ Pbind(
 ).play;
 )
 
-// O 3.1 acima quer dizer um passo cromático sobre o grau 3 da escala (neste caso, fá# acima do fá). Note que quando você não especifica explicitamente uma escala \scale, Scale.major é subentendida.
+// O 3.1 acima quer dizer um passo cromático sobre o grau 3 da escala (neste caso,  
+fá# acima do fá). Note que quando você não especifica explicitamente uma escala \scale, Scale.major é subentendida.
 \end{lstlisting}
 
 \subsection{Transposição}
@@ -86,7 +87,7 @@ Pbind(\degree, Pseq([0, 0.1, 1, 2, 3, 4, 5, 6, 7]),
 )
 \end{lstlisting}
  
-Por acaso, você percebeu que o \texttt{Pseq} recebeu um único argumento (a lista)? Onde está o valor \texttt{repeats} que sempre veio após a lista? Você pode ouvir que o exemplo toca a sequência apenas uma vez, mas por quê? Está é uma propriedade comum a todos os Patterns (e também de muitos outros objetos dentro do SuperCollider): se você omite um argumento, será utilizado um valor padrão que já vem embutido. Neste caso, o \texttt{repeats} padrão para \texttt{Pseq} é 1. Lembra-se do seu primeiro \texttt{Pbind} ridiculamente simples? Era um mero \texttt{Pbind(\textbackslash degree, 0).play} e ele somente sabia tocar uma nota. Você não forneceu nenhuma informação para duração, amplitude, legato, etc. Nestes casos o \texttt{Pbind} simplesmente usa os valores padrão.
+Por acaso, você percebeu que o \texttt{Pseq} recebeu um único argumento (a lista)? Onde está o valor \texttt{repeats} que sempre veio após a lista? Você pode ouvir que o exemplo toca a sequência apenas uma vez, mas por quê? Está é uma propriedade comum a todos os Patterns (e também de muitos outros objetos dentro do SuperCollider): se você omite um argumento, será utilizado um valor padrão que já vem embutido. Neste caso, o \texttt{repeats} padrão para \texttt{Pseq} é 1. Lembra-se do seu primeiro \texttt{Pbind} ridiculamente simples? Era um mero \texttt{Pbind(\textbackslash degree, 0).play} e ele somente sabia tocar uma nota. Você não forneceu nenhuma informação para duração, amplitude, legato, etc. Nestes casos, o \texttt{Pbind} simplesmente usa os valores padrão.
 
 
 \subsection{Pausas}
@@ -184,7 +185,7 @@ Na seção anterior, "Expandindo seu vocabulário de Patterns", você percebeu q
 // Usando muito a mesma sequência de números? Guarde-a em uma variável:
 c = [0, 2, 3, 5, 7, 8, 11, 12];
 
-// Agora você pode simplesmente se referir a elax
+// Agora você pode simplesmente se referir a ela
 Pbind(\note, Pseq(c, 1), \dur, 0.15).play;
 Pbind(\note, Prand(c, 6), \dur, 0.15).play;
 Pbind(\note, Pslide(c, 5, 3, 1), \dur, 0.15).play;
