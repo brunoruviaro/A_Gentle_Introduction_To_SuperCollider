@@ -8,23 +8,23 @@ Arrays [N.T.: em computação, o termo "array" pode ser traduzido como "vetor", 
 // Criar uma array
 a = [10, 11, 12, 13, 14, 15, 16, 17];
 
-a.reverse;  // inverter
+a.reverse; // inverter
 a.scramble; // embaralhar
-a.choose;  // escolher um elemento ao acaso
-a.size;	  // retorna o tamanho da array
-a.at(0);   // recupera um item na posição especificada
-a[0]	;  // o mesmo que acima
+a.choose; // escolher um elemento ao acaso
+a.size; // retorna o tamanho da array
+a.at(0); // recupera um item na posição especificada
+a[0]; // o mesmo que acima
 a.wrapAt(9); // recupera item na posição especificada, relendo do início se > a.size
 ["wow", 99] ++ a; // concatena duas arrays em uma nova
-a ++ \oi;  // um Símbolo é entendido como um único caracter
+a ++ \oi; // um Símbolo é entendido como um único caracter
 a ++ 'oi'; // o mesmo que acima
 a ++ "oi"; // uma cadeia ("String") é entendida como uma coleção de caracteres
-a.add(44);    // cria uma nova array adicionando o novo elemento ao final
+a.add(44); // cria uma nova array adicionando o novo elemento ao final
 a.insert(5, "uau"); // insere "uau" na posição 5, empurra itens seguintes para a frente (retorna uma nova array)
 a; // rode isso e veja que nenhuma das operações acima mudou a array original
 a.put(2, "oops"); // colocar "oops" no índice 2 (destrutivo; volte a rodar a linha acima para verificar)
 a.permute(3); // permutar: item na posição 3 vai para a posição zero, e vice-versa
-a.mirror;  // faz um palíndromo
+a.mirror; // faz um palíndromo
 a.powerset; // retorna todas as possíveis combinações dos elementos da array
 \end{lstlisting}
  
