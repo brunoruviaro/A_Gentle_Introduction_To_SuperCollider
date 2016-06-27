@@ -10,9 +10,9 @@ Canais de áudio ("audio buses") são usados para rotear sinais de áudio. É co
 \label{fig:audio-bus}
 \end{figure}
 
-Pressione [ctrl+M] para abrir a janela Meter ("medidor"). Ela mostra os níveis de todas as entradas e saídas. A figura \ref{fig:audio-bus} mostra uma captura de tela dessa janela e sua correspondência com os canais padrão do SuperCollider. No SC, canais de áudio são numerados de 0 a 127. Os primeiros oito (0-7) são por definição reservados para serem os canais de saída da sua placa de som. Os próximos oito (8-15) são reservados para as entradas da sua placa de som. Todos os outros (16 a 127) estão livres para serem utilizados como se desejar, por exemplo, quando você precisa rotear sinais de áudio de uma UGen para outra.
+Pressione [ctrl+M] para abrir a janela Meter ("Medidor"). Ela mostra os níveis de todas as entradas e saídas. A figura \ref{fig:audio-bus} mostra uma captura de tela dessa janela e sua correspondência com os canais padrão do SuperCollider. No SC, canais de áudio são numerados de 0 a 127. Os primeiros oito (0-7) são por definição reservados para serem os canais de saída da sua placa de som. Os próximos oito (8-15) são reservados para as entradas da sua placa de som. Todos os outros (16 a 127) estão livres para serem utilizados como se desejar, por exemplo, quando você precisa rotear sinais de áudio de uma UGen para outra.
 
-\subsection{\texttt{Out} and \texttt{In} UGens}
+\subsection{As UGens\texttt{Out} e \texttt{In}}
 
 Agora experimente a seguinte linha de código:
 
@@ -20,13 +20,13 @@ Agora experimente a seguinte linha de código:
 {Out.ar(1, SinOsc.ar(440, 0, 0.1))}.play; // canal direito
 \end{lstlisting}
 
-A UGen \texttt{Out} UGen cuida do roteamento de sinais para canais específicos.
+A UGen \texttt{Out} cuida do roteamento de sinais para canais específicos.
 
 O primeiro argumento para \texttt{Out} é o canal de destino, isto é, para onde você quer que o sinal vá. No exemplo acima, o número \texttt{1} significa que queremos mandar o sinal para o canal 1, que é o canal direito da sua placa de som.
 
-O segundo argumento de \texttt{Out.ar} é o próprio sinal que você quer "escrever" neste canal. Pode ser uma única UGen, ou uma combinação de UGens. No exemplo, é somente uma onda senoidal. Você deve ouvi-la somente no seu alto-falante direito (ou seu ouvido direito, se estiver usando fones de ouvido).
+O segundo argumento de \texttt{Out.ar} é o próprio sinal que você quer "escrever" neste canal. Pode ser uma única UGen ou uma combinação de UGens. No exemplo, é uma simples onda senoidal. Você deve ouvi-la somente no seu alto-falante direito (ou seu ouvido direito, se estiver usando fones de ouvido).
 
-Com a janela Meter aberta e visível, vá ao código e mude o primeiro argumento de \texttt{Out.ar}: tente qualquer número entre 0 e 7. Observe os medidores. Você verá que o sinal vai para qualquer lugar que você mandar.
+Com a janela Meter aberta e visível, vá ao código e mude o primeiro argumento de \texttt{Out.ar}: tente qualquer número entre 0 e 7. Observe os medidores. Você verá que o sinal vai para qualquer lugar que você mandá-lo.
 
 \bigskip
 \todo[inline, color=green!40]{DICA: É bastante provável que você tenha uma placa de som que só pode tocar dois canais (esquerdo e direito), então você somente escutará a senoide quando mandá-la para o canal 0 ou 1. Se você enviá-la para outros canais (3 a 7), você ainda poderá ver o medidor correspondente mostrando o sinal: o SC está de fato mandando som para aquele canal, mas a menos que você tenha uma placa de som de 8 canais, você não poderá ouvir a saída dos canais 3-7.}
@@ -43,7 +43,7 @@ n = {Out.ar(55, WhiteNoise.ar(0.5))}.play;
 
 A primeira linha declara um sintetizador (armazenado na variável \texttt{f}), consistindo em uma UGen de filtro (Band Pass Filter: "filtro passa-banda"). Um filtro passa-banda aceita qualquer som como entrada e \emph{elimina todas as frequências exceto a região de frequência que você quer deixar passar}. \texttt{In.ar} é a UGen que usamos para ler de um canal de áudio. Portanto, com \texttt{In.ar(55)} sendo utilizado como entrada para o \texttt{BPF}, qualquer som que mandarmos para o canal 55 passará pelo filtro passa-banda. Note que o primeiro sintetizador, em um primeiro momento, não produz som algum: quando você roda a primera linha, o canal 55 ainda está vazio. Ele somente produzirá som quando mandarmos algum audio para o canal 55, que é o que acontece na segunda linha.
 
-A segunda linha cria um sintetizador e o armazena na variável \texttt{n}. Este sintetizador simplesmente gera ruído branco, e o envia \emph{não diretamente para os alto-falantes, mas sim para o canal de audio 55}. Este é precisamente o canal que nosso sintetizador de filtro está escutando, então assim que você rodar a segunda linha, você deve começar a ouvir o ruído branco sendo filtrado pelo sintetizador \texttt{f}.
+A segunda linha cria um sintetizador e o armazena na variável \texttt{n}. Este sintetizador simplesmente gera ruído branco e o envia \emph{não diretamente para os alto-falantes, mas sim para o canal de audio 55}. Este é precisamente o canal que nosso sintetizador de filtro está escutando, então assim que você rodar a segunda linha, você deve começar a ouvir o ruído branco sendo filtrado pelo sintetizador \texttt{f}.
 
 Em resumo, o roteamento tem a seguinte configuração: 
 
