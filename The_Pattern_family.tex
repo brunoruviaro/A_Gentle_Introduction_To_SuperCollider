@@ -8,7 +8,7 @@ Pbind(\degree, Pseries(0, 1, 30), \dur, 0.05).play;
 
 \subsection{Conheça o Pbind}
 
-\texttt{Pbind} é um membro da família Pattern ("padrão", ou "modelo") no SuperCollider. O P maiúsculo no \texttt{Pbind} e \texttt{Pseries} remete a \emph{Pattern}; em breve teremos o prazer de conhecer outros membros da família. Por ora, vamos focar somente somente no \texttt{Pbind}. Experimente este exemplo reduzido ao mínimo:
+\texttt{Pbind} é um membro da família Pattern ("padrão" ou "modelo") no SuperCollider. O P maiúsculo no \texttt{Pbind} e \texttt{Pseries} remete a \emph{Pattern}; em breve teremos o prazer de conhecer outros membros da família. Por ora, vamos focar somente somente no \texttt{Pbind}. Experimente este exemplo reduzido ao mínimo:
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 Pbind(\degree, 0).play;
@@ -37,7 +37,7 @@ Esta linha introduz um novo membro da família Pattern: \texttt{Pseq}. Como o no
 \item um número de repetições.
 \end{itemize} 
 
-No exemplo, a lista é \texttt{[0, 1, 2, 3, 4, 5, 6, 7]} e o número de repetições é \texttt{1}. Este \texttt{Pseq} simplesmente diz: "toque todos os itens da lista, na sequência, uma vez." Repare que estes dois elementos, lista e número de repetições, estão dentro dos parênteses que pertencem ao \texttt{Pseq} e são separados por uma vírgula.
+No exemplo, a lista é \texttt{[0, 1, 2, 3, 4, 5, 6, 7]} e o número de repetições é \texttt{1}. Este \texttt{Pseq} simplesmente diz: "toque todos os itens da lista, na sequência, uma vez". Repare que estes dois elementos, lista e número de repetições, estão dentro dos parênteses que pertencem ao \texttt{Pseq} e são separados por uma vírgula.
 
 Veja também onde o \texttt{Pseq} aparece no interior do \texttt{Pbind}: é colocado como valor de \texttt{\textbackslash degree}. Isso é importante: em vez de fornecer um número único e fixo para o grau da escala (como no nosso primeiro \texttt{Pbind} simples), \emph{estamos fornecendo todo um Pseq: uma receita para uma sequência de números}. Com isto em mente, podemos facilmente expandir esta ideia e usar outro Pseq para controlar também as durações.
  
@@ -93,7 +93,7 @@ Veja a figura \ref{fig:scale-degrees} para uma comparação dos quatro métodos.
 \label{fig:scale-degrees}
 \end{figure}
 
-No próximo exemplo, os quatro Pbinds vão tocar a mesma nota: o lá acima do dó central (lá 4).
+No próximo exemplo, quatro Pbinds vão tocar a mesma nota: o lá acima do dó central (lá 4).
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 Pbind(\degree, 5).play;
@@ -105,7 +105,7 @@ Pbind(\freq, 440).play;
 
 \bigskip
 \todo[inline, color=green!40]{
-DICA: Lembre-se que cada maneira de especificar alturas requer números em âmbitos diferentes. Uma lista de números como \texttt{[-1, 0, 1, 3]} faz sentido para \texttt{\textbackslash degree} e \texttt{\textbackslash note}, mas não faz sentido para \texttt{\textbackslash midinote} ou \texttt{\textbackslash freq}. A tabela abaixo compara alguns valores usando o teclado do piano como referência.
+DICA: Lembre-se que cada maneira de especificar alturas requer números em âmbitos dife-rentes. Uma lista de números como \texttt{[-1, 0, 1, 3]} faz sentido para \texttt{\textbackslash degree} e \texttt{\textbackslash note}, mas não faz sentido para \texttt{\textbackslash midinote} ou \texttt{\textbackslash freq}. A tabela abaixo compara alguns valores usando o teclado do piano como referência.
 }
 \bigskip
 
@@ -128,7 +128,7 @@ DICA: Lembre-se que cada maneira de especificar alturas requer números em âmbi
 
 \subsection{Mais palavras-chave: amplitude e legato}
 
-O novo exemplo introduz duas novas palavras-chave: \texttt{\textbackslash amp} e \texttt{\textbackslash legato}, que definem a amplitude dos eventos e a quantidade de legato entre as notas. Perceba como o código fica bem mais fácil de ler, graças a uma boa indentação e distribuição em diversas linhas. Parênteses externos (no topo e embaixo) são usados para delimitar um bloco de código a ser executado de uma vez.
+O novo exemplo introduz duas novas palavras-chave: \texttt{\textbackslash amp} e \texttt{\textbackslash legato}, que definem a amplitude dos eventos e a quantidade de legato entre as notas. Perceba como o código fica bem mais fácil de ler, graças a uma boa indentação e distribuição em várias linhas. Parênteses externos (no topo e embaixo) são usados para delimitar um bloco de código a ser executado de uma vez.
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -143,9 +143,9 @@ Pbind(
 \end{lstlisting}
  
 
-\texttt{Pbind} tem muitas destas palavras-chave pré-definidas, e com o tempo você aprenderá mais delas. Por agora, vamos nos centrar em apenas algumas---uma para altura (com as opções de \texttt{\textbackslash degree}, \texttt{\textbackslash note}, \texttt{\textbackslash midinote} ou \texttt{\textbackslash freq}), uma para durações (\texttt{\textbackslash dur}), uma para amplitude (\texttt{\textbackslash amp}) e uma para legato (\texttt{\textbackslash legato}). Durações estão em tempos (neste caso, 1 batida por segundo, que é o padrão); a amplitude deve estar entre 0 e 1 (0 = silêncio, 1 = muito alto); e o legato funciona melhor com valores entre 0.1 e 1 (se você não tem certeza o que o legato faz, simplesmente experimente o exemplo acima com 0.1, depois 0.2, depois 0.3, até chegar no 1 e ouça os resultados).
+\texttt{Pbind} tem muitas destas palavras-chave pré-definidas e, com o tempo, você aprenderá mais delas. Por agora, vamos nos centrar em apenas algumas---uma para altura (com as opções de \texttt{\textbackslash degree}, \texttt{\textbackslash note}, \texttt{\textbackslash midinote} ou \texttt{\textbackslash freq}), uma para durações (\texttt{\textbackslash dur}), uma para amplitude (\texttt{\textbackslash amp}) e uma para legato (\texttt{\textbackslash legato}). Durações estão em tempos (neste caso, 1 batida por segundo, que é o padrão); a amplitude deve estar entre 0 e 1 (0 = silêncio, 1 = muito alto); e o legato funciona melhor com valores entre 0.1 e 1 (se você não tem certeza o que o legato faz, simplesmente experimente o exemplo acima com 0.1, depois 0.2, depois 0.3, até chegar no 1 e ouça os resultados).
 
-Tome o último exemplo como um  ponto de partida e crie novos \texttt{Pbind}s. Mude a melodia. Introduza novas listas de durações e amplitudes. Experimente usar \texttt{\textbackslash freq} para alturas. Lembre, você sempre pode usar um número fixo para qualquer um destes parâmetros, se quiser. Por exemplo, se você quer que todas as notas da sua melodia tenham 0.2 segundos de duração, não há porque escrever \texttt{Pseq[0.2, 0.2, 0.2, 0.2\dots}, nem mesmo \texttt{Pseq([0.2], inf)}---simplesmente remova toda a estrutura do \texttt{Pseq} e escreva 0.2 no lugar.
+Tome o último exemplo como um  ponto de partida e crie novos \texttt{Pbind}s. Mude a melodia. Introduza novas listas de durações e amplitudes. Experimente usar \texttt{\textbackslash freq} para alturas. Lembre-se, você sempre pode usar um número fixo para qualquer um destes parâmetros, se quiser. Por exemplo, se você quer que todas as notas da sua melodia tenham 0.2 segundos de duração, não há porque escrever \texttt{Pseq[0.2, 0.2, 0.2, 0.2\dots}, nem mesmo \texttt{Pseq([0.2], inf)}---simplesmente remova toda a estrutura do \texttt{Pseq} e escreva 0.2 no lugar.
 
 \subsection{Prand}
 
@@ -305,7 +305,7 @@ Pbind(
 )
 
 // Pseries
-// Aceita três argumentos: início, passo, comprimento
+// Aceita três argumentos: início, razão, comprimento
 (
 Pbind(
     \note, Pseries(0, 2, 15),
