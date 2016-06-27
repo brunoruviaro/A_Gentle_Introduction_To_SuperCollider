@@ -4,7 +4,7 @@ Há quatro tipos de fechamento: \texttt{(parênteses)}, \texttt{[colchetes]}, \t
 
 Cada um que você abre, deve ser fechado mais adiante. Isso é chamado "balancear", ou seja, manter devida correspondência entre os pares de fechamento em todo o seu código.
 
-O IDE do SuperCollider automaticamente indica o fechamento de parênteses (também de colchetes e chaves) quando você fecha um par--- eles são destacados em vermelho. Se você clicar um parêntese que não tem um par de abertura/fechamento, você verá uma seleção em vermelho escuro indicando que algo está faltando. Balancear é uma maneira rápida de selecionar uma grande seção de código para ser executado, deletado ou para operações de copiar/colar. Você pode fazer um clique duplo em um parêntese de abertura ou fechamento para selecionar tudo o que está contido neles (o mesmo vale para colchetes e chaves).
+O IDE do SuperCollider automaticamente indica o fechamento de parênteses (também de colchetes e chaves) quando você fecha um par--- eles são destacados em vermelho. Se você clicar um parêntese que não tem um par de abertura/fechamento, você verá uma seleção em vermelho escuro indicando que algo está faltando. O balanceamento é uma maneira rápida de selecionar uma grande seção de código para ser executado, deletado ou para operações de copiar/colar. Você pode fazer um clique duplo em um parêntese de abertura ou fechamento para selecionar tudo o que está contido neles (o mesmo vale para colchetes e chaves).
 
 \subsection{Aspas duplas}
 
@@ -27,7 +27,7 @@ Parênteses podem ser usados para:
 
 \subsection{Colchetes}
 
-Colchetes definem uma coleção de itens, como \texttt{[1, 2, 3, 4, "oi"]}. Estas são normalmente chamadas Arrays. Uma array pode conter qualquer coisa: números, strings, funções, Patterns, etc. Arrays entendem mensagens como \texttt{reverse} ("inverter"), \texttt{scramble} ("embaralhar"), \texttt{mirror} ("espelhar"), \texttt{choose} ("escolher"), para dar alguns exemplos. Você também pode fazer operações matemáticas em arrays.
+Colchetes definem uma coleção de itens, como \texttt{[1, 2, 3, 4, "oi"]}. Estas são normalmente chamadas Arrays. Um array pode conter qualquer coisa: números, strings, funções, Patterns, etc. Arrays entendem mensagens como \texttt{reverse} ("inverter"), \texttt{scramble} ("embaralhar"), \texttt{mirror} ("espelhar"), \texttt{choose} ("escolher"), para dar alguns exemplos. Você também pode fazer operações matemáticas em arrays.
 
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -49,7 +49,7 @@ exprand(1, 1000.0);
 {exprand(1, 1000.0)};
 \end{lstlisting}
 
-David Cottle nos explica passo a passo esse exemplo: \textit{"a primeira linha seleciona um número randômico, que é mostrado na Post window. A segunda linha imprime um resultado bastante diferente: uma função. O que essa função faz? Ela seleciona um número randômico. Como pode esta diferença afetar o código? Considere as linhas abaixo. A primeira escolhe um número randômico e o duplica. A segunda executa  cinco vezes a função-seletora-de-números-randômicos e coleta os resultados em uma array."}\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, p. 13.}
+David Cottle nos explica passo a passo esse exemplo: \textit{"a primeira linha seleciona um número aleatório, que é mostrado na Post window. A segunda linha imprime um resultado bastante diferente: uma função. O que essa função faz? Ela seleciona um número aleatório. Como pode esta diferença afetar o código? Considere as linhas abaixo. A primeira escolhe um número aleatório e o duplica. A segunda executa  cinco vezes a função-seletora-de-números-aleatórios e coleta os resultados em um array."}\footnote{Cottle, D. ``Beginner's Tutorial.'' The SuperCollider Book, MIT Press, 2011, p. 13.}
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 rand(1000.0).dup(5);  // seleciona um número e o duplica
