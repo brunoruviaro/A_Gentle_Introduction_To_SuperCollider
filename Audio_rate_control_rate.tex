@@ -19,7 +19,7 @@ Agora, quando você usa \texttt{kr} em vez de \texttt{ar}, o trabalho tambem é 
 
 \end{enumerate} 
 
-OK, então UGens são geradores de números incrivelmente velozes. Alguns destes números se tornam sinais sonoros; outros se tornam sinais de controle. Até aí, tudo bem. Mas que números são estes, afinal de contas? Grandes? Pequenos? Positivos? Negativos? Na verdade, são números bem pequenos, muitas vezes entre -1 e +1. Às vezes somente entre 0 e 1. Todas as UGens podem ser divididas em duas categorias, de acordo com a abrangência dos números que elas geram: UGens unipolares e UGens bipolares.
+OK, então UGens são geradores de números incrivelmente velozes. Alguns destes números se tornam sinais sonoros; outros se tornam sinais de controle. Até aí, tudo bem. Mas que números são estes, afinal de contas? Grandes? Pequenos? Positivos? Negativos? Na verdade, são números bem pequenos, muitas vezes entre -1 e +1. Às vezes somente entre 0 e 1. Todas as UGens podem ser divididas em duas categorias, de acordo com o âmbito númerico que elas geram: UGens unipolares e UGens bipolares.
 
 \begin{description}
 \item[UGens unipolares] geram números entre 0 e 1.
@@ -46,6 +46,6 @@ Abaixe todo o volume antes de rodar a próxima linha, depois aumente-o devagar. 
 {LFNoise0.ar(1).poll}.play;
 \end{lstlisting}
 
-Como mandamos uma mensagem \texttt{ar} para esta Ugen, ela está enviando 44100 amostras por segundo para a sua placa de som---é um sinal de áudio. \texttt{LFNoise0} é um gerador de ruído de baixa frequência ("Low Frequency Noise"). Cada amostra é um número aleatoriamente escolhido entre -1 e +1 (então é uma UGen bipolar). Com \texttt{poll} você está vendo somente dez deles por segundo. \texttt{LFNoise0.ar(1)} escolhe um novo número randômico a cada segundo. Tudo isto é feito pelo servidor.
+Como mandamos uma mensagem \texttt{ar} para esta Ugen, ela está enviando 44100 amostras por segundo para a sua placa de som---é um sinal de áudio. \texttt{LFNoise0} é um gerador de ruído de baixa frequência ("Low Frequency Noise"). Cada amostra é um número aleatoriamente escolhido entre -1 e +1 (então é uma UGen bipolar). Com \texttt{poll} você está vendo somente dez deles por segundo. \texttt{LFNoise0.ar(1)} escolhe um novo número aleatório a cada segundo. Tudo isto é feito pelo servidor.
 
-Pare os clicks com [ctrl+.] e experimente mudar a frequência de \texttt{LFNoise0}. Tente números como 3, 5, 10 e depois mais altos. Observe os números produzidos e ouça os resultados.
+Pare os cliques com [ctrl+.] e experimente mudar a frequência de \texttt{LFNoise0}. Tente números como 3, 5, 10 e depois mais altos. Observe os números produzidos e ouça os resultados.
