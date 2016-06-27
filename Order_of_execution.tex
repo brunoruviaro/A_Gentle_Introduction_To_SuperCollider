@@ -25,7 +25,7 @@ m.set(\amp, 0.1);
 
 Primeiro, dois canais de áudio são criados nas variáveis \texttt{$\sim$fxbus} e \texttt{$\sim$masterBus}.
 
-Depois, três \texttt{SynthDef}s são criados:
+Depois, três \texttt{SynthDef}s são criadas:
 
 \begin{itemize}
 \item \texttt{"noise"} é uma fonte de ruído que envia ruído branco para o canal de efeitos;
@@ -44,7 +44,7 @@ Observe a janela Node Tree conforme você roda os synths em ordem.
 
 Os nós de Synth na janela Node Tree são calculados \emph{de cima pra baixo}. Os synths mais recentes são adicionados no topo da pilha. Na figura \ref{fig:node-tree}, você pode ver que \texttt{"noise"} está no topo, \texttt{"filter"} vem em segundo, e \texttt{"masterOut"} aparece por último. Esta é a ordem correta que nós queremos para este exemplo: lendo de cima para baixo, o ruído branco passa para o filtro, e o resultado do filtro passa para o canal master. Tente agora rodar o exemplo de novo, mas de trás pra frente (ou seja, rode as linhas na ordem \texttt{n}, \texttt{f}, and \texttt{m}. Você não vai ouvir nada, porque os sinais estão sendo calculados na ordem errada.
 
-Rodar as linhas certas na ordem certa é um método adequado em muitos casos, mas pode ser que isso fique um pouco complicado conforme o seu código vá ficando mais complexo. Para simplificar a tarefa, o SuperCollider permite que você defina explicitamente onde colocar os synths na janela Node Tree. Para tanto, usamos os argumentos \texttt{target} e \texttt{addAction}.
+Executar as linhas certas na ordem correta é um método adequado em muitos casos, mas pode ser que isso fique um pouco complicado conforme o seu código vá ficando mais complexo. Para simplificar a tarefa, o SuperCollider permite que você defina explicitamente onde colocar os synths na janela Node Tree. Para tanto, usamos os argumentos \texttt{target} e \texttt{addAction}.
 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 n = Synth("noise", addAction: 'addToHead');
@@ -97,4 +97,4 @@ s.plotTree;
 )
 \end{lstlisting}
 
-Para mais informações sobre ordem de execução, consulte os arquivos de ajuda ``Synth,'' ``Order of Execution,'' e ``Group.''
+Para mais informações sobre ordem de execução, consulte os arquivos de ajuda ``Synth'', ``Order of Execution'' e ``Group.''
