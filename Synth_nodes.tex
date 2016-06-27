@@ -1,4 +1,4 @@
-\section{Nós ("nodes") de sintetizador}
+\section{Nós de sintetizador}
 
 Nos exemplos anteriores com \texttt{PlayBuf}, você teve que apertar [ctrl+.] depois de cada linha para parar o som. Em outros exemplos, você atribuiu o sintetizador a uma variável (como \texttt{x = \{WhiteNoise.ar\}.play}) para que você pudesse pará-lo diretamente com \texttt{x.free}.
 
@@ -22,7 +22,7 @@ z.free;
 
 Cada retângulo que você vê na Node Tree é um nó de sintetizador. Cada sintetizador ganha um nome temporário (algo como temp\_101, temp\_102, etc.) e fica ali enquanto estiver rodando. Experimente agora tocar novamente as quatro senoides e aperte [ctrl+.] (observe a janela Node Tree). O atalho [ctrl+.] impiedosamente interrompe todos os nós que estão rodando no servidor. Por outro lado, com o método \texttt{.free}, você pode ser mais sutil e liberar nós específicos, um de cada vez.
 
-Uma coisa importante de se perceber é que sintetizadores podem continuar a rodar no servidor mesmo que eles estejam gerando apenas silêncio. Eis um exemplo. A amplitude desta UGen \texttt{WhiteNoise} irá de 0.2 a 0 em dois segundos. Depois disso, não escutaremos nada. Mas você vê que o nó do sintetizador ainda esta ali e não desaparecerá até que você o libere.
+Uma coisa importante de se perceber é que sintetizadores podem continuar a rodar no servidor mesmo que eles estejam gerando apenas silêncio. Eis um exemplo. A amplitude desta UGen \texttt{WhiteNoise} irá de 0.2 a 0 em dois segundos. Depois disso, não escutaremos nada. Mas você vê que o nó do sintetizador ainda está ali e não desaparecerá até que você o libere.
 
  
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
@@ -43,7 +43,7 @@ Toque os exemplos abaixo e compare como eles se comportam com e sem doneAction: 
 \begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
 // sem doneAction: 2
 {WhiteNoise.ar(Line.kr(0.2, 0, 2))}.play;
-{PlayBuf.ar(1, ~buf1)}.play; // PS. isso presume que você anda tem seu arquivo de som carregado no ~buf1 da seção anterior
+{PlayBuf.ar(1, ~buf1)}.play; // PS.: isso presume que você anda tem seu arquivo de som carregado no ~buf1 da seção anterior
 
 // com doneAction: 2
 {WhiteNoise.ar(Line.kr(0.2, 0, 2, doneAction: 2))}.play;
