@@ -5,12 +5,12 @@ Audio buses are used for routing audio signals. They are like the channels of a 
 
 \begin{figure}[h!]
 \centerline{
-	\includegraphics[scale=0.4]{fig-audio-bus.png}}
+	\includegraphics[scale=0.4]{fig-audio-bus-stereo.png}}
 \caption{Audio buses and Meter window in SC.}
-\label{fig:audio-bus}
+\label{fig:audio-bus-stereo}
 \end{figure}
 
-Hit [ctrl+M] to open up the Meter window. It shows the levels of all inputs and outputs. Figure \ref{fig:audio-bus} shows a screenshot of this window and its correspondence to SuperCollider's default buses. In SuperCollider, audio buses are numbered from 0 to 127. The first eight (0-7) are by default reserved to be the output channels of your sound card. The next eight (8-15) are reserved for the inputs of your sound card. All the others (16 to 127) are free to be used in any way you want, for example, when you need to route audio signals from one UGen to another.
+Hit [ctrl+M] to open up the Meter window. It shows the levels of all inputs and outputs. Figure \ref{fig:audio-bus-stereo} shows a screenshot of this window and its correspondence to SuperCollider's default buses. In SuperCollider, audio buses are numbered from 0 to 127. The first eight (0-7) are by default reserved to be the output channels of your sound card. The next eight (8-15) are reserved for the inputs of your sound card. All the others (16 to 127) are free to be used in any way you want, for example, when you need to route audio signals from one UGen to another.
 
 \subsection{\texttt{Out} and \texttt{In} UGens}
 

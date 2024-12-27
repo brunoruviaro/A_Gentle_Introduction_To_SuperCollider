@@ -33,7 +33,7 @@ Now you know how to scale the output of UGens in the server using the method \te
 // This:
 {LFPulse.kr(1).range(100, 200).poll}.play;
 // ...is the same as this:
-{LFPulse.kr(1, mul: 50, add: 100).poll}.play;
+{LFPulse.kr(1, mul: 100, add: 100).poll}.play;
 \end{lstlisting}
 
 Figure \ref{fig:mul-add-scale} helps visualize how \texttt{mul} and \texttt{add} work in rescaling UGen outputs (a \texttt{SinOsc} is used as demonstration).

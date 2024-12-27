@@ -1,0 +1,158 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{letterpaper,portrait}
+%\geometry{paperwidth=8.5in,paperheight=11in}
+%\usepackage{hyperref}
+\usepackage[pdftex,
+            pdfauthor={Bruno Ruviaro},
+            pdftitle={A Gentle Introduction to SuperCollider},
+            pdfsubject={a SuperCollider tutorial},
+            pdfkeywords={computer music, SuperCollider, programming, music},
+            pdfproducer={LaTeX},
+            pdfcreator={pdflatex}]{hyperref}
+            
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{endnotes}
+\usepackage[symbol*, perpage]{footmisc}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[framed, numbered]{sclang-prettifier}
+\renewcommand{\lstlistingname}{Example}
+\title{\textbf{A Gentle Introduction to SuperCollider}}
+\author{Bruno Ruviaro}
+%\date{\today}
+\date{ (2024 revision) }
+\begin{document}
+
+% This is the first page, just title, no page number
+\topskip0pt
+\vspace*{\fill}
+\begin{center}
+{\LARGE \textbf{A Gentle Introduction to SuperCollider}}
+
+\bigskip
+by Bruno Ruviaro
+
+\bigskip
+\bigskip
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=1]{fig-by-sa.png}
+\end{center}
+\end{figure}
+
+\bigskip
+This work is licensed under the Creative Commons
+
+Attribution-ShareAlike 4.0 International License.
+
+To view a copy of this license, visit:
+
+\url{http://creativecommons.org/licenses/by-sa/4.0/}.
+
+\bigskip
+%First published in 2014. This revision is from \today.
+Rev. 2024
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+ISBN: 978-1-300-73752-0
+
+Imprint: Lulu.com
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=1]{978-1-300-73752-0.png}
+\end{center}
+\end{figure}
+
+\end{center}
+
+
+\vspace*{\fill}
+\thispagestyle{empty}
+\clearpage
+
+% This is the table of contents
+\pagenumbering{roman}
+\tableofcontents
+\maketitle
+\pagenumbering{arabic}
+
+% This is the body of the text
+% Page numbers are reset to arabic
+
+% PART I
+\part{BASICS}
+\input{Hello_World.tex}
+\input{Server_and_language.tex}
+\input{Your_first_sine_wave.tex}
+\input{Error_messages.tex}
+\input{Changing_parameters.tex}
+\input{Comments.tex}
+\input{Precedence.tex}
+\input{The_last_thing_always_gets_posted.tex}
+\input{Code_blocks.tex}
+\input{How_to_clean_up_the_Post_window.tex}
+\input{Recording_the_output_of_SuperCollider.tex}
+\input{Variables.tex}
+% PART II
+\newpage
+\part{PATTERNS}
+\input{The_Pattern_family.tex}
+\input{More_Pattern_tricks.tex}
+\input{Starting_and_stopping_Pbinds_independently.tex}
+% PART III
+\newpage
+\part{MORE ABOUT THE LANGUAGE}
+\input{Objects_classes_messages_arguments.tex}
+\input{Receiver_notation_functional_notation.tex}
+\input{Nesting.tex}
+\input{Enclosures.tex}
+\input{Conditionals_if-else_case.tex}
+\input{Functions.tex}
+\input{Fun_with_arrays.tex}
+\input{Getting_help.tex}
+% PART IV
+\newpage
+\part{SOUND SYNTHESIS AND PROCESSING}
+\input{UGens.tex}
+\input{Audio_rate_control_rate.tex}
+\input{UGen_arguments.tex}
+\input{Scaling_ranges.tex}
+\input{Stopping_individual_synths.tex}
+\input{The_set_message.tex}
+\input{Audio_buses.tex}
+\input{Microphone_input.tex}
+\input{Multichannel_expansion.tex}
+\input{The_Bus_object.tex}
+\input{Panning.tex}
+\input{Mix_and_Splay.tex}
+\input{Playing_an_audio_file.tex}
+\input{Synth_nodes.tex}
+\input{Envelopes.tex}
+\input{Synth_definitions.tex}
+\input{Pbind_can_play_your_SynthDef.tex}
+\input{Control_buses.tex}
+\input{Order_of_execution.tex}
+% PART V
+\newpage
+\part{WHAT'S NEXT?}
+If you have read and more or less understood everything in this tutorial up to now, you are no longer a beginner SuperCollider user! We covered a lot of ground, and from here on you have all the basic tools needed to start developing your personal projects, and continue learning on your own. The following sections provide a brief introduction to a few popular intermediate level topics. The very last section presents a concise list of other tutorials and learning resources.
+
+\input{MIDI.tex}
+\input{OSC.tex}
+\input{Quarks_and_plug-ins.tex}
+\input{Extra_resources.tex}
+
+\newpage
+% this add the endnotes here
+\theendnotes
+
+% this ends the document
+\end{document}

@@ -213,3 +213,20 @@ Pbind(
 Interesting tricks here: thanks to variables, we reuse the same list of scale degrees and durations for both \texttt{Pbind}s. We wanted the second scale to be descending and one octave above the first. To achieve this, we simply use the message \texttt{.reverse} to reverse the order of the list (type \texttt{$\sim$scale.reverse} on a new line and evaluate to see exactly what it does). Then we add 7 to transpose it one octave above (test it as well to see the result).\footnote{We could also have used \texttt{\textbackslash ctranspose, 12} to get the same transposition.} We played two \texttt{Pbind}s at the same time by enclosing them within a single code block.
 
 Exercise: create one additional \texttt{Pbind} inside the code block above, so that you hear three simultaneous voices. Use both variables (\texttt{$\sim$scale} and \texttt{$\sim$durs}) in some different way---for example, use them inside a pattern other than Pseq; change transposition amount; reverse and/or multiply durations; etc.
+
+\subsection{Assignment to multiple keys}
+
+This alternative way of writing allows you to assign multiple keys in the form of Arrays. In the example below, one might find useful to write in this way in order to keep notes and durations together as pairs:
+
+\begin{lstlisting}[style=SuperCollider-IDE, basicstyle=\scttfamily\footnotesize]
+// assignment to multiple keys
+(
+Pbind(
+	#[midinote, dur], Pseq([
+		[60, 0.75],
+		[67, 0.25]
+	], inf),
+	\amp, 0.7
+).play;
+)
+\end{lstlisting}
